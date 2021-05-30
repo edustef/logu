@@ -1,0 +1,9 @@
+{
+  "locales": ["en", "es"],
+  "defaultLocale": "en",
+  "pages": {
+    "*": ["common", "metadata", "navigation", "errors", "validation"],
+    "/": ["home"],
+    "/account": ["account"]
+  }
+}
