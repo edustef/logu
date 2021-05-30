@@ -1,20 +1,28 @@
 import React from 'react'
 import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/client'
+import { getSession, useSession } from 'next-auth/client'
 import Head from 'next/head'
 import useTranslation from 'next-translate/useTranslation'
 import LoguSvg from '../public/svgs/logu.svg'
 import Button from '../components/Button'
 import Link from '../components/Link'
 import LayoutGuest from '../components/LayoutGuest'
+import { useGoogleOneTap } from '../utils/useGoogleOneTap'
 
-type Props = {}
+interface Props {
+	clientId: string
+}
 
-const HomePage: React.FC<Props> = () => {
+const HomePage: React.FC<Props> = ({ clientId }) => {
 	const { t } = useTranslation()
+
+	useGoogleOneTap(clientId)
 
 	return (
 		<LayoutGuest>
+			<Head>
+				<script src='https://accounts.google.com/gsi/client' />
+			</Head>
 			<div className='flex justify-center'>
 				<LoguSvg className='w-24 h-24' />
 			</div>
@@ -24,6 +32,7 @@ const HomePage: React.FC<Props> = () => {
 				</Link>
 				<Button className='border border-white uppercase'>Discover</Button>
 			</div>
+			<div id='put-google-one-tap-here-plz'></div>
 		</LayoutGuest>
 	)
 }
@@ -42,6 +51,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 
 	return {
-		props: {}
+		props: {
+			clientId: process.env.GOOGLE_CLIENT_ID
+		}
 	}
 }
