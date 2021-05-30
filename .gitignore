@@ -2,3 +2,4 @@ node_modules/
 .next/
 prisma/migrations/
 .env
+lib/prisma.ts
