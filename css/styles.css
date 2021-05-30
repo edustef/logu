@@ -1,0 +1,9 @@
+html {
+  background-color: rgb(249, 250, 251);
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: rgb(0, 0, 0);
+  }
+}
