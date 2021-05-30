@@ -7,7 +7,7 @@ const options: NextAuthOptions = {
 	providers: [
 		Providers.Google({
 			clientId: process.env.GOOGLE_CLIENT_ID,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET
 		}),
 		Providers.Email({
 			server: {
@@ -15,14 +15,14 @@ const options: NextAuthOptions = {
 				port: Number(process.env.SMTP_PORT),
 				auth: {
 					user: process.env.SMTP_USER,
-					pass: process.env.SMTP_PASSWORD,
-				},
+					pass: process.env.SMTP_PASSWORD
+				}
 			},
-			from: process.env.SMTP_FROM,
-		}),
+			from: process.env.SMTP_FROM
+		})
 	],
 	adapter: Adapters.Prisma.Adapter({ prisma }),
-	secret: process.env.SECRET,
+	secret: process.env.SECRET
 }
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options)
