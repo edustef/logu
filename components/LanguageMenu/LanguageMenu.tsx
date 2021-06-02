@@ -9,7 +9,7 @@ import { Listbox } from '@headlessui/react'
 import 'dayjs/locale/es'
 import 'dayjs/locale/en'
 import { ClassNameModel } from '../../models/className.model'
-import { useLanguage, languages } from '../../context/useLanguage'
+import { useLanguage, languages } from '../../hooks/useLanguage'
 
 interface Props extends ClassNameModel {
 	popupRight?: boolean

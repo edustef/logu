@@ -14,12 +14,12 @@ export interface Language {
 export const languages: Language[] = [
 	{
 		name: 'English',
-		locale: 'en',
+		locale: 'en'
 	},
 	{
 		name: 'Español',
-		locale: 'es',
-	},
+		locale: 'es'
+	}
 ]
 
 export const LanguageContext = React.createContext<[Language, React.Dispatch<Language>]>(undefined)
