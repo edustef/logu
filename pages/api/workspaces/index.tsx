@@ -38,7 +38,7 @@ export const createWorkspace = async ({ workspace, email }: { workspace: string;
 			workspaces: {
 				create: {
 					workspace: { create: { name: workspace } },
-					isAdmin: false
+					isAdmin: true
 				}
 			}
 		}
