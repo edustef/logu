@@ -1,0 +1,10 @@
+{
+  "signIn": "Sign In",
+  "form": {
+    "email": {
+      "label": "Email"
+    }
+  },
+  "signWithEmail": "Sign in with email",
+  "signWithGoogle": "Sign in with Google"
+}

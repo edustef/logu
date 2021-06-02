@@ -7,22 +7,18 @@ import LoguSvg from '../public/svgs/logu.svg'
 import Button from '../components/Button'
 import Link from '../components/Link'
 import LayoutGuest from '../components/LayoutGuest'
-import { useGoogleOneTap } from '../utils/useGoogleOneTap'
+import { useGoogleOneTap } from '../hooks/useGoogleOneTap'
 
 interface Props {
 	clientId: string
 }
 
-const HomePage: React.FC<Props> = ({ clientId }) => {
+const HomePage: React.FC<Props> = () => {
 	const { t } = useTranslation()
-
-	useGoogleOneTap(clientId)
+	useGoogleOneTap()
 
 	return (
 		<LayoutGuest>
-			<Head>
-				<script src='https://accounts.google.com/gsi/client' />
-			</Head>
 			<div className='flex justify-center'>
 				<LoguSvg className='w-24 h-24' />
 			</div>
@@ -32,7 +28,6 @@ const HomePage: React.FC<Props> = ({ clientId }) => {
 				</Link>
 				<Button className='border border-white uppercase'>Discover</Button>
 			</div>
-			<div id='put-google-one-tap-here-plz'></div>
 		</LayoutGuest>
 	)
 }
@@ -51,8 +46,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 
 	return {
-		props: {
-			clientId: process.env.GOOGLE_CLIENT_ID
-		}
+		props: {}
 	}
 }
