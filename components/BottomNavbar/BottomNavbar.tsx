@@ -21,16 +21,16 @@ export default function BottomNavbar() {
 			<div id='tabs' className='flex justify-between'>
 				<NavigationRouter currentPath={router.pathname}>
 					<NavLink path='/dashboard' name={t('navigation:dashboard')}>
-						<HomeIcon className='w-6 h-6' />
+						<HomeIcon className='w-8 h-8' />
 					</NavLink>
 					<NavLink path='/organize' name={t('navigation:organize')}>
-						<ViewGridAddIcon className='w-6 h-6' />
+						<ViewGridAddIcon className='w-8 h-8' />
 					</NavLink>
 					<NavLink path='/report' name={t('navigation:report')}>
-						<ChartBarIcon className='w-6 h-6' />
+						<ChartBarIcon className='w-8 h-8' />
 					</NavLink>
 					<NavLink path='/account' name={t('navigation:account')}>
-						<UserIcon className='w-6 h-6' />
+						<UserIcon className='w-8 h-8' />
 					</NavLink>
 				</NavigationRouter>
 			</div>
