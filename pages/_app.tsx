@@ -15,14 +15,6 @@ import Head from 'next/head'
 const queryClient = new QueryClient()
 
 const App = ({ Component, pageProps }: AppProps) => {
-	const styles = {
-		root: clsx([
-			'min-h-screen bg-gradient-to-tr',
-			'from-gray-100 to-gray-200 text-black',
-			'dark:from-gray-800 dark:to-gray-900 dark:text-white'
-		])
-	}
-
 	// configure dayjs and plugins
 	dayjs.extend(localizedFormat)
 	dayjs.extend(calendarPlugin)
