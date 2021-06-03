@@ -25,13 +25,19 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 	}
 	const { t } = useTranslation()
 	const workspaces = useWorkspaces()
+	if (workspaces.data) {
+		console.log(workspaces.data)
+	}
 
 	return (
 		<Layout>
-			<Title>{t('navigation:account')}</Title>
+			<div className='flex items-center'>
+				<Title className='flex-grow'>{t('navigation:account')}</Title>
+				<LanguageMenu popupRight={true} />
+			</div>
 			<div className='space-y-4'>
 				<Card>
-					<CardHeader className='relative flex'>
+					<CardHeader className='flex'>
 						<Image
 							src={user.image}
 							alt='Profile picture'
@@ -43,7 +49,6 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 							<h2 className='font-semibold'>{user.name}</h2>
 							<small className='text-sm text-gray-500 dark:text-gray-400'>{user.email}</small>
 						</div>
-						<LanguageMenu className='absolute right-0' popupRight={true} />
 					</CardHeader>
 					<div className='flex justify-between'>
 						<Link href='/account/edit' className='text-blue-300'>
@@ -63,8 +68,13 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 					</CardHeader>
 					{workspaces.isLoading && <Skeleton count={2} />}
 					{workspaces.isError && <div>{t('errors:failedLoad')}</div>}
-					{workspaces.isSuccess && workspaces.data.map((workspace) => <div key={workspace.id}>{workspace.name}</div>)}
-					{workspaces.isSuccess && !!workspaces.data && <div>{t('account:noWorkspaces')}</div>}
+					{workspaces.isSuccess &&
+						workspaces.data.map((workspace) => (
+							<Link className='block my-2' href={`/teams/${workspace.name}`} key={workspace.id}>
+								{workspace.name}
+							</Link>
+						))}
+					{workspaces.isSuccess && !workspaces.data && <div>{t('account:noWorkspaces')}</div>}
 				</Card>
 				<Card>
 					<CardHeader className='flex justify-between items-center'>
