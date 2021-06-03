@@ -3,6 +3,7 @@
     "title": "Create a new Workspace",
     "addWorkspace": "Create workspace",
     "label": "Name",
-    "placeholder": "My awesome workspace"
+    "placeholder": "My awesome workspace",
+    "success": "Workspace, {{name}}, has been greated succesfully."
   }
 }
