@@ -6,9 +6,9 @@ import { ClassNameModel } from '../../models/className.model'
 
 interface Props extends LinkProps, ClassNameModel {}
 
-const Link: React.FC<Props> = ({ className, children, href }) => {
+const Link: React.FC<Props> = ({ className, children, ...props }) => {
 	return (
-		<NextLink href={href}>
+		<NextLink {...props}>
 			<a className={clsx('px-2 py-1 rounded font-semibold', className)}>{children}</a>
 		</NextLink>
 	)
