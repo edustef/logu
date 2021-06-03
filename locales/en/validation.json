@@ -1,5 +1,6 @@
 {
   "invalidField": "{{field}} is not valid.",
+  "notNumberFirst": "{{field}} cant start with numbers.",
   "required": "{{field}} is required.",
   "min": "Must be at least {{num}} characters.",
   "max": "Must be {{num}} characters or less.",
