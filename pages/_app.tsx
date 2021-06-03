@@ -25,12 +25,10 @@ const App = ({ Component, pageProps }: AppProps) => {
 			default: 'validation:invalidField',
 			required: ({ label }) => ({ key: 'validation:required', value: label })
 		},
-		number: {
+		string: {
+			email: () => ({ key: 'validation:email' }),
 			min: ({ min }) => ({ key: 'validation:min', value: min }),
 			max: ({ max }) => ({ key: 'validation:max', value: max })
-		},
-		string: {
-			email: () => ({ key: 'validation:email' })
 		}
 	})
 
