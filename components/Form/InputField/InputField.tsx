@@ -16,7 +16,7 @@ const InputField: React.FC<Props> = ({ label, parentClassName, icon, className, 
 	return (
 		<div className={parentClassName}>
 			{label && <label className='block mb-1 uppercase text-sm text-gray-400 font-semibold'>{label}</label>}
-			<div className={clsx(className, 'relative text-gray-400 focus-within:text-gray-600')}>
+			<div className={clsx(className, 'relative inline-block text-gray-400 focus-within:text-gray-600')}>
 				{icon && (
 					<span className='p-2 absolute inset-y-0 left-0 flex items-center'>
 						<span className='w-5 h-5'>{icon}</span>
@@ -33,7 +33,7 @@ const InputField: React.FC<Props> = ({ label, parentClassName, icon, className, 
 					{...props}
 				/>
 			</div>
-			{meta.error && meta.touched && <div className='text-red-400 italic text-sm'>{meta.error}</div>}
+			{meta.error && meta.touched && <div className='text-red-400 mt-1 italic text-sm'>{meta.error}</div>}
 		</div>
 	)
 }
