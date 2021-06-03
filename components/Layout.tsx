@@ -42,7 +42,7 @@ const Layout: React.FC<Props> = ({ children, className = '', page }) => {
 				<meta name='application-name' content='Logu' />
 				<meta name='msapplication-TileColor' content='#000' />
 			</Head>
-			<main className='p-3 flex-grow'>{children}</main>
+			<main className='p-3 flex-grow mb-[60px]'>{children}</main>
 			<BottomNavbar />
 		</div>
 	)
