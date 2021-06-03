@@ -13,6 +13,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
 import useTranslation from 'next-translate/useTranslation'
+import Title from '../../components/Title'
 
 interface Props {
 	providers: Provider[]
@@ -48,7 +49,27 @@ const SignIn: React.FC<Props> = ({ providers, csrfToken, callbackUrl }) => {
 			<Link href='/' className='inline-flex items-center'>
 				<HomeIcon className='w-6 h-6' />
 			</Link>
-			<h1 className='uppercase text-lg text-center mb-6 font-semibold'>{t('signin:signIn')}</h1>
+			<Title>{t('signin:continue')}</Title>
+			{Object.values(providers)
+				.filter((provider) => provider.name.toLowerCase() !== 'email')
+				.map((provider) => (
+					<div key={provider.name}>
+						<Button
+							className='flex items-center justify-center uppercase bg-white text-black w-full'
+							onClick={() => signIn(provider.id, { callbackUrl: callbackUrl })}
+						>
+							<FontAwesomeIcon className='w-4 h-4 mr-2' icon={faGoogle} />
+							<span>Sign in with {provider.name}</span>
+						</Button>
+					</div>
+				))}
+
+			<div className='my-6 text-gray-500 flex items-center'>
+				<div className='flex-grow border-b border-gray-500'></div>
+				<div className='mx-4'>OR</div>
+				<div className='flex-grow border-b border-gray-500'></div>
+			</div>
+
 			<Formik
 				initialValues={{
 					email: '',
@@ -89,25 +110,6 @@ const SignIn: React.FC<Props> = ({ providers, csrfToken, callbackUrl }) => {
 					</Form>
 				)}
 			</Formik>
-
-			<div className='my-6 text-gray-500 flex items-center'>
-				<div className='flex-grow border-b border-gray-500'></div>
-				<div className='mx-4'>OR</div>
-				<div className='flex-grow border-b border-gray-500'></div>
-			</div>
-			{Object.values(providers)
-				.filter((provider) => provider.name.toLowerCase() !== 'email')
-				.map((provider) => (
-					<div key={provider.name}>
-						<Button
-							className='flex items-center justify-center uppercase bg-white text-black w-full'
-							onClick={() => signIn(provider.id, { callbackUrl: callbackUrl })}
-						>
-							<FontAwesomeIcon className='w-4 h-4 mr-2' icon={faGoogle} />
-							<span>Sign in with {provider.name}</span>
-						</Button>
-					</div>
-				))}
 		</LayoutGuest>
 	)
 }

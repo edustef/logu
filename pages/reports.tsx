@@ -1,15 +1,16 @@
 import React from 'react'
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import Layout from '../components/Layout'
-import Post, { PostProps } from '../components/Post'
-import prisma from '../lib/prisma'
 import { getSession } from 'next-auth/client'
+import Title from '../components/Title'
+import useTranslation from 'next-translate/useTranslation'
 
 const ReportsPage = () => {
+	const { t } = useTranslation()
 	return (
 		<Layout>
 			<div className='page'>
-				<h1>Public Feed</h1>
+				<Title>{t('navigation:reports')}</Title>
 				<main></main>
 			</div>
 		</Layout>
@@ -20,8 +21,8 @@ export default ReportsPage
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 	const session = await getSession({ req })
-	
+
 	return {
-		props: {},
+		props: {}
 	}
 }

@@ -3,8 +3,7 @@ import Layout from '../components/Layout'
 import Router from 'next/router'
 import Calendar, { DatePicker } from '../components/Calendar'
 import useTranslation from 'next-translate/useTranslation'
-import { Popover } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+import Title from '../components/Title'
 
 const Draft: React.FC = () => {
 	const { t } = useTranslation()
@@ -18,7 +17,7 @@ const Draft: React.FC = () => {
 			await fetch(`http://localhost:3000/api/post`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(body),
+				body: JSON.stringify(body)
 			})
 			await Router.push('/drafts')
 		} catch (error) {
@@ -29,10 +28,7 @@ const Draft: React.FC = () => {
 	return (
 		<Layout>
 			<div className='px-2 flex flex-col'>
-				<div className='mb-4 flex flex-col items-center'>
-					<h1 className='text-2xl'>{t('navigation:organize')}</h1>
-					<small className='text-xs text-gray-400 italic'>{t('navigation:organize-desc')}</small>
-				</div>
+				<Title>{t('navigation:organize')}</Title>
 				<Calendar className='flex-grow' />
 			</div>
 		</Layout>

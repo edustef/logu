@@ -6,6 +6,7 @@ import prisma from '../lib/prisma'
 import { getSession } from 'next-auth/client'
 import { User } from 'next-auth'
 import useTranslation from 'next-translate/useTranslation'
+import Title from '../components/Title'
 
 type Props = {
 	user: User
@@ -17,7 +18,7 @@ const DashboardPage: React.FC<Props> = ({ user }) => {
 	return (
 		<Layout page={t('navigation:dashboard')}>
 			<div className='page'>
-				<h1>Dashboard</h1>
+				<Title>{t('navigation:dashboard')}</Title>
 				<main></main>
 			</div>
 		</Layout>

@@ -26,7 +26,7 @@ export default function BottomNavbar() {
 					<NavLink path='/organize' name={t('navigation:organize')}>
 						<ViewGridAddIcon className='w-8 h-8' />
 					</NavLink>
-					<NavLink path='/report' name={t('navigation:report')}>
+					<NavLink path='/reports' name={t('navigation:reports')}>
 						<ChartBarIcon className='w-8 h-8' />
 					</NavLink>
 					<NavLink path='/account' name={t('navigation:account')}>

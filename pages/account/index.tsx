@@ -13,6 +13,7 @@ import useWorkspaces from '../../hooks/useWorkspaces'
 import Button from '../../components/Button'
 import Link from '../../components/Link'
 import Skeleton from 'react-loading-skeleton'
+import Title from '../../components/Title'
 
 interface Props {
 	user: User
@@ -27,6 +28,7 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 
 	return (
 		<Layout>
+			<Title>{t('navigation:account')}</Title>
 			<div className='space-y-4'>
 				<Card>
 					<CardHeader className='relative flex'>

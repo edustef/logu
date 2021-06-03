@@ -6,6 +6,7 @@ import React from 'react'
 import * as Yup from 'yup'
 import Button from '../../components/Button'
 import Layout from '../../components/Layout'
+import Title from '../../components/Title'
 
 export default function CreatePage() {
 	const { t } = useTranslation()
@@ -25,6 +26,7 @@ export default function CreatePage() {
 
 	return (
 		<Layout>
+			<Title>{t('teams:create.title')}</Title>
 			<Formik
 				initialValues={{
 					workspace: ''
