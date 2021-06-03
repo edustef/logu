@@ -1,8 +1,6 @@
 import React from 'react'
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import Layout from '../components/Layout'
-import Post, { PostProps } from '../components/Post'
-import prisma from '../lib/prisma'
 import { getSession } from 'next-auth/client'
 import { User } from 'next-auth'
 import useTranslation from 'next-translate/useTranslation'
@@ -12,7 +10,7 @@ type Props = {
 	user: User
 }
 
-const DashboardPage: React.FC<Props> = ({ user }) => {
+const DashboardPage: React.FC<Props> = () => {
 	const { t } = useTranslation()
 
 	return (
@@ -39,6 +37,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 
 	return {
-		props: { user: session.user }
+		props: {}
 	}
 }
