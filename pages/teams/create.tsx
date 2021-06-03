@@ -1,9 +1,11 @@
 import { Workspace } from '.prisma/client'
-import { CollectionIcon, UsersIcon } from '@heroicons/react/outline'
+import { CollectionIcon } from '@heroicons/react/outline'
 import axios from 'axios'
-import { ErrorMessage, Form, Formik } from 'formik'
+import { Form, Formik } from 'formik'
 import useTranslation from 'next-translate/useTranslation'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
+import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import Button from '../../components/Button'
 import Card from '../../components/Card'
@@ -11,15 +13,23 @@ import InputField from '../../components/Form/InputField'
 import Layout from '../../components/Layout'
 import Title from '../../components/Title'
 
-export default function CreatePage() {
+interface FormValues {
+	workspace: string
+}
+
+const CreatePage: React.FC = () => {
 	const { t } = useTranslation()
-	const submitNewWorkspace = async (values: any, { setSubmitting }) => {
+	const router = useRouter()
+	const submitNewWorkspace = async (values: FormValues, { setSubmitting }) => {
 		try {
 			setSubmitting(true)
 			const res = await axios.post<Workspace>(`/api/workspaces`, {
 				headers: { 'Content-Type': 'application/json' },
 				data: { ...values }
 			})
+
+			toast(t('teams:create.success', { name: values.workspace }))
+			router.push('/account')
 		} catch (error) {
 			console.error(error)
 		} finally {
@@ -43,7 +53,7 @@ export default function CreatePage() {
 				})}
 				onSubmit={submitNewWorkspace}
 			>
-				{({ isSubmitting, errors, touched }) => (
+				{({ isSubmitting }) => (
 					<Form>
 						<>
 							<Card className='mb-2'>
@@ -70,3 +80,5 @@ export default function CreatePage() {
 		</Layout>
 	)
 }
+
+export default CreatePage
