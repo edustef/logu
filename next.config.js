@@ -10,6 +10,6 @@ module.exports = nextTranslate({
 		return config
 	},
 	images: {
-		domains: ['images.unsplash.com', 'lh3.googleusercontent.com'],
-	},
+		domains: ['images.unsplash.com', 'lh3.googleusercontent.com', 'eu.ui-avatars.com']
+	}
 })
