@@ -1,10 +1,10 @@
 import React from 'react'
 import { GetServerSideProps } from 'next'
-import Layout from '../components/Layout'
+import Layout from '../components/Templates/Layout'
 import { getSession } from 'next-auth/client'
 import { User } from 'next-auth'
 import useTranslation from 'next-translate/useTranslation'
-import Title from '../components/Title'
+import Title from '../components/Atoms/Title'
 
 type Props = {
 	user: User

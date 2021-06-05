@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import Layout from '../components/Layout'
-import Router from 'next/router'
-import Calendar, { DatePicker } from '../components/Calendar'
+import React from 'react'
+import Layout from '../components/Templates/Layout'
+import Calendar from '../components/Molecules/Calendar'
 import useTranslation from 'next-translate/useTranslation'
-import Title from '../components/Title'
+import Title from '../components/Atoms/Title'
+import WorkspaceDropdown from '../components/Molecules/WorkspaceDropdown'
 
 const Draft: React.FC = () => {
 	const { t } = useTranslation()

@@ -4,8 +4,8 @@ import { getSession } from 'next-auth/client'
 import Head from 'next/head'
 import useTranslation from 'next-translate/useTranslation'
 import LoguSvg from '../public/svgs/logu.svg'
-import Button from '../components/Button'
-import Link from '../components/Link'
+import Button from './Atoms/Button'
+import Link from './Atoms/Link'
 import { ClassNameModel } from '../models/className.model'
 
 interface Props extends ClassNameModel {
@@ -30,7 +30,9 @@ const LayoutGuest: React.FC<Props> = ({ children }) => {
 				<meta name='application-name' content='Logu' />
 				<meta name='msapplication-TileColor' content='#000' />
 			</Head>
-			<main className='min-h-screen pt-6 w-full px-3 dark:text-white dark:bg-gray-darkest'>{children}</main>
+			<main className='flex flex-col min-h-screen w-full px-3 dark:text-white dark:bg-gray-darkest'>
+				<div className='pt-6 h-0 flex-grow'>{children}</div>
+			</main>
 		</>
 	)
 }

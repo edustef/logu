@@ -7,11 +7,11 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
-import Button from '../../components/Button'
-import Card from '../../components/Card'
-import InputField from '../../components/Form/InputField'
-import Layout from '../../components/Layout'
-import Title from '../../components/Title'
+import Button from '../../components/Atoms/Button'
+import Card from '../../components/Molecules/Card'
+import InputField from '../../components/Atoms/InputField'
+import Layout from '../../components/Templates/Layout'
+import Title from '../../components/Atoms/Title'
 
 interface FormValues {
 	workspace: string
@@ -28,7 +28,7 @@ const CreatePage: React.FC = () => {
 				data: { ...values }
 			})
 
-			toast(t('teams:create.success', { name: values.workspace }))
+			toast(t('workspaces:create.success', { name: values.workspace }))
 			router.push('/account')
 		} catch (error) {
 			console.error(error)
@@ -39,17 +39,17 @@ const CreatePage: React.FC = () => {
 
 	return (
 		<Layout>
-			<Title>{t('teams:create.title')}</Title>
+			<Title>{t('workspaces:create.title')}</Title>
 			<Formik
 				initialValues={{
 					workspace: ''
 				}}
 				validationSchema={Yup.object({
 					workspace: Yup.string()
-						.matches(/^\D+\w*/, t('validation:notNumberFirst', { field: t('teams:create.label') }))
+						.matches(/^\D+\w*/, t('validation:notNumberFirst', { field: t('workspaces:create.label') }))
 						.min(3, t('validation:min', { num: 3 }))
 						.max(30, t('validation:max', { num: 30 }))
-						.required(t('validation:required', { field: t('teams:create.label') }))
+						.required(t('validation:required', { field: t('workspaces:create.label') }))
 				})}
 				onSubmit={submitNewWorkspace}
 			>
@@ -59,11 +59,11 @@ const CreatePage: React.FC = () => {
 							<Card className='mb-2'>
 								<InputField
 									className='w-full'
-									label={t('teams:create.label')}
+									label={t('workspaces:create.label')}
 									icon={<CollectionIcon className='w-full h-full text-current' />}
 									name='workspace'
 									type='text'
-									placeholder={t('teams:create.placeholder')}
+									placeholder={t('workspaces:create.placeholder')}
 								/>
 							</Card>
 							<Button
@@ -71,7 +71,7 @@ const CreatePage: React.FC = () => {
 								type='submit'
 								className='block w-full bg-green-600 text-white disabled:cursor-not-allowed disabled:bg-gray-300 up'
 							>
-								{t('teams:create.addWorkspace')}
+								{t('workspaces:create.addWorkspace')}
 							</Button>
 						</>
 					</Form>

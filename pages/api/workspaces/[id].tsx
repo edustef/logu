@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getSession } from 'next-auth/client'
-import prisma from '../../../lib/prisma'
+import prisma from '../../../utils/prisma'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
 	switch (req.method.toUpperCase()) {

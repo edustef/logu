@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Head from 'next/head'
 import { ToastContainer } from 'react-toastify'
 import { XIcon } from '@heroicons/react/outline'
-import XButton from '../components/XButton'
+import XButton from '../components/Atoms/XButton'
 import clsx from 'clsx'
 
 const queryClient = new QueryClient()

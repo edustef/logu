@@ -3,8 +3,8 @@ import useTranslation from 'next-translate/useTranslation'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { ClassNameModel } from '../models/className.model'
-import BottomNavbar from './BottomNavbar'
+import { ClassNameModel } from '../../models/className.model'
+import BottomNavbar from '../Molecules/BottomNavbar'
 
 interface Props extends ClassNameModel {
 	children: React.ReactNode

@@ -2,18 +2,18 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { GetServerSideProps } from 'next'
-import { getProviders, signIn, getCsrfToken } from 'next-auth/client'
+import { getProviders, signIn, getCsrfToken, getSession } from 'next-auth/client'
 import { Provider } from 'next-auth/providers'
-import Button from '../../components/Button'
+import Button from '../../components/Atoms/Button'
 import { HomeIcon } from '@heroicons/react/outline'
 import LayoutGuest from '../../components/LayoutGuest'
 import { useRouter } from 'next/router'
-import Link from '../../components/Link'
+import Link from '../../components/Atoms/Link'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
 import useTranslation from 'next-translate/useTranslation'
-import Title from '../../components/Title'
+import Title from '../../components/Atoms/Title'
 
 interface Props {
 	providers: Provider[]
@@ -28,20 +28,8 @@ const SignIn: React.FC<Props> = ({ providers, csrfToken, callbackUrl }) => {
 		button: clsx('text-sm font-semibold uppercase px-2 py-1 rounded bg-gray-100 text-black w-full')
 	}
 
-	const handleEmailSignIn = async (values: any, { setSubmitting }) => {
-		console.log('running email sign in')
-
-		try {
-			setSubmitting(true)
-			const res = await axios.post(`/api/auth/signin/email`, {
-				headers: { 'Content-Type': 'application/json' },
-				data: { ...values }
-			})
-		} catch (error) {
-			console.error(error)
-		} finally {
-			setSubmitting(false)
-		}
+	const handleEmailSignIn = async ({ email }: { email: string }, { setSubmitting }) => {
+		signIn('email', { email })
 	}
 
 	return (
@@ -72,8 +60,7 @@ const SignIn: React.FC<Props> = ({ providers, csrfToken, callbackUrl }) => {
 
 			<Formik
 				initialValues={{
-					email: '',
-					csrfToken: ''
+					email: ''
 				}}
 				validationSchema={Yup.object({
 					email: Yup.string().email().required().label(t('signin:form.email.label'))
@@ -82,7 +69,6 @@ const SignIn: React.FC<Props> = ({ providers, csrfToken, callbackUrl }) => {
 			>
 				{({ isSubmitting, errors, touched }) => (
 					<Form>
-						<input name='csrfToken' type='hidden' defaultValue={csrfToken} />
 						<>
 							<label className='block uppercase text-sm text-gray-400 font-semibold'>
 								{t('signin:form.email.label')}
@@ -117,6 +103,17 @@ const SignIn: React.FC<Props> = ({ providers, csrfToken, callbackUrl }) => {
 export default SignIn
 
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+	const session = await getSession({ req })
+
+	if (session) {
+		return {
+			redirect: {
+				destination: '/dashboard',
+				permanent: false
+			}
+		}
+	}
+
 	const providers = await getProviders()
 	const csrfToken = await getCsrfToken({ req })
 	const url = query.callbackUrl ? decodeURIComponent(query.callbackUrl as string) : null

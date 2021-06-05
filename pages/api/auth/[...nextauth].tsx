@@ -2,7 +2,10 @@ import { NextApiHandler } from 'next'
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import Providers from 'next-auth/providers'
 import Adapters from 'next-auth/adapters'
-import prisma from '../../../lib/prisma'
+import prisma from '../../../utils/prisma'
+import getAvatarName from '../../../utils/getAvatarName'
+import { User } from '.prisma/client'
+
 const options: NextAuthOptions = {
 	providers: [
 		Providers.Google({

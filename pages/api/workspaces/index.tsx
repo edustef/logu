@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../lib/prisma'
+import prisma from '../../../utils/prisma'
 import nc from 'next-connect'
 import auth, { NextApiRequestWithUser } from '../../../middlewares/auth'
 import { Workspace } from '.prisma/client'
@@ -23,7 +23,10 @@ export const getWorkspaces = async ({ email }: { email: string }) => {
 			email: email
 		},
 		select: {
-			workspaces: { select: { workspace: true } }
+			workspaces: {
+				take: 3,
+				include: { workspace: true }
+			}
 		}
 	})
 

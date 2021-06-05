@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../lib/prisma'
+import prisma from '../../../utils/prisma'
 import { getSession } from 'next-auth/client'
 import StatusCode from 'status-code-enum'
 

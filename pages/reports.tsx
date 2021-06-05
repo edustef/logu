@@ -1,8 +1,8 @@
 import React from 'react'
 import { GetServerSideProps } from 'next'
-import Layout from '../components/Layout'
+import Layout from '../components/Templates/Layout'
 import { getSession } from 'next-auth/client'
-import Title from '../components/Title'
+import Title from '../components/Atoms/Title'
 import useTranslation from 'next-translate/useTranslation'
 
 const ReportsPage = () => {
