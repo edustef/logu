@@ -25,7 +25,25 @@ const options: NextAuthOptions = {
 		})
 	],
 	adapter: Adapters.Prisma.Adapter({ prisma }),
-	secret: process.env.SECRET
+	secret: process.env.SECRET,
+	pages: {
+		signIn: '/auth/signin',
+		error: '/auth/error', // Error code passed in query string as ?error=
+		verifyRequest: '/auth/verify-request', // (used for check email message)
+		newUser: null // If set, new users will be directed here on first sign in
+	},
+	callbacks: {
+		async session(session, user) {
+
+			session.userDetails = user as User
+
+			if (!session.userDetails.image) {
+				session.userDetails.image = getAvatarName(session.userDetails.name)
+			}
+
+			return session
+		}
+	}
 }
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options)
