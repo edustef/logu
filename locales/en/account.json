@@ -1,9 +1,18 @@
 {
+  "noName": "No name",
   "workspacesTitle": "Workspaces",
   "developersTitle": "For developers",
   "generateAPI": "Generate API Key",
   "editProfile": "Edit Profile",
   "newWorkspace": "New workspace",
   "addWorkspace": "Add workspace",
-  "noWorkspaces": "You have no workspace."
+  "noWorkspaces": "You have no workspace.",
+  "edit": {
+    "title": "Edit account",
+    "notValidName": "Name can not contain any numbers and must start with a letter",
+    "nameLabel": "Name",
+    "success": "Profile edited succesfully.",
+    "error": "Something went wrong while updating your profile. Please try again.",
+    "submit": "Update profile"
+  }
 }
