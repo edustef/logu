@@ -7,28 +7,14 @@ import WorkspaceDropdown from '../components/Molecules/WorkspaceDropdown'
 
 const Draft: React.FC = () => {
 	const { t } = useTranslation()
-	const [title, setTitle] = useState('')
-	const [content, setContent] = useState('')
-
-	const submitData = async (e: React.SyntheticEvent) => {
-		e.preventDefault()
-		try {
-			const body = { title, content }
-			await fetch(`http://localhost:3000/api/post`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(body)
-			})
-			await Router.push('/drafts')
-		} catch (error) {
-			console.error(error)
-		}
-	}
 
 	return (
 		<Layout>
-			<div className='px-2 flex flex-col'>
-				<Title>{t('navigation:organize')}</Title>
+			<div className='flex flex-col'>
+				<div className='flex items-center'>
+					<Title>{t('navigation:organize')}</Title>
+					<WorkspaceDropdown />
+				</div>
 				<Calendar className='flex-grow' />
 			</div>
 		</Layout>

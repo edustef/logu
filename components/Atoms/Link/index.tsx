@@ -2,9 +2,10 @@ import clsx from 'clsx'
 import { LinkProps } from 'next/link'
 import NextLink from 'next/link'
 import React from 'react'
-import { ClassNameModel } from '../../../models/className.model'
 
-interface Props extends LinkProps, ClassNameModel {}
+interface Props extends LinkProps {
+	className: string
+}
 
 const Link: React.FC<Props> = ({ className, children, ...props }) => {
 	return (

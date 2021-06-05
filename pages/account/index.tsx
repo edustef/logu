@@ -26,9 +26,6 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 	}
 	const { t } = useTranslation()
 	const workspaces = useWorkspaces()
-	if (workspaces.data) {
-		console.log(workspaces.data)
-	}
 
 	return (
 		<Layout>
@@ -47,8 +44,8 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 							className='rounded-full object-cover'
 						/>
 						<div className='ml-3 flex flex-col'>
-							<h2 className='font-semibold'>{user.name}</h2>
-							<small className='text-sm text-gray-500 dark:text-gray-400'>{user.email}</small>
+							<h2 className='font-semibold'>{user.name ?? t('account:noName')}</h2>
+							<small className='text-sm dark:text-gray-400'>{user.email}</small>
 						</div>
 					</CardHeader>
 					<div className='flex justify-between'>
@@ -62,24 +59,33 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 				</Card>
 				<Card>
 					<CardHeader className='flex justify-between items-center'>
-						<h2 className='text-gray-400 font-semibold'>{t('account:workspacesTitle')}</h2>
-						<Link href='/teams/create' className='bg-gray-700 text-white'>
+						<h2 className='font-semibold'>{t('account:workspacesTitle')}</h2>
+						<Link href='/workspaces/create' className='bg-gray-700 text-white'>
 							{t('account:newWorkspace')}
 						</Link>
 					</CardHeader>
 					{workspaces.isLoading && <Skeleton count={2} />}
 					{workspaces.isError && <div>{t('errors:failedLoad')}</div>}
 					{workspaces.isSuccess &&
-						workspaces.data.map((workspace) => (
-							<Link className='block my-2' href={`/teams/${workspace.name}`} key={workspace.id}>
-								{workspace.name}
+						workspaces.data.map((workspace, index) => (
+							<Link
+								className={clsx(index > 0 && 'border-t', 'flex items-center rounded-none my-2 border-gray-700')}
+								href={`/workspaces/${workspace.name}`}
+								key={workspace.id}
+							>
+								<span className='flex-grow'>{workspace.name}</span>
+								<span>
+									<ArrowRightIcon className='w-4 h-4' />
+								</span>
 							</Link>
 						))}
-					{workspaces.isSuccess && !workspaces.data && <div>{t('account:noWorkspaces')}</div>}
+					{workspaces.isSuccess && workspaces.data.length === 0 && (
+						<div className='italic text-gray-400'>{t('account:noWorkspaces')}</div>
+					)}
 				</Card>
 				<Card>
 					<CardHeader className='flex justify-between items-center'>
-						<h2 className='text-gray-400 font-semibold'>{t('account:developersTitle')}</h2>
+						<h2 className='font-semibold'>{t('account:developersTitle')}</h2>
 						<Button className='bg-green-600'>{t('account:generateAPI')}</Button>
 					</CardHeader>
 					<div className='mt-2 flex'>
@@ -102,8 +108,17 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 		return authRedirect('/account')
 	}
 
+	if (session.isNewUser) {
+		return {
+			redirect: {
+				permanent: false,
+				destination: '/account-setup'
+			}
+		}
+	}
+
 	return {
-		props: { user: session.user }
+		props: { user: JSON.parse(JSON.stringify(session.userDetails)) }
 	}
 }
 

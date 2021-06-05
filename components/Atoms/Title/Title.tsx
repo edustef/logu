@@ -1,7 +1,6 @@
 import clsx from 'clsx'
-import { ClassNameModel } from '../../../models/className.model'
-
-interface Props extends ClassNameModel {
+interface Props{
+	className: string,
 	children: React.ReactNode
 }
 

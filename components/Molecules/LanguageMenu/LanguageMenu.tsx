@@ -7,11 +7,11 @@ import { CheckIcon, GlobeAltIcon } from '@heroicons/react/outline'
 import { Listbox, Transition } from '@headlessui/react'
 import 'dayjs/locale/es'
 import 'dayjs/locale/en'
-import { ClassNameModel } from '../../../models/className.model'
 import { useLanguage, languages } from '../../../hooks/useLanguage'
 import Link from '../../Atoms/Link'
 
-interface Props extends ClassNameModel {
+interface Props {
+	className: string,
 	popupRight?: boolean
 }
 

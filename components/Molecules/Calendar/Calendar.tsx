@@ -3,9 +3,10 @@ import dayjs from 'dayjs'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import useTranslation from 'next-translate/useTranslation'
 import clsx from 'clsx'
-import { ClassNameModel } from '../../models/className.model'
 
-interface Props extends ClassNameModel {}
+interface Props {
+	className: string
+}
 
 const Calendar: React.FC<Props> = ({ className }) => {
 	const { t } = useTranslation()

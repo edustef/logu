@@ -4,11 +4,11 @@ import { getSession } from 'next-auth/client'
 import Head from 'next/head'
 import useTranslation from 'next-translate/useTranslation'
 import LoguSvg from '../public/svgs/logu.svg'
-import Button from './Atoms/Button'
-import Link from './Atoms/Link'
-import { ClassNameModel } from '../models/className.model'
+import Button from '../Atoms/Button'
+import Link from '../Atoms/Link'
 
-interface Props extends ClassNameModel {
+interface Props {
+	className: string,
 	children: React.ReactNode
 }
 

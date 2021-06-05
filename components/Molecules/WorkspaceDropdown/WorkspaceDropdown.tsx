@@ -1,17 +1,14 @@
-import { UserWorkspace, Workspace } from '.prisma/client'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/outline'
-import axios from 'axios'
 import clsx from 'clsx'
 import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/router'
 import React, { Fragment, useState } from 'react'
-import { useQuery } from 'react-query'
-import { ClassNameModel } from '../../../models/className.model'
-import workspaces from '../../../pages/api/workspaces'
 import Link from '../../Atoms/Link'
 
-interface Props extends ClassNameModel {}
+interface Props {
+	className: string
+}
 
 const WorkspaceDropdown: React.FC<Props> = ({ className }) => {
 	const styles = {
