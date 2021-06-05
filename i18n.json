@@ -5,7 +5,8 @@
     "*": ["common", "metadata", "navigation", "errors", "validation"],
     "/": ["home"],
     "/account": ["account"],
+    "/account/edit": ["account"],
     "/auth/signin": ["signin"],
-    "/teams/create": ["teams"]
+    "/workspaces/create": ["workspaces"]
   }
 }
