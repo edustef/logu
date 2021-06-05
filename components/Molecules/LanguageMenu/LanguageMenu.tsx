@@ -11,7 +11,7 @@ import { useLanguage, languages } from '../../../hooks/useLanguage'
 import Link from '../../Atoms/Link'
 
 interface Props {
-	className: string,
+	className?: string
 	popupRight?: boolean
 }
 

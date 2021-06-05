@@ -4,7 +4,7 @@ import NextLink from 'next/link'
 import React from 'react'
 
 interface Props extends LinkProps {
-	className: string
+	className?: string
 }
 
 const Link: React.FC<Props> = ({ className, children, ...props }) => {

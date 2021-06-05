@@ -5,7 +5,7 @@ import useTranslation from 'next-translate/useTranslation'
 import clsx from 'clsx'
 
 interface Props {
-	className: string
+	className?: string
 }
 
 const Calendar: React.FC<Props> = ({ className }) => {

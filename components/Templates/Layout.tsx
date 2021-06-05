@@ -6,7 +6,7 @@ import React from 'react'
 import BottomNavbar from '../Molecules/BottomNavbar'
 
 interface Props {
-	className: string,
+	className?: string
 	children: React.ReactNode
 	page?: string
 }

@@ -7,7 +7,7 @@ import React, { Fragment, useState } from 'react'
 import Link from '../../Atoms/Link'
 
 interface Props {
-	className: string
+	className?: string
 }
 
 const WorkspaceDropdown: React.FC<Props> = ({ className }) => {

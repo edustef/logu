@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-interface Props{
-	className: string,
+interface Props {
+	className?: string
 	children: React.ReactNode
 }
 

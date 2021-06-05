@@ -8,7 +8,7 @@ import Button from '../Atoms/Button'
 import Link from '../Atoms/Link'
 
 interface Props {
-	className: string,
+	className?: string
 	children: React.ReactNode
 }
 
