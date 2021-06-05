@@ -9,13 +9,14 @@ datasource db {
 
 model User {
   id            String          @id @default(cuid())
-  name          String          @default("No name")
+  name          String?
   email         String          @unique
   emailVerified DateTime?       @map("email_verified")
-  image         String          @default("/images/default-profile.png")
+  image         String?
   createdAt     DateTime        @default(now()) @map("created_at")
   updatedAt     DateTime        @updatedAt @map("updated_at")
   workspaces    UserWorkspace[]
+  isNewUser     Boolean         @default(true) @map("is_new_user")
 
   @@map("users")
 }
@@ -44,7 +45,7 @@ model UserWorkspace {
   userId      String
   workspaceId String
   createdAt   DateTime @default(now()) @map("created_at")
-  isAdmin     Boolean
+  isAdmin     Boolean  @map("is_admin")
 
   user      User      @relation(fields: [userId], references: [id])
   workspace Workspace @relation(fields: [workspaceId], references: [id])
