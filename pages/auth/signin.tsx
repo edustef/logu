@@ -6,7 +6,7 @@ import { getProviders, signIn, getCsrfToken, getSession } from 'next-auth/client
 import { Provider } from 'next-auth/providers'
 import Button from '../../components/Atoms/Button'
 import { HomeIcon } from '@heroicons/react/outline'
-import LayoutGuest from '../../components/LayoutGuest'
+import LayoutGuest from '../../components/Templates/LayoutGuest'
 import { useRouter } from 'next/router'
 import Link from '../../components/Atoms/Link'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
