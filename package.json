@@ -1,7 +1,7 @@
 {
   "name": "logu",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A web application for managing and logging your work and your team's work.",
   "scripts": {
     "dev": "next",
     "build": "next build",
@@ -11,8 +11,9 @@
     "postinstall": "prisma generate"
   },
   "keywords": [],
-  "author": "",
+  "author": "Eduard Stefan",
   "license": "MIT",
+  "homepage": "https://logu.app",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
