@@ -21,6 +21,7 @@
     "@headlessui/react": "^1.2.0",
     "@heroicons/react": "^1.0.1",
     "@prisma/client": "^2.24.1",
+    "@tailwindcss/line-clamp": "^0.2.1",
     "axios": "^0.21.1",
     "clsx": "^1.1.1",
     "dayjs": "^1.10.4",
