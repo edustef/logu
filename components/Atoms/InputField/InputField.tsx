@@ -1,7 +1,7 @@
 import clsx from 'clsx'
-import { useField } from 'formik'
-import useTranslation from 'next-translate/useTranslation'
+import { FieldMetaProps, useField } from 'formik'
 import React, { InputHTMLAttributes } from 'react'
+import useTranslation from 'next-translate/useTranslation'
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
 	parentClassName?: string
@@ -9,9 +9,16 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 	label?: string
 }
 
+interface CustomMetaProps extends FieldMetaProps<any> {
+	error: any
+}
+
 const InputField: React.FC<Props> = ({ label, parentClassName, icon, className, name, ...props }) => {
 	const { t } = useTranslation()
-	const [field, meta, helpers] = useField(name)
+	const [field, meta] = useField(name)
+	const customMeta = meta as CustomMetaProps
+	console.log(customMeta);
+	
 
 	return (
 		<div className={parentClassName}>
@@ -33,7 +40,9 @@ const InputField: React.FC<Props> = ({ label, parentClassName, icon, className, 
 					{...props}
 				/>
 			</div>
-			{meta.error && meta.touched && <div className='text-red-400 mt-1 italic text-sm'>{meta.error}</div>}
+			{meta.error && meta.touched && (
+				<div className='text-red-400 mt-1 italic text-sm'>{t(customMeta.error.key, customMeta.error.values)}</div>
+			)}
 		</div>
 	)
 }
