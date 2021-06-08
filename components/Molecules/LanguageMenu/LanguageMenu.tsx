@@ -7,7 +7,7 @@ import 'dayjs/locale/es'
 import 'dayjs/locale/en'
 import { useLanguage} from '../../../hooks/useLanguage'
 import Link from '../../Atoms/Link'
-import languages from '../../../static/languages'
+import languages from '../../../constants/languages'
 
 interface Props {
 	className?: string

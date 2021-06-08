@@ -1,26 +1,11 @@
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
+import languages, { Language } from '../constants/languages'
 
 interface Props {
 	children: React.ReactNode
 }
-
-export interface Language {
-	name: string
-	locale: string
-}
-
-export const languages: Language[] = [
-	{
-		name: 'English',
-		locale: 'en'
-	},
-	{
-		name: 'Español',
-		locale: 'es'
-	}
-]
 
 export const LanguageContext = React.createContext<[Language, React.Dispatch<Language>]>(undefined)
 
