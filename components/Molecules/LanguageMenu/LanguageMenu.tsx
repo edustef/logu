@@ -1,14 +1,13 @@
 import React, { Fragment } from 'react'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
-import GlobeSvg from './icons/globe.svg'
-import CheckmarkSvg from './icons/checkmark.svg'
 import { CheckIcon, GlobeAltIcon } from '@heroicons/react/outline'
 import { Listbox, Transition } from '@headlessui/react'
 import 'dayjs/locale/es'
 import 'dayjs/locale/en'
-import { useLanguage, languages } from '../../../hooks/useLanguage'
+import { useLanguage} from '../../../hooks/useLanguage'
 import Link from '../../Atoms/Link'
+import languages from '../../../static/languages'
 
 interface Props {
 	className?: string
