@@ -8,7 +8,8 @@
     "start": "next start",
     "vercel-build": "prisma migrate deploy && next build",
     "prisma:generate": "prisma generate",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "ts-node": "ts-node --compiler-options {\"\"\"module\"\"\":\"\"\"CommonJS\"\"\"}"
   },
   "keywords": [],
   "author": "Eduard Stefan",
@@ -48,8 +49,9 @@
     "autoprefixer": "^10.2.5",
     "cypress": "^7.4.0",
     "postcss": "^8.2.14",
-    "prisma": "^2.23.0",
+    "prisma": "^2.24.1",
     "tailwindcss": "^2.1.2",
+    "ts-node": "^10.0.0",
     "typescript": "4.2.4"
   }
 }
