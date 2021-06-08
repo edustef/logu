@@ -2,22 +2,22 @@ import { AppProps } from 'next/app'
 import 'tailwindcss/tailwind.css'
 import '../css/styles.css'
 import { Provider } from 'next-auth/client'
-import dayjs from 'dayjs'
-import calendarPlugin from 'dayjs/plugin/calendar'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
 import LanguageProvider from '../context/languageProvider'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { SkeletonTheme } from 'react-loading-skeleton'
-import { setLocale } from 'yup'
 import GoogleOneTapProvider from '../context/googleOneTapProvider'
 import 'react-toastify/dist/ReactToastify.css'
 import Head from 'next/head'
 import { ToastContainer } from 'react-toastify'
-import { XIcon } from '@heroicons/react/outline'
 import XButton from '../components/Atoms/XButton'
 import clsx from 'clsx'
+import { dayjsConfig } from '../config/dayjs.config'
+import yupConfig from '../config/yup.config'
 
 const queryClient = new QueryClient()
+
+// Configure yup locale validation
+yupConfig()
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const contextClass = {
@@ -30,21 +30,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 	}
 
 	// configure dayjs and plugins
-	dayjs.extend(localizedFormat)
-	dayjs.extend(calendarPlugin)
-
-	// configure Yup validation translation
-	setLocale({
-		mixed: {
-			default: 'validation:invalidField',
-			required: ({ label }) => ({ key: 'validation:required', value: label })
-		},
-		string: {
-			email: () => ({ key: 'validation:email' }),
-			min: ({ min }) => ({ key: 'validation:min', value: min }),
-			max: ({ max }) => ({ key: 'validation:max', value: max })
-		}
-	})
+	dayjsConfig()
 
 	return (
 		<>
