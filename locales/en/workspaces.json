@@ -4,6 +4,7 @@
     "addWorkspace": "Create workspace",
     "label": "Name",
     "placeholder": "My awesome workspace",
-    "success": "Workspace, {{name}}, has been greated succesfully."
+    "success": "Workspace, {{name}}, has been created succesfully.",
+    "error": "There was a problem with creating the workspace."
   }
 }

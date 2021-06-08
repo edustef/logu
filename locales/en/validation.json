@@ -1,8 +1,8 @@
 {
-  "invalidField": "{{field}} is not valid.",
-  "notNumberFirst": "{{field}} cant start with numbers.",
-  "required": "{{field}} is required.",
-  "min": "Must be at least {{num}} characters.",
-  "max": "Must be {{num}} characters or less.",
+  "invalidField": "{{label}} is not valid.",
+  "notNumberFirst": "{{label}} cant start with numbers.",
+  "required": "{{label}} is required.",
+  "min": "Must be at least {{min}} characters.",
+  "max": "Must be {{max}} characters or less.",
   "email": "Email is not valid."
 }

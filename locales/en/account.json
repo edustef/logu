@@ -7,6 +7,7 @@
   "newWorkspace": "New workspace",
   "addWorkspace": "Add workspace",
   "noWorkspaces": "You have no workspace.",
+  "seeAllWorkspaces": "See all",
   "edit": {
     "title": "Edit account",
     "notValidName": "Name can not contain any numbers and must start with a letter",
