@@ -79,7 +79,7 @@ const AccountSetupPage = ({ user }: InferGetServerSidePropsType<typeof getServer
 	return (
 		<LayoutGuest>
 			<div className='max-w-lg mx-auto'>
-				<Title className='text-center'>{t('accountSetup:title')}</Title>
+				<Title position="center" className='text-center'>{t('accountSetup:title')}</Title>
 				<Formik
 					enableReinitialize={true}
 					initialValues={{
