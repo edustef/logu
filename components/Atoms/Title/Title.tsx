@@ -4,13 +4,16 @@ interface Props {
 	className?: string
 	children: React.ReactNode
 	hasBackBtn?: boolean
+	position?: 'start' | 'center' | 'end'
 }
 
-const Title: React.FC<Props> = ({ children, className, hasBackBtn = false }) => {
+const Title: React.FC<Props> = ({ children, className, hasBackBtn = false, position = 'left' }) => {
 	return (
-		<div className={clsx(className, 'flex items-center')}>
-			{hasBackBtn && <BackButton className='mr-2' />}
-			<h1 className='mb-3 mt-2 text-2xl font-semibold'>{children}</h1>
+		<div className={clsx(className, 'flex items-center relative', `justify-${position}`)}>
+			{hasBackBtn && <BackButton className='absolute left-0 mr-2' />}
+			<h1 className={clsx('mb-3 mt-2 text-2xl font-semibold', hasBackBtn && position === 'start' && 'ml-12')}>
+				{children}
+			</h1>
 		</div>
 	)
 }
