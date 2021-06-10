@@ -22,11 +22,12 @@ model User {
 }
 
 model Workspace {
-  id        String          @id @default(cuid())
-  name      String
-  createdAt DateTime        @default(now()) @map("created_at")
-  updatedAt DateTime        @updatedAt @map("updated_at")
-  users     UserWorkspace[]
+  id          String          @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime        @updatedAt @map("updated_at")
+  users       UserWorkspace[]
 
   @@map("workspaces")
 }
@@ -35,8 +36,8 @@ model Schedule {
   id            String   @id @default(cuid())
   name          String
   description   String?
-  scheduleStart DateTime @map("schedule_start")
-  scheduleEnd   DateTime @map("schedule_end")
+  start DateTime
+  end   DateTime
 
   @@map("schedules")
 }
