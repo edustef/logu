@@ -1,7 +1,6 @@
-import React from 'react'
-import Image from 'next/image'
+import React, { Fragment, useState } from 'react'
 import Card, { CardHeader } from '../../components/Molecules/Card'
-import { ArrowRightIcon, ClipboardCopyIcon } from '@heroicons/react/outline'
+import { ArrowRightIcon, ClipboardCopyIcon, MailIcon } from '@heroicons/react/outline'
 import useTranslation from 'next-translate/useTranslation'
 import Layout from '../../components/Templates/Layout'
 import { getSession, signOut } from 'next-auth/client'
@@ -15,17 +14,38 @@ import Skeleton from 'react-loading-skeleton'
 import Title from '../../components/Atoms/Title'
 import clsx from 'clsx'
 import { User } from '.prisma/client'
+import Avatar from '../../components/Atoms/Avatar'
+import { Dialog, Transition } from '@headlessui/react'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 interface Props {
 	user: User
 }
 
 const AccountPage: React.FC<Props> = ({ user }) => {
-	const styles = {
-		bar: 'h-2 bg-gray-700 rounded'
-	}
 	const { t } = useTranslation()
-	const workspaces = useWorkspaces()
+	const workspaceTake = 5
+	const workspaces = useWorkspaces({ take: workspaceTake, filter: { qwe: 'asd' } })
+	const [isDeleteModalOpen, setIsDeletModalOpen] = useState(false)
+	const [confirmEmail, setConfirmEmail] = useState('')
+
+	const handleAccountDelete = async () => {
+		try {
+			const res = await axios.delete(`/api/users/${user.id}`)
+			signOut()
+			toast.success(t('account:manage.deleteSuccess'))
+		} catch (error) {
+			console.log(error)
+
+			toast.error(t('account:manage.deleteError'))
+		}
+	}
+
+	const handleCloseModal = () => {
+		setIsDeletModalOpen(false)
+		setConfirmEmail('')
+	}
 
 	return (
 		<Layout>
@@ -36,13 +56,7 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 			<div className='space-y-4'>
 				<Card>
 					<CardHeader className='flex'>
-						<Image
-							src={user.image}
-							alt='Profile picture'
-							width={50}
-							height={50}
-							className='rounded-full object-cover'
-						/>
+						<Avatar url={user.image} width={50} height={50} className='rounded-full object-cover' />
 						<div className='ml-3 flex flex-col'>
 							<h2 className='font-semibold'>{user.name ?? t('account:noName')}</h2>
 							<small className='text-sm dark:text-gray-400'>{user.email}</small>
@@ -69,8 +83,11 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 					{workspaces.isSuccess &&
 						workspaces.data.map((workspace, index) => (
 							<Link
-								className={clsx(index > 0 && 'border-t', 'flex items-center rounded-none my-2 border-gray-700')}
-								href={`/workspaces/${workspace.name}`}
+								className={clsx(
+									index === 0 && 'border-none pt-0',
+									'border-t flex items-center rounded-none py-2 border-gray-700'
+								)}
+								href={`/workspaces/${workspace.id}`}
 								key={workspace.id}
 							>
 								<span className='flex-grow'>{workspace.name}</span>
@@ -82,22 +99,87 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 					{workspaces.isSuccess && workspaces.data.length === 0 && (
 						<div className='italic text-gray-400'>{t('account:noWorkspaces')}</div>
 					)}
+					{workspaces.data?.length === workspaceTake && (
+						<Link className='flex items-center text-blue-300' href='/teams'>
+							{t('account:seeAllWorkspaces')} <ArrowRightIcon className='ml-2 w-4 h-4' />
+						</Link>
+					)}
 				</Card>
 				<Card>
-					<CardHeader className='flex justify-between items-center'>
-						<h2 className='font-semibold'>{t('account:developersTitle')}</h2>
-						<Button className='bg-green-600'>{t('account:generateAPI')}</Button>
+					<CardHeader>
+						<h2 className='font-semibold'>{t('account:manage.title')}</h2>
 					</CardHeader>
-					<div className='mt-2 flex'>
-						<div className='overflow-x-scroll w-48 md:w-64'>
-							eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-						</div>
-						<button>
-							<ClipboardCopyIcon className='w-6 h-6 ml-2' />
-						</button>
+					<div className='mb-2 text-gray-300 text-sm italic'>
+						If you no longer want to use this application you can chose to delete your account.
 					</div>
+					<Button onClick={() => setIsDeletModalOpen(true)} className='bg-red-500'>
+						{t('account:manage.delete')}
+					</Button>
 				</Card>
 			</div>
+			<Transition appear show={isDeleteModalOpen} as={Fragment}>
+				<Dialog as='div' className='fixed inset-0 z-10 overflow-y-auto' onClose={handleCloseModal}>
+					<div className='text-white min-h-screen grid place-items-center px-3 text-center bg-black bg-opacity-50'>
+						<Transition.Child
+							as={Fragment}
+							enter='ease-out duration-300'
+							enterFrom='opacity-0'
+							enterTo='opacity-100'
+							leave='ease-in duration-200'
+							leaveFrom='opacity-100'
+							leaveTo='opacity-0'
+						>
+							<Dialog.Overlay className='fixed inset-0' />
+						</Transition.Child>
+						<Transition.Child
+							as={Fragment}
+							enter='ease-out duration-300'
+							enterFrom='opacity-0 scale-95'
+							enterTo='opacity-100 scale-100'
+							leave='ease-in duration-200'
+							leaveFrom='opacity-100 scale-100'
+							leaveTo='opacity-0 scale-95'
+						>
+							<div className='inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-gray-dark shadow-xl rounded'>
+								<Dialog.Title as='h3' className='text-lg font-medium leading-6'>
+									{t('account:manage.deleteModalTitle')}
+								</Dialog.Title>
+								<div className='mt-2'>
+									<p className='text-sm text-red-300 italic'>
+										Note. This action will delete every workspace that you currently own and your members will no longer
+										be able to access them.
+									</p>
+								</div>
+								<div className='mt-2 mb-1 font-semibold'>{t('account:manage.emailLabel')}</div>
+								<div className='relative w-full inline-block text-gray-400 focus-within:text-gray-600'>
+									<span className='flex items-center absolute left-0 inset-y-0'>
+										<MailIcon className='ml-1 w-6 h-6' />
+									</span>
+									<input
+										defaultValue=''
+										onChange={(val) => setConfirmEmail(val.target.value)}
+										type='email'
+										className='w-full pl-8 py-1 text-gray-600 focus-within:text-black rounded pr-2'
+										placeholder={t('account:manage.emailPlaceholder')}
+									/>
+								</div>
+								<div className='mt-4'>
+									<Button
+										disabled={user.email !== confirmEmail}
+										className='bg-red-500 disabled:bg-gray-400 disabled:cursor-not-allowed'
+										onClick={() => {
+											handleCloseModal()
+											handleAccountDelete()
+										}}
+									>
+										{t('account:manage.confirmButton')}
+									</Button>
+								</div>
+							</div>
+						</Transition.Child>
+					</div>
+				</Dialog>
+			</Transition>
 		</Layout>
 	)
 }

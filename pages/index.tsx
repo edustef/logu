@@ -1,12 +1,11 @@
 import React from 'react'
 import { GetServerSideProps } from 'next'
-import { getSession, useSession } from 'next-auth/client'
-import Head from 'next/head'
+import { getSession } from 'next-auth/client'
 import useTranslation from 'next-translate/useTranslation'
 import LoguSvg from '../public/svgs/logu.svg'
 import Button from '../components/Atoms/Button'
 import Link from '../components/Atoms/Link'
-import LayoutGuest from '../components/LayoutGuest'
+import LayoutGuest from '../components/Templates/LayoutGuest'
 import { useGoogleOneTap } from '../hooks/useGoogleOneTap'
 
 interface Props {

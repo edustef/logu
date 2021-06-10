@@ -17,9 +17,7 @@ const InputField: React.FC<Props> = ({ label, parentClassName, icon, className, 
 	const { t } = useTranslation()
 	const [field, meta] = useField(name)
 	const customMeta = meta as CustomMetaProps
-	console.log(customMeta);
 	
-
 	return (
 		<div className={parentClassName}>
 			{label && <label className='block mb-1 uppercase text-sm text-gray-400 font-semibold'>{label}</label>}
@@ -34,7 +32,7 @@ const InputField: React.FC<Props> = ({ label, parentClassName, icon, className, 
 						className,
 						meta.error && meta.touched && 'border border-red-500',
 						icon ? 'pl-8' : 'pl-2',
-						'py-1 text-black rounded-md pr-2'
+						'py-1 text-gray-600 focus-within:text-black rounded pr-2'
 					)}
 					{...field}
 					{...props}

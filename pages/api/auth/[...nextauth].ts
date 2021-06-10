@@ -3,7 +3,6 @@ import NextAuth, { NextAuthOptions } from 'next-auth'
 import Providers from 'next-auth/providers'
 import Adapters from 'next-auth/adapters'
 import prisma from '../../../utils/prisma'
-import getAvatarName from '../../../utils/getAvatarName'
 import { User } from '.prisma/client'
 
 const options: NextAuthOptions = {
@@ -30,16 +29,11 @@ const options: NextAuthOptions = {
 		signIn: '/auth/signin',
 		error: '/auth/error', // Error code passed in query string as ?error=
 		verifyRequest: '/auth/verify-request', // (used for check email message)
-		newUser: null // If set, new users will be directed here on first sign in
+		newUser: '/account-setup' // If set, new users will be directed here on first sign in
 	},
 	callbacks: {
 		async session(session, user) {
-
 			session.userDetails = user as User
-
-			if (!session.userDetails.image) {
-				session.userDetails.image = getAvatarName(session.userDetails.name)
-			}
 
 			return session
 		}

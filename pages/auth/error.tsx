@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import LayoutGuest from '../../components/LayoutGuest'
+import LayoutGuest from '../../components/Templates/LayoutGuest'
 import Title from '../../components/Atoms/Title'
 
 const AuthErrorPage = () => {

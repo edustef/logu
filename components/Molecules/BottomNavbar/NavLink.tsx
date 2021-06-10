@@ -13,7 +13,7 @@ interface Props {
  * Wrap NavLinks in NavigationRouter and pass the currentPath to it
  */
 const NavLink: React.FC<Props> = ({ currentPath, path, name, children }) => {
-	const isActive = currentPath === path
+	const isActive = currentPath.split('/')[1] === path.split('/')[1]
 	return (
 		<Link href={path}>
 			<a

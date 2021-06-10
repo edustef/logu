@@ -41,7 +41,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 				<Provider
 					options={{
 						clientMaxAge: 60,
-						keepAlive: 5 * 60
+						keepAlive: 2 * 60
 					}}
 					session={pageProps.session}
 				>

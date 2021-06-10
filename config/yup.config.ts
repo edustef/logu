@@ -1,5 +1,5 @@
 import { setLocale } from 'yup'
-import { startsWithNumber } from '../utils/regex'
+import { onlyWords, startsWithNumber } from '../constants/regex'
 
 export default function yupConfig() {
 	setLocale({
@@ -12,8 +12,17 @@ export default function yupConfig() {
 		string: {
 			matches: ({ label, regex }) => {
 				let key: string
-				if (regex === startsWithNumber) {
-					key = 'validation:notNumberFirst'
+				
+				switch (regex) {
+					case startsWithNumber:
+						key = 'validation:notNumberFirst'
+						break
+					case onlyWords:
+						key = 'validation:onlyWords'
+						break
+					default:
+						key = 'validation:invalidField'
+						break
 				}
 
 				return {

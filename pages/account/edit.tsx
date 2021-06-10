@@ -1,76 +1,74 @@
-import { User, Workspace } from '.prisma/client'
-import { CollectionIcon, UserIcon } from '@heroicons/react/outline'
+import { ArrowLeftIcon, CollectionIcon, UserAddIcon } from '@heroicons/react/outline'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { GetServerSideProps } from 'next'
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import { getSession } from 'next-auth/client'
 import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/router'
-import React from 'react'
 import { toast } from 'react-toastify'
-import * as Yup from 'yup'
+import { object } from 'yup'
+import Avatar from '../../components/Atoms/Avatar'
 import Button from '../../components/Atoms/Button'
-import Card from '../../components/Molecules/Card'
-import InputField from '../../components/Atoms/InputField'
-import Layout from '../../components/Templates/Layout'
+import { InputField } from '../../components/Atoms/Form'
+import Link from '../../components/Atoms/Link'
 import Title from '../../components/Atoms/Title'
-import prisma from '../../utils/prisma'
+import Card from '../../components/Molecules/Card'
+import Layout from '../../components/Templates/Layout'
+import { YupUserData, userImage, userName } from '../../schemas/user.schema'
 import authRedirect from '../../utils/authRedirect'
 
-interface Props {
-	user: User
-}
-interface FormValues {
-	name: string
-	image: string
-}
-
-const EditAccountPage: React.FC<Props> = ({ user }) => {
+const EditAccountPage = ({ user }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { t } = useTranslation()
 	const router = useRouter()
-
-	const submit = async (values: FormValues, { setSubmitting }) => {
+	const submit = async (values: YupUserData, asd) => {
 		try {
-			setSubmitting(true)
-			const res = await axios.put<User>(`/api/users`, {
-				headers: { 'Content-Type': 'application/json' },
-				data: { ...values }
-			})
+			const res = await axios.put(`/api/users/${user.id}`, values)
 
-			toast.success(t('account:edit.success'))
+			toast.success(t('accountEdit:success'))
 			router.push('/account')
 		} catch (error) {
-			toast.error(t('account:edit.error'))
-		} finally {
-			setSubmitting(false)
+			console.log(error)
+
+			toast.error(t('accountEdit:error'))
 		}
 	}
 
 	return (
 		<Layout>
-			<Title>{t('account:edit.title')}</Title>
+			<Button onClick={router.back} className='inline-flex items-center'>
+				<ArrowLeftIcon className='w-6 h-6' />
+			</Button>
+			<Title className='text-center'>{t('accountEdit:title')}</Title>
 			<Formik
+				enableReinitialize={true}
 				initialValues={{
-					name: user.name,
-					image: ''
+					name: user.name ?? '',
+					image: user.image ?? '',
+					email: user.email
 				}}
-				validationSchema={Yup.object({
-					name: Yup.string()
-						.matches(/^[a-zA-Z]+( [a-zA-Z]+)*$/, t('account:edit.notValidName', { field: t('account:edit.nameLabel') }))
-						.required(t('validation:required', { field: t('account:edit.nameLabel') }))
+				validationSchema={object({
+					name: userName.label(t('accountEdit:name.label')),
+					image: userImage.label(t('accountEdit:image.label'))
 				})}
 				onSubmit={submit}
 			>
-				{({ isSubmitting }) => (
+				{({ isSubmitting, values }) => (
 					<Form>
 						<>
-							<Card className='mb-2'>
+							<div className='grid place-items-center'>
+								{user.image && <Avatar className='mb-4' url={user.image} />}
+								{!user.image && values.name && (
+									<Avatar className='mb-4' name={values.name ?? t('accountEdit:name.placeholder')} />
+								)}
+							</div>
+							<Card className='mb-2 space-y-2'>
 								<InputField
 									className='w-full'
-									label={t('account:edit.nameLabel')}
-									icon={<UserIcon className='w-full h-full text-current' />}
+									label={t('accountEdit:name.label')}
+									icon={<UserAddIcon className='w-full h-full text-current' />}
 									name='name'
 									type='text'
+									placeholder={t('accountEdit:name.placeholder')}
 								/>
 							</Card>
 							<Button
@@ -78,7 +76,7 @@ const EditAccountPage: React.FC<Props> = ({ user }) => {
 								type='submit'
 								className='block w-full bg-green-600 text-white disabled:cursor-not-allowed disabled:bg-gray-300 up'
 							>
-								{t('account:edit.submit')}
+								{t('accountEdit:submit')}
 							</Button>
 						</>
 					</Form>
@@ -90,13 +88,14 @@ const EditAccountPage: React.FC<Props> = ({ user }) => {
 
 export default EditAccountPage
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+export const getServerSideProps = async ({ req }: GetServerSidePropsContext) => {
 	const session = await getSession({ req })
+
 	if (!session) {
-		return authRedirect('/account')
+		return authRedirect(req.url)
 	}
 
 	return {
-		props: { user: JSON.parse(JSON.stringify(session.userDetails)) }
+		props: { user: session.userDetails }
 	}
 }
