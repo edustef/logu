@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, CollectionIcon, UserAddIcon } from '@heroicons/react/outline'
+import { ArrowLeftIcon, UserIcon } from '@heroicons/react/outline'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
@@ -65,7 +65,7 @@ const EditAccountPage = ({ user }: InferGetServerSidePropsType<typeof getServerS
 								<InputField
 									className='w-full'
 									label={t('accountEdit:name.label')}
-									icon={<UserAddIcon className='w-full h-full text-current' />}
+									icon={<UserIcon className='w-full h-full text-current' />}
 									name='name'
 									type='text'
 									placeholder={t('accountEdit:name.placeholder')}
