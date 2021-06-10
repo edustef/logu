@@ -10,7 +10,7 @@ interface Props extends LinkProps {
 const Link: React.FC<Props> = ({ className, children, ...props }) => {
 	return (
 		<NextLink {...props}>
-			<a className={clsx('px-2 py-1 rounded font-semibold', className)}>{children}</a>
+			<a className={clsx('py-1 rounded font-semibold', className)}>{children}</a>
 		</NextLink>
 	)
 }

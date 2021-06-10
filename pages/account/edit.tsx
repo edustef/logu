@@ -35,10 +35,9 @@ const EditAccountPage = ({ user }: InferGetServerSidePropsType<typeof getServerS
 
 	return (
 		<Layout>
-			<Button onClick={router.back} className='inline-flex items-center'>
-				<ArrowLeftIcon className='w-6 h-6' />
-			</Button>
-			<Title className='text-center'>{t('accountEdit:title')}</Title>
+			<Title hasBackBtn className='text-center'>
+				{t('accountEdit:title')}
+			</Title>
 			<Formik
 				enableReinitialize={true}
 				initialValues={{

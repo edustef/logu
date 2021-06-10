@@ -16,6 +16,7 @@ import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/client'
 import authRedirect from '../../utils/authRedirect'
 import { UserWorkspace } from '../../schemas/userWorkspace.schema'
+import BackButton from '../../components/Molecules/BackButton'
 
 const CreatePage: React.FC = () => {
 	const { t } = useTranslation()
@@ -43,10 +44,8 @@ const CreatePage: React.FC = () => {
 
 	return (
 		<Layout>
-			<Button onClick={router.back}>
-				<ArrowLeftIcon className="w-6 h-6" />
-			</Button>
-			<Title className="text-center">{t('workspaceCreate:title')}</Title>
+			<BackButton />
+			<Title className='text-center'>{t('workspaceCreate:title')}</Title>
 			<Formik
 				initialValues={{
 					name: '',
