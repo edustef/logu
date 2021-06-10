@@ -21,7 +21,7 @@ yupConfig()
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const contextClass = {
-		success: 'bg-blue-600',
+		success: 'bg-green-600',
 		error: 'bg-red-600',
 		info: 'bg-gray-600',
 		warning: 'bg-red-400',

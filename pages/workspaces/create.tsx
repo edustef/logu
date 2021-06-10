@@ -28,7 +28,7 @@ const CreatePage: React.FC = () => {
 		try {
 			const { data } = await axios.post<UserWorkspace>(`/api/workspaces`, values)
 
-			toast(t('workspaceCreate:success', { name: data.workspace.name }))
+			toast.success(t('workspaceCreate:success', { name: data.workspace.name }))
 			router.push('/account')
 		} catch (error) {
 			console.log(error.response)
