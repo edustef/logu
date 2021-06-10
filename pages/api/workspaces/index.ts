@@ -1,13 +1,11 @@
-import type { NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../utils/prisma'
-import nc from 'next-connect'
-import auth, { NextApiRequestWithUser } from '../../../middlewares/auth'
 import { Workspace } from '.prisma/client'
 import { YupWorkspaceData, YupWorkspaceObject } from '../../../schemas/workspace.schema'
 import StatusCode from 'status-code-enum'
 import { getSession } from 'next-auth/client'
 
-export default async function handle(req: NextApiRequestWithUser, res: NextApiResponse) {
+export default async function handle(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
 	const { skip, take, filter } = req.query
 	// console.log(take, filter)

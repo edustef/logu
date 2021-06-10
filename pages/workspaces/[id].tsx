@@ -47,7 +47,7 @@ const WorkspacePage = ({ workspace }: InferGetServerSidePropsType<typeof getServ
 
 	return (
 		<Layout>
-			<Title>{workspace.name}</Title>
+			<Title hasBackBtn>{workspace.name}</Title>
 			<Card>{workspace.name}</Card>
 		</Layout>
 	)

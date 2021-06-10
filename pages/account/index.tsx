@@ -73,8 +73,10 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 				</Card>
 				<Card>
 					<CardHeader className='flex justify-between items-center'>
-						<h2 className='font-semibold'>{t('account:workspacesTitle')}</h2>
-						<Link href='/workspaces/create' className='bg-gray-700 text-white'>
+						<Link href='/workspaces'>
+							<h2 className='font-semibold'>{t('account:workspacesTitle')}</h2>
+						</Link>
+						<Link href='/workspaces/create' className='bg-gray-700 px-2 text-white'>
 							{t('account:newWorkspace')}
 						</Link>
 					</CardHeader>

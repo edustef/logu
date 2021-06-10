@@ -11,6 +11,7 @@ import Link from '../../components/Atoms/Link'
 import useTranslation from 'next-translate/useTranslation'
 import dayjs from 'dayjs'
 import { SearchIcon } from '@heroicons/react/outline'
+import BackButton from '../../components/Molecules/BackButton'
 
 const WorkspacePage: React.FC = () => {
 	const { t } = useTranslation()
@@ -18,7 +19,7 @@ const WorkspacePage: React.FC = () => {
 
 	return (
 		<Layout>
-			<Title>Workspaces</Title>
+			<Title hasBackBtn>Workspaces</Title>
 			<div className='relative inline-block text-gray-400 focus-within:text-gray-600'>
 				<span className='flex items-center absolute left-0 inset-y-0'>
 					<SearchIcon className='ml-1 w-6 h-6' />
@@ -34,7 +35,7 @@ const WorkspacePage: React.FC = () => {
 				{workspaces.isError && <div>{t('errors:failedLoad')}</div>}
 				{workspaces.isSuccess &&
 					workspaces.data.map((workspace) => (
-						<Link className='block my-2 font-normal' href={`/teams/${workspace.name}`} key={workspace.id}>
+						<Link className='block my-2 font-normal' href={`/workspaces/${workspace.id}`} key={workspace.id}>
 							<h2 className='text-lg font-semibold'>{workspace.name}</h2>
 							<div className='text-sm italic text-gray-400'>{dayjs(workspace.createdAt).format('LL')}</div>
 							<div className='line-clamp-2 mt-2'>{workspace.description}</div>

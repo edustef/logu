@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, CollectionIcon, UserAddIcon } from '@heroicons/react/outline'
+import { ArrowLeftIcon, UserIcon } from '@heroicons/react/outline'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
@@ -35,10 +35,9 @@ const EditAccountPage = ({ user }: InferGetServerSidePropsType<typeof getServerS
 
 	return (
 		<Layout>
-			<Button onClick={router.back} className='inline-flex items-center'>
-				<ArrowLeftIcon className='w-6 h-6' />
-			</Button>
-			<Title className='text-center'>{t('accountEdit:title')}</Title>
+			<Title hasBackBtn className='text-center'>
+				{t('accountEdit:title')}
+			</Title>
 			<Formik
 				enableReinitialize={true}
 				initialValues={{
@@ -65,7 +64,7 @@ const EditAccountPage = ({ user }: InferGetServerSidePropsType<typeof getServerS
 								<InputField
 									className='w-full'
 									label={t('accountEdit:name.label')}
-									icon={<UserAddIcon className='w-full h-full text-current' />}
+									icon={<UserIcon className='w-full h-full text-current' />}
 									name='name'
 									type='text'
 									placeholder={t('accountEdit:name.placeholder')}
