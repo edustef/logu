@@ -59,7 +59,7 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 						<Avatar url={user.image} width={50} height={50} className='rounded-full object-cover' />
 						<div className='ml-3 flex flex-col'>
 							<h2 className='font-semibold'>{user.name ?? t('account:noName')}</h2>
-							<small className='text-sm dark:text-gray-400'>{user.email}</small>
+							<small className='text-sm text-gray-400'>{user.email}</small>
 						</div>
 					</CardHeader>
 					<div className='flex justify-between'>
@@ -76,7 +76,7 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 						<Link href='/workspaces'>
 							<h2 className='font-semibold'>{t('account:workspacesTitle')}</h2>
 						</Link>
-						<Link href='/workspaces/create' className='bg-gray-700 px-2 text-white'>
+						<Link asBtn href='/workspaces/create' className='bg-gray-700 text-white'>
 							{t('account:newWorkspace')}
 						</Link>
 					</CardHeader>

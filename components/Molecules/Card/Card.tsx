@@ -8,7 +8,7 @@ type Props = {
 
 const Card: React.FC<Props> = ({ children, className = '' }) => {
 	return (
-		<div className={clsx('rounded-md p-3 shadow-md', 'from-white to-gray-100', 'dark:bg-gray-dark', className)}>
+		<div className={clsx('rounded-md p-3 shadow-md bg-gray-dark', className)}>
 			{children}
 		</div>
 	)

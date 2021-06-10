@@ -5,7 +5,7 @@ import useTranslation from 'next-translate/useTranslation'
 import Title from '../components/Atoms/Title'
 import WorkspaceDropdown from '../components/Molecules/WorkspaceDropdown'
 
-const Draft: React.FC = () => {
+const OrganizePage: React.FC = () => {
 	const { t } = useTranslation()
 
 	return (
@@ -21,4 +21,4 @@ const Draft: React.FC = () => {
 	)
 }
 
-export default Draft
+export default OrganizePage
