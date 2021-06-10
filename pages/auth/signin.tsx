@@ -26,9 +26,6 @@ const SignIn: React.FC<InferGetServerSidePropsType<typeof getServerSideProps>> =
 
 	return (
 		<LayoutGuest>
-			<Link href='/' className='inline-flex items-center'>
-				<HomeIcon className='w-6 h-6' />
-			</Link>
 			<Title>{t('signin:continue')}</Title>
 			<Card>
 				{Object.values(providers)
@@ -83,6 +80,12 @@ const SignIn: React.FC<InferGetServerSidePropsType<typeof getServerSideProps>> =
 					)}
 				</Formik>
 			</Card>
+			<div className='mt-3 flex justify-center'>
+				<Link href='/' className='mr-2 flex items-center'>
+					<HomeIcon className='w-6 h-6 mr-2' />
+					<span>{t('signin:goToHome')}</span>
+				</Link>
+			</div>
 		</LayoutGuest>
 	)
 }
@@ -91,7 +94,7 @@ export default SignIn
 
 export const getServerSideProps = async ({ req, query }: GetServerSidePropsContext) => {
 	const session = await getSession({ req })
-	
+
 	if (session) {
 		return {
 			redirect: {
@@ -100,7 +103,7 @@ export const getServerSideProps = async ({ req, query }: GetServerSidePropsConte
 			}
 		}
 	}
-	
+
 	const providers = await getProviders()
 	const url = query.callbackUrl ? decodeURIComponent(query.callbackUrl as string) : null
 	return {

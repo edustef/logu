@@ -14,10 +14,9 @@ const WorkspaceDropdown: React.FC<Props> = ({ className }) => {
 	const styles = {
 		options: clsx(
 			'absolute left-0 border border-gray-600 w-32 rounded-md shadow-md ml-4 py-2 z-10',
-			'bg-white text-black',
-			'dark:bg-gray-darkless dark:text-white shadow-md'
+			'bg-gray-darkless text-white shadow-md'
 		),
-		listItem: (active) => clsx(active && 'bg-green-300 dark:bg-green-600', 'p-1')
+		listItem: (active) => clsx(active && 'bg-green-600', 'p-1')
 	}
 
 	// TODO Fetch data with react-query

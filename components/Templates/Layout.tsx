@@ -15,8 +15,7 @@ const Layout: React.FC<Props> = ({ children, className = '', page }) => {
 	const styles = {
 		root: clsx([
 			'flex flex-col min-h-screen',
-			'bg-gray-50 text-black',
-			'dark:bg-gray-darkest dark:text-white',
+			'bg-gray-darkest text-white',
 			className
 		])
 	}

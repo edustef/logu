@@ -26,12 +26,9 @@ const CreatePage: React.FC = () => {
 		setSubmitting(true)
 
 		try {
-			const { data } = await axios.post<UserWorkspace>(`/api/workspaces`, {
-				headers: { 'Content-Type': 'application/json' },
-				data: { ...values }
-			})
+			const { data } = await axios.post<UserWorkspace>(`/api/workspaces`, values)
 
-			toast(t('workspaceCreate:success', { name: data.workspace.name }))
+			toast.success(t('workspaceCreate:success', { name: data.workspace.name }))
 			router.push('/account')
 		} catch (error) {
 			console.log(error.response)
@@ -44,8 +41,7 @@ const CreatePage: React.FC = () => {
 
 	return (
 		<Layout>
-			<BackButton />
-			<Title className='text-center'>{t('workspaceCreate:title')}</Title>
+			<Title hasBackBtn>{t('workspaceCreate:title')}</Title>
 			<Formik
 				initialValues={{
 					name: '',

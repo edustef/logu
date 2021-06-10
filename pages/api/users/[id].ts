@@ -63,15 +63,17 @@ export const deleteUser = async (id: string) => {
 					AND: [{ userId: id }, { isAdmin: true }]
 				}
 			}
-		}
+		},
+		select: { id: true }
 	})
+	console.log(workspacesWhereUserIsAdmin)
 
 	const sessionDelete = prisma.session.deleteMany({
 		where: {
 			userId: id
 		}
 	})
-	const accountDelete = prisma.session.deleteMany({
+	const accountDelete = prisma.account.deleteMany({
 		where: {
 			userId: id
 		}
@@ -95,10 +97,10 @@ export const deleteUser = async (id: string) => {
 		}
 	})
 
-	const deleteWorkspacesTransaction = workspacesWhereUserIsAdmin.map((workspace) => {
-		return prisma.workspace.findUnique({
+	const deleteWorkspacesTransaction = workspacesWhereUserIsAdmin.map(({ id }) => {
+		return prisma.workspace.delete({
 			where: {
-				id: workspace.id
+				id
 			}
 		})
 	})
@@ -108,6 +110,7 @@ export const deleteUser = async (id: string) => {
 		accountDelete,
 		userWorkspaceScheduleDelete,
 		userWorkspaceDelete,
+		...deleteWorkspacesTransaction,
 		userDelete
 	])
 }

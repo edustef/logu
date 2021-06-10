@@ -10,11 +10,12 @@ interface Props {
 	className?: string
 	width?: number
 	height?: number
+	isGuest?: boolean
 }
 
 type UrlOrName = { url?: null; name: string } | { url: string; name?: never }
 
-const Avatar: React.FC<Props & UrlOrName> = ({ className, url, name, width = 80, height = 80 }) => {
+const Avatar: React.FC<Props & UrlOrName> = ({ isGuest = false, className, url, name, width = 80, height = 80 }) => {
 	const [src, setSrc] = useState<string>()
 	const { t } = useTranslation()
 

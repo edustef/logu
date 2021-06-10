@@ -18,6 +18,7 @@ import LayoutGuest from '../components/Templates/LayoutGuest'
 import { userImage, userName } from '../schemas/user.schema'
 import { workspaceDescription, workspaceName } from '../schemas/workspace.schema'
 import authRedirect from '../utils/authRedirect'
+import getAvatarName from '../utils/getAvatarName'
 import homeRedirect from '../utils/homeRedirect'
 
 interface Values {
@@ -56,7 +57,11 @@ const AccountSetupPage = ({ user }: InferGetServerSidePropsType<typeof getServer
 
 	const submit = async (values: Values) => {
 		try {
-			await axios.put(`/api/users/${user.id}`, { name: values.name, isNewUser: false })
+			await axios.put(`/api/users/${user.id}`, {
+				name: values.name,
+				isNewUser: false,
+				image: values.image
+			})
 
 			if (isIndividual()) {
 				await axios.post(`/api/workspaces`, {
@@ -79,7 +84,9 @@ const AccountSetupPage = ({ user }: InferGetServerSidePropsType<typeof getServer
 	return (
 		<LayoutGuest>
 			<div className='max-w-lg mx-auto'>
-				<Title className='text-center'>{t('accountSetup:title')}</Title>
+				<Title position='center' className='text-center'>
+					{t('accountSetup:title')}
+				</Title>
 				<Formik
 					enableReinitialize={true}
 					initialValues={{

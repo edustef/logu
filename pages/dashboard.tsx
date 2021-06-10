@@ -5,6 +5,8 @@ import { getSession } from 'next-auth/client'
 import { User } from 'next-auth'
 import useTranslation from 'next-translate/useTranslation'
 import Title from '../components/Atoms/Title'
+import authRedirect from '../utils/authRedirect'
+import accountSetupRedirect from '../utils/accountSetupRedirect'
 
 type Props = {
 	user: User
@@ -28,12 +30,11 @@ export default DashboardPage
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const session = await getSession({ req })
 	if (!session) {
-		return {
-			redirect: {
-				destination: '/auth/signin',
-				permanent: false
-			}
-		}
+		authRedirect('/dashboard')
+	}
+
+	if (session.isNewUser) {
+		accountSetupRedirect()
 	}
 
 	return {

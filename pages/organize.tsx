@@ -4,8 +4,12 @@ import Calendar from '../components/Molecules/Calendar'
 import useTranslation from 'next-translate/useTranslation'
 import Title from '../components/Atoms/Title'
 import WorkspaceDropdown from '../components/Molecules/WorkspaceDropdown'
+import { getSession } from 'next-auth/client'
+import { GetServerSideProps } from 'next'
+import authRedirect from '../utils/authRedirect'
+import accountSetupRedirect from '../utils/accountSetupRedirect'
 
-const Draft: React.FC = () => {
+const OrganizePage: React.FC = () => {
 	const { t } = useTranslation()
 
 	return (
@@ -21,4 +25,19 @@ const Draft: React.FC = () => {
 	)
 }
 
-export default Draft
+export default OrganizePage
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+	const session = await getSession({ req })
+	if (!session) {
+		authRedirect('/dashboard')
+	}
+
+	if (session.isNewUser) {
+		accountSetupRedirect()
+	}
+
+	return {
+		props: {}
+	}
+}
