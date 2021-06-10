@@ -5,8 +5,10 @@
     "*": ["common", "metadata", "navigation", "errors", "validation"],
     "/": ["home"],
     "/account": ["account"],
-    "/account/edit": ["account"],
+    "/account/edit": ["accountEdit"],
+    "/account-setup": ["accountSetup"],
     "/auth/signin": ["signin"],
-    "/workspaces/create": ["workspaces"]
+    "/workspaces": ["workspaces"],
+    "/workspaces/create": ["workspaceCreate"]
   }
 }

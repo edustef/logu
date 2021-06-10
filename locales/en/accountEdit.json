@@ -1,0 +1,13 @@
+{
+  "title": "Edit profile information",
+  "name": {
+    "label": "Name",
+    "placeholder": "Joe Doe"
+  },
+  "image": {
+    "label": "Paste your image url here"
+  },
+  "submit": "Update profile",
+  "success": "Profile updated succesfully.",
+  "error": "Something went wrong. Please try again."
+}

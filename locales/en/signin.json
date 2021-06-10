@@ -2,9 +2,10 @@
   "continue": "Continue with",
   "form": {
     "email": {
-      "label": "Email"
+      "label": "Email",
+      "placeholder": "joe@example.com"
     }
   },
-  "signWithEmail": "Sign in with email",
-  "signWithGoogle": "Sign in with Google"
+  "signWithEmail": "Sign in with magic link",
+  "signWithGoogle": "Google"
 }

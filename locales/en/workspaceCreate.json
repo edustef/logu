@@ -1,0 +1,14 @@
+{
+  "title": "Create a new Workspace",
+  "createWorkspace": "Create workspace",
+  "success": "Workspace, {{name}}, has been created succesfully.",
+  "error": "There was a problem with creating the workspace.",
+  "name": {
+    "label": "Name",
+    "placeholder": "My awesome workspace"
+  },
+  "description": {
+    "label": "Description",
+    "placeholder": "Brief description about the workspace."
+  }
+}

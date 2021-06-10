@@ -1,0 +1,40 @@
+{
+  "title": "Account setup",
+  "name": {
+    "label": "Name",
+    "placeholder": "Joe Doe"
+  },
+  "image": {
+    "label": "Paste your image url here"
+  },
+  "individualWorkspace": {
+    "name": {
+      "label": "Your first workspace",
+      "placeholder": "My first workspace",
+      "defaultValue": "Personal workspace"
+    },
+    "defaultDescriptionValue": "Workspace created by default on account setup."
+  },
+  "teamWorkspace": {
+    "name": {
+      "label": "Your team's workspace name",
+      "placeholder": "My first workspace",
+      "defaultValue": "My team workspace"
+    },
+    "description": {
+      "label": "Workspace description",
+      "placeholder": "Describe the workspace here..."
+    }
+  },
+  "confirmSetup": "Finish Setup",
+  "options": {
+    "individual": {
+      "name": "For myself",
+      "description": "Start with a personal workspace. Don't worry you can always create workspaces with others later on."
+    },
+    "withTeam": {
+      "name": "For my team",
+      "description": "Start as a team. Once the workspace is created feel free to add the other members."
+    }
+  }
+}
