@@ -18,6 +18,7 @@ import Avatar from '../../components/Atoms/Avatar'
 import { Dialog, Transition } from '@headlessui/react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import accountSetupRedirect from '../../utils/accountSetupRedirect'
 
 interface Props {
 	user: User
@@ -193,12 +194,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 
 	if (session.isNewUser) {
-		return {
-			redirect: {
-				permanent: false,
-				destination: '/account-setup'
-			}
-		}
+		accountSetupRedirect()
 	}
 
 	return {

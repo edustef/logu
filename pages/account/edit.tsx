@@ -35,7 +35,7 @@ const EditAccountPage = ({ user }: InferGetServerSidePropsType<typeof getServerS
 
 	return (
 		<Layout>
-			<Title hasBackBtn className='text-center'>
+			<Title hasBackBtn position='center'>
 				{t('accountEdit:title')}
 			</Title>
 			<Formik
@@ -54,12 +54,6 @@ const EditAccountPage = ({ user }: InferGetServerSidePropsType<typeof getServerS
 				{({ isSubmitting, values }) => (
 					<Form>
 						<>
-							<div className='grid place-items-center'>
-								{user.image && <Avatar className='mb-4' url={user.image} />}
-								{!user.image && values.name && (
-									<Avatar className='mb-4' name={values.name ?? t('accountEdit:name.placeholder')} />
-								)}
-							</div>
 							<Card className='mb-2 space-y-2'>
 								<InputField
 									className='w-full'
