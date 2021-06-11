@@ -19,6 +19,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import accountSetupRedirect from '../../utils/accountSetupRedirect'
+import Preferences from '../../components/Molecules/Preferences'
 
 interface Props {
 	user: User
@@ -27,7 +28,7 @@ interface Props {
 const AccountPage: React.FC<Props> = ({ user }) => {
 	const { t } = useTranslation()
 	const workspaceTake = 5
-	const workspaces = useWorkspaces({ take: workspaceTake, filter: { qwe: 'asd' } })
+	const workspaces = useWorkspaces({ take: workspaceTake })
 	const [isDeleteModalOpen, setIsDeletModalOpen] = useState(false)
 	const [confirmEmail, setConfirmEmail] = useState('')
 
@@ -110,11 +111,14 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 				</Card>
 				<Card>
 					<CardHeader>
+						<h2 className='font-semibold'>{t('account:preferences.title')}</h2>
+					</CardHeader>
+					<Preferences />
+				</Card>
+				<Card>
+					<CardHeader>
 						<h2 className='font-semibold'>{t('account:manage.title')}</h2>
 					</CardHeader>
-					<div className='mb-2 text-gray-300 text-sm italic'>
-						If you no longer want to use this application you can chose to delete your account.
-					</div>
 					<Button onClick={() => setIsDeletModalOpen(true)} className='bg-red-500'>
 						{t('account:manage.delete')}
 					</Button>

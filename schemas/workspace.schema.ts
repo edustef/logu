@@ -1,4 +1,4 @@
-import { Workspace as PrismaWorkspace } from '.prisma/client'
+import { Workspace as PrismaWorkspace, UserWorkspace as PrismaUserWorkspace, User as PrismaUser } from '.prisma/client'
 import { Asserts, object, string } from 'yup'
 import { startsWithNumber } from '../constants/regex'
 

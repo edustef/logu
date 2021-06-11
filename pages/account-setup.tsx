@@ -60,7 +60,7 @@ const AccountSetupPage = ({ user }: InferGetServerSidePropsType<typeof getServer
 			await axios.put(`/api/users/${user.id}`, {
 				name: values.name,
 				isNewUser: false,
-				image: values.image
+				image: !values.image ? getAvatarName({ name: values.name }) : ''
 			})
 
 			if (isIndividual()) {
