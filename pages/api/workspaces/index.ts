@@ -4,15 +4,20 @@ import { Workspace } from '.prisma/client'
 import { YupWorkspaceData, YupWorkspaceObject } from '../../../schemas/workspace.schema'
 import StatusCode from 'status-code-enum'
 import { getSession } from 'next-auth/client'
+import parseQueryOne from '../../../utils/parseQueryOne'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
-	const { skip, take, filter } = req.query
-	// console.log(take, filter)
+
+	if (!session) {
+		res.status(StatusCode.ClientErrorForbidden).end()
+	}
 
 	switch (req.method) {
 		case 'GET':
-			const result = await getWorkspaces(session.userDetails.id)
+			const name = parseQueryOne(req.query.name)
+
+			const result = await getWorkspaces(session.userDetails.id, name)
 			res.json(result)
 			break
 		case 'POST':
@@ -33,25 +38,24 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 	res.status(StatusCode.ClientErrorMethodNotAllowed).end()
 }
 
-export const getWorkspaces = async (id: string) => {
-	const data = await prisma.user.findUnique({
+export const getWorkspaces = async (userId: string, name: string) => {
+	const data = await prisma.workspace.findMany({
 		where: {
-			id
-		},
-		select: {
-			workspaces: {
-				take: 3,
-				orderBy: [
-					{
-						createdAt: 'desc'
+			AND: {
+				name: { contains: name, mode: 'insensitive' },
+				users: {
+					some: {
+						userId
 					}
-				],
-				include: { workspace: true }
+				}
 			}
+		},
+		include: {
+			users: { include: { user: true } }
 		}
 	})
 
-	return data.workspaces.map(({ workspace }: { workspace: Workspace }) => workspace)
+	return data
 }
 
 export const createWorkspace = async (id: string, data: YupWorkspaceData) => {

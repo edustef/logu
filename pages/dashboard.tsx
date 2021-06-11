@@ -30,11 +30,11 @@ export default DashboardPage
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const session = await getSession({ req })
 	if (!session) {
-		authRedirect('/dashboard')
+		return authRedirect('/dashboard')
 	}
 
-	if (session.isNewUser) {
-		accountSetupRedirect()
+	if (session.userDetails.isNewUser) {
+		return accountSetupRedirect()
 	}
 
 	return {

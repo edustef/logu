@@ -17,6 +17,7 @@ import { getSession } from 'next-auth/client'
 import authRedirect from '../../utils/authRedirect'
 import { UserWorkspace } from '../../schemas/userWorkspace.schema'
 import BackButton from '../../components/Molecules/BackButton'
+import accountSetupRedirect from '../../utils/accountSetupRedirect'
 
 const CreatePage: React.FC = () => {
 	const { t } = useTranslation()
@@ -94,7 +95,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const session = await getSession({ req })
 
 	if (!session) {
-		return authRedirect(req.url)
+		return authRedirect('/dashboard')
+	}
+
+	if (session.userDetails.isNewUser) {
+		return accountSetupRedirect()
 	}
 
 	return {

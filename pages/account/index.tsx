@@ -27,7 +27,7 @@ interface Props {
 const AccountPage: React.FC<Props> = ({ user }) => {
 	const { t } = useTranslation()
 	const workspaceTake = 5
-	const workspaces = useWorkspaces({ take: workspaceTake, filter: { qwe: 'asd' } })
+	const workspaces = useWorkspaces({ take: workspaceTake })
 	const [isDeleteModalOpen, setIsDeletModalOpen] = useState(false)
 	const [confirmEmail, setConfirmEmail] = useState('')
 

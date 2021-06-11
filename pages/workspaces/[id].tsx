@@ -8,16 +8,21 @@ import useTranslation from 'next-translate/useTranslation'
 import authRedirect from '../../utils/authRedirect'
 import { getWorkspace } from '../api/workspaces/[id]'
 import StatusCode from 'status-code-enum'
+import accountSetupRedirect from '../../utils/accountSetupRedirect'
+import parseQueryOne from '../../utils/parseQueryOne'
 
 export const getServerSideProps = async ({ req, params, res }: GetServerSidePropsContext) => {
 	const session = await getSession({ req })
-	let id: string
 
-	if (typeof params['id'] === 'string') {
-		id = params['id']
-	} else {
-		id = params['id'][0]
+	if (!session) {
+		return authRedirect('/dashboard')
 	}
+
+	if (session.userDetails.isNewUser) {
+		return accountSetupRedirect()
+	}
+
+	const id = parseQueryOne(params.id)
 
 	if (!session) {
 		return authRedirect(req.url)

@@ -9,7 +9,7 @@ export default function BottomNavbar() {
 	const styles = {
 		root: clsx([
 			'block fixed shadow border-t-2 inset-x-0 bottom-0 z-10',
-			'border-gray-800 bg-gray-darkest'
+			'border-gray-dark bg-gray-darkest'
 		])
 	}
 	const router = useRouter()

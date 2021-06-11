@@ -14,12 +14,11 @@ const OrganizePage: React.FC = () => {
 
 	return (
 		<Layout>
-			<div className='flex flex-col'>
-				<div className='flex items-center'>
-					<Title>{t('navigation:organize')}</Title>
-					<WorkspaceDropdown />
+			<div className='flex flex-col h-full'>
+				<WorkspaceDropdown className='mt-2 text-2xl font-semibold' />
+				<div className='mt-6 flex-grow'>
+					<Calendar className='flex-grow' />
 				</div>
-				<Calendar className='flex-grow' />
 			</div>
 		</Layout>
 	)
@@ -29,12 +28,13 @@ export default OrganizePage
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const session = await getSession({ req })
+
 	if (!session) {
-		authRedirect('/dashboard')
+		return authRedirect('/dashboard')
 	}
 
-	if (session.isNewUser) {
-		accountSetupRedirect()
+	if (session.userDetails.isNewUser) {
+		return accountSetupRedirect()
 	}
 
 	return {
