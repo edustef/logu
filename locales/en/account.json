@@ -1,19 +1,22 @@
 {
-  "noName": "No name",
-  "workspacesTitle": "Workspaces",
-  "editProfile": "Edit Profile",
-  "newWorkspace": "New workspace",
-  "addWorkspace": "Add workspace",
-  "noWorkspaces": "You have no workspace.",
-  "seeAllWorkspaces": "See all",
-  "manage": {
-    "title": "Manage account",
-    "delete": "Delete account",
-    "deleteModalTitle": "Are you sure you want to delete this account?",
-    "confirmButton": "Confirm deletion",
-    "emailLabel": "Input your email to confirm",
-    "emailPlaceholder": "Your email",
-    "deleteSuccess": "Account deleted succesfully.",
-    "deleteError": "Something went wrong with deleting the account."
-  }
+	"noName": "No name",
+	"workspacesTitle": "Workspaces",
+	"editProfile": "Edit Profile",
+	"newWorkspace": "New workspace",
+	"addWorkspace": "Add workspace",
+	"noWorkspaces": "You have no workspace.",
+	"seeAllWorkspaces": "See all",
+	"preferences": {
+		"title": "Preferences"
+	},
+	"manage": {
+		"title": "Manage account",
+		"delete": "Delete account",
+		"deleteModalTitle": "Are you sure you want to delete this account?",
+		"confirmButton": "Confirm deletion",
+		"emailLabel": "Input your email to confirm",
+		"emailPlaceholder": "Your email",
+		"deleteSuccess": "Account deleted succesfully.",
+		"deleteError": "Something went wrong with deleting the account."
+	}
 }

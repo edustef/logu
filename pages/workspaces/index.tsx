@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { GetServerSideProps } from 'next'
 import Layout from '../../components/Templates/Layout'
 import Title from '../../components/Atoms/Title'

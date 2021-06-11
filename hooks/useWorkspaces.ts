@@ -1,14 +1,9 @@
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { Workspace } from '.prisma/client'
-interface Props {
-	skip?: number
-	take?: number
-	sort?: { dir: 'ASC' | 'DESC'; field: 'string' }
-	name?: string
-}
+import { WorkspaceParams } from '../models/WorkspaceParams'
 
-export default function useWorkspaces(props: Props = {}) {
+export default function useWorkspaces(props: WorkspaceParams = {}) {
 	return useQuery(['workspaces', props], async () => {
 		const { data } = await axios.get<Workspace[]>('/api/workspaces', {
 			params: props
