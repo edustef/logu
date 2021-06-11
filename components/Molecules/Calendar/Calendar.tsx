@@ -7,10 +7,6 @@ import Button from '../../Atoms/Button'
 import Toggle from '../../Atoms/Toggle'
 import Link from '../../Atoms/Link'
 
-interface Props {
-	className?: string
-}
-
 const WORK_WEEK = 5
 const FULL_WEEK = 7
 
@@ -41,7 +37,12 @@ const getMonthDaysPerWeek = (date: Dayjs, typeOfWeek: TypeOfWeek = WORK_WEEK) =>
 	return daysPerWeek
 }
 
-const Calendar: React.FC<Props> = ({ className }) => {
+interface Props {
+	className?: string
+	workspaceId: string
+}
+
+const Calendar: React.FC<Props> = ({ workspaceId, className }) => {
 	const { t } = useTranslation()
 	const [isFullWeek, setIsFullWeek] = useState(false)
 	const [currentMonthDate, setCurrentMonthDate] = useState(dayjs())
@@ -88,25 +89,21 @@ const Calendar: React.FC<Props> = ({ className }) => {
 					<Toggle checked={isFullWeek} onChange={setIsFullWeek} />
 				</div>
 			</div>
-			<div
-				className={clsx('mt-4 grid grid-flow-rows auto-cols-max', `grid-cols-${isFullWeek ? FULL_WEEK : WORK_WEEK}`)}
-			>
+			<div className="flex justify-center mt-4">
+				<span className="font-semibold text-lg">{currentMonthDate.format('MMMM YYYY')}</span>
+			</div>
+			<div className={clsx('mt-4 grid auto-cols-max', isFullWeek ? 'grid-cols-7' : 'grid-cols-5')}>
 				{weekDays.map((day) => (
 					<div className='text-center flex-grow border border-gray-dark' key={day}>
 						{day}
 					</div>
 				))}
 			</div>
-			<div
-				className={clsx(
-					'mt-4 flex-grow grid grid-flow-rows auto-cols-max',
-					`grid-cols-${isFullWeek ? FULL_WEEK : WORK_WEEK}`
-				)}
-			>
+			<div className={clsx('mt-4 flex-grow grid auto-cols-max', isFullWeek ? 'grid-cols-7' : 'grid-cols-5')}>
 				{daysPerWeek.map((week, weekIndex) => {
 					return week.map((day, dayIndex) => (
 						<Link
-							href={`/${'qwe'}/${day.format('YYYY-MM-DD')}`}
+							href={`/workspaces/${workspaceId}/${day.format('YYYY-MM-DD')}`}
 							className={clsx(
 								'border border-gray-dark text-center p-1',
 								day.month() !== currentMonthDate.month() && 'text-gray-600'

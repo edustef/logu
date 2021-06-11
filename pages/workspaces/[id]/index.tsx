@@ -10,10 +10,10 @@ import { getWorkspace } from '../../api/workspaces/[id]'
 import StatusCode from 'status-code-enum'
 import accountSetupRedirect from '../../../utils/accountSetupRedirect'
 import parseQueryOne from '../../../utils/parseQueryOne'
+import { WorkspaceWithUsers } from '../../../schemas/userWorkspace.schema'
 
 const WorkspacePage = ({ workspace }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { t } = useTranslation()
-
 	return (
 		<Layout>
 			<Title hasBackBtn>{workspace.name}</Title>
@@ -50,7 +50,7 @@ export const getServerSideProps = async ({ req, params, res }: GetServerSideProp
 
 	return {
 		props: {
-			workspace: JSON.parse(JSON.stringify(workspace))
+			workspace: JSON.parse(JSON.stringify(workspace)) as WorkspaceWithUsers
 		}
 	}
 }
