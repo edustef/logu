@@ -1,11 +1,15 @@
 {
-  "title": "WorkLogger",
-  "powered": "Powered by",
-  "alt": "Vercel logo",
-  "english": "English",
-  "spanish": "Spanish",
-  "signIn": "Sign In",
-  "signOut": "Sign Out",
-  "today": "Today",
-  "avatarAlt": "Profile picture"
+	"title": "WorkLogger",
+	"powered": "Powered by",
+	"alt": "Vercel logo",
+	"english": "English",
+	"spanish": "Spanish",
+	"signIn": "Sign In",
+	"signOut": "Sign Out",
+	"today": "Today",
+	"avatarAlt": "Profile picture",
+	"email": {
+		"label": "Email",
+		"placeholder": "joe@example.com"
+	}
 }
