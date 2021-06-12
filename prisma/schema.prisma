@@ -33,35 +33,40 @@ model Workspace {
 }
 
 model Schedule {
-  id            String   @id @default(cuid())
-  name          String
-  description   String?
-  start DateTime
-  end   DateTime
+  id             String                  @id @default(cuid())
+  name           String
+  description    String?
+  start          DateTime
+  end            DateTime
+  userWorkspaces UserWorkspaceSchedule[]
 
   @@map("schedules")
 }
 
 model UserWorkspace {
+  id          String   @id
   userId      String
   workspaceId String
   createdAt   DateTime @default(now()) @map("created_at")
   isAdmin     Boolean  @map("is_admin")
 
-  user      User      @relation(fields: [userId], references: [id])
-  workspace Workspace @relation(fields: [workspaceId], references: [id])
+  user      User                    @relation(fields: [userId], references: [id])
+  workspace Workspace               @relation(fields: [workspaceId], references: [id])
+  schedules UserWorkspaceSchedule[]
 
-  @@id([userId, workspaceId])
   @@map("users_workspaces")
 }
 
 model UserWorkspaceSchedule {
-  userId      String
-  workspaceId String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  id              String   @id
+  userWorkspaceId String
+  scheduleId      String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt @map("updated_at")
 
-  @@id([userId, workspaceId])
+  userWorkspace UserWorkspace @relation(fields: [userWorkspaceId], references: [id])
+  schedule      Schedule      @relation(fields: [scheduleId], references: [id])
+
   @@map("users_workspaces_schedules")
 }
 

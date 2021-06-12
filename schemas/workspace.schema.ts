@@ -1,4 +1,4 @@
-import { Workspace as PrismaWorkspace, UserWorkspace as PrismaUserWorkspace, User as PrismaUser } from '.prisma/client'
+import { CommonParams } from './commonParams'
 import { Asserts, object, string } from 'yup'
 import { startsWithNumber } from '../constants/regex'
 
@@ -11,3 +11,7 @@ export const YupWorkspaceObject = object({
 })
 
 export interface YupWorkspaceData extends Asserts<typeof YupWorkspaceObject> {}
+
+export interface WorkspaceParams extends CommonParams {
+	name?: string
+}
