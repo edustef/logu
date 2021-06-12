@@ -6,36 +6,9 @@ import clsx from 'clsx'
 import Button from '../../Atoms/Button'
 import Toggle from '../../Atoms/Toggle'
 import Link from '../../Atoms/Link'
-
-const WORK_WEEK = 5
-const FULL_WEEK = 7
-
-type TypeOfWeek = typeof WORK_WEEK | typeof FULL_WEEK
-
-const getWeekDays = (typeOfWeek: TypeOfWeek = WORK_WEEK) => {
-	return Array(typeOfWeek)
-		.fill('')
-		.map((val, i) => {
-			return dayjs().weekday(i).format('ddd').toUpperCase()
-		})
-}
-
-const getMonthDaysPerWeek = (date: Dayjs, typeOfWeek: TypeOfWeek = WORK_WEEK) => {
-	const firstWeekdayOfMonth = date.date(1).startOf('week')
-	const daysPerWeek: Dayjs[][] = []
-
-	let currentDate = firstWeekdayOfMonth
-	for (let week = 0; week < 5; week++) {
-		let weekDays: Dayjs[] = []
-		for (let day = 0; day < typeOfWeek; day++) {
-			weekDays.push(currentDate.weekday(day))
-		}
-		daysPerWeek.push(weekDays)
-		currentDate = currentDate.add(FULL_WEEK, 'day')
-	}
-
-	return daysPerWeek
-}
+import DatePicker from './DatePicker'
+import { FULL_WEEK, WORK_WEEK } from './_utils/typeOfWeek'
+import { getDays, getWeekDays } from './_utils/getDates'
 
 interface Props {
 	className?: string
@@ -45,42 +18,48 @@ interface Props {
 const Calendar: React.FC<Props> = ({ workspaceId, className }) => {
 	const { t } = useTranslation()
 	const [isFullWeek, setIsFullWeek] = useState(false)
-	const [currentMonthDate, setCurrentMonthDate] = useState(dayjs())
-	const [weekDays, setWeekDays] = useState<string[]>(getWeekDays())
-	const [daysPerWeek, setDaysPerWeek] = useState<Dayjs[][]>(getMonthDaysPerWeek(dayjs()))
+	const [currentDate, setCurrentDate] = useState(dayjs())
+	const [daysView, setDaysView] = useState<string[]>(getWeekDays())
+	const [daysPerWeek, setDaysPerWeek] = useState<Dayjs[]>(getDays(dayjs()))
+	const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
 
 	useEffect(() => {
-		setWeekDays(getWeekDays(isFullWeek ? FULL_WEEK : WORK_WEEK))
-		setDaysPerWeek(getMonthDaysPerWeek(currentMonthDate, isFullWeek ? FULL_WEEK : WORK_WEEK))
-	}, [isFullWeek, currentMonthDate])
+		setDaysView(getWeekDays(isFullWeek ? FULL_WEEK : WORK_WEEK))
+		setDaysPerWeek(getDays(currentDate, isFullWeek ? FULL_WEEK : WORK_WEEK))
+	}, [isFullWeek, currentDate])
 
 	// console.log(dayjs().localeData().longDateFormat('L'))
 
-	const handleMonthChange = (action: 'today' | 'next' | 'previous') => {
+	const handleNavigation = (action: 'today' | 'next' | 'previous') => {
 		switch (action) {
 			case 'today':
-				setCurrentMonthDate(dayjs())
+				setCurrentDate(dayjs())
 				break
 			case 'next':
-				setCurrentMonthDate((date) => date.add(1, 'month'))
+				setCurrentDate((date) => date.add(1, 'month'))
 				break
 			case 'previous':
-				setCurrentMonthDate((date) => date.subtract(1, 'month'))
+				setCurrentDate((date) => date.subtract(1, 'month'))
 				break
 		}
+	}
+
+	const handleDateChange = (date: Dayjs) => {
+		setCurrentDate(date)
+		setIsDatePickerOpen(false)
 	}
 
 	return (
 		<div className={clsx(className, 'w-full h-full flex flex-col')}>
 			<div className='flex justify-between items-center'>
 				<div className='flex justify-between items-center'>
-					<Button onClick={() => handleMonthChange('previous')} className='bg-green-600 px-1'>
+					<Button onClick={() => handleNavigation('previous')} className='bg-green-600 px-1'>
 						<ChevronLeftIcon className='w-6 h-6' />
 					</Button>
-					<Button onClick={() => handleMonthChange('today')} className='mx-3 bg-gray-dark'>
+					<Button onClick={() => handleNavigation('today')} className='mx-3 bg-gray-dark'>
 						{t('common:today')}
 					</Button>
-					<Button onClick={() => handleMonthChange('next')} className='bg-green-600 px-1'>
+					<Button onClick={() => handleNavigation('next')} className='bg-green-600 px-1'>
 						<ChevronRightIcon className='w-6 h-6' />
 					</Button>
 				</div>
@@ -89,33 +68,34 @@ const Calendar: React.FC<Props> = ({ workspaceId, className }) => {
 					<Toggle checked={isFullWeek} onChange={setIsFullWeek} />
 				</div>
 			</div>
-			<div className="flex justify-center mt-4">
-				<span className="font-semibold text-lg">{currentMonthDate.format('MMMM YYYY')}</span>
+			<div className='flex justify-center mt-4'>
+				<Button onClick={() => setIsDatePickerOpen(true)}>
+					<span className='font-semibold text-lg'>{currentDate.format('MMMM YYYY')}</span>
+				</Button>
+				<DatePicker show={isDatePickerOpen} onClose={setIsDatePickerOpen} defaultDate={currentDate} onChange={handleDateChange} />
 			</div>
 			<div className={clsx('mt-4 grid auto-cols-max', isFullWeek ? 'grid-cols-7' : 'grid-cols-5')}>
-				{weekDays.map((day) => (
+				{daysView.map((day) => (
 					<div className='text-center flex-grow border border-gray-dark' key={day}>
 						{day}
 					</div>
 				))}
 			</div>
 			<div className={clsx('mt-4 flex-grow grid auto-cols-max', isFullWeek ? 'grid-cols-7' : 'grid-cols-5')}>
-				{daysPerWeek.map((week, weekIndex) => {
-					return week.map((day, dayIndex) => (
-						<Link
-							href={`/workspaces/${workspaceId}/${day.format('YYYY-MM-DD')}`}
-							className={clsx(
-								'border border-gray-dark text-center p-1',
-								day.month() !== currentMonthDate.month() && 'text-gray-600'
-							)}
-							key={dayIndex}
-						>
-							<div className={clsx(day.isSame(dayjs(), 'day') && 'bg-green-600', 'mx-auto w-8 h-8 p-1 rounded-full')}>
-								{day.format('D')}
-							</div>
-						</Link>
-					))
-				})}
+				{daysPerWeek.map((day, index) => (
+					<Link
+						href={`/workspaces/${workspaceId}/${day.format('YYYY-MM-DD')}`}
+						className={clsx(
+							'border border-gray-dark text-center p-1',
+							day.month() !== currentDate.month() && 'text-gray-600'
+						)}
+						key={index}
+					>
+						<div className={clsx(day.isSame(dayjs(), 'day') && 'bg-green-600', 'mx-auto w-8 h-8 p-1 rounded-full')}>
+							{day.format('D')}
+						</div>
+					</Link>
+				))}
 			</div>
 		</div>
 	)
