@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../utils/prisma'
-import { YupWorkspaceData, YupWorkspaceObject } from '../../../schemas/workspace.schema'
+import { WorkspaceParams, YupWorkspaceData, YupWorkspaceObject } from '../../../schemas/workspace.schema'
 import StatusCode from 'status-code-enum'
 import { getSession } from 'next-auth/client'
-import { WorkspaceParams } from '../../../schemas/WorkspaceParams'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getSession({ req })

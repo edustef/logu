@@ -55,7 +55,10 @@ export const getWorkspaceWithUserSchedule = async (workspaceId: string) => {
 		},
 		include: {
 			users: {
-				
+				include: {
+					user: true,
+					schedules: true
+				}
 			}
 		}
 	})
@@ -63,7 +66,7 @@ export const getWorkspaceWithUserSchedule = async (workspaceId: string) => {
 	return workspace
 }
 
-export const updateWorkspace = async (id:string, data: YupWorkspaceData) => {
+export const updateWorkspace = async (id: string, data: YupWorkspaceData) => {
 	return await prisma.workspace.update({
 		where: {
 			id

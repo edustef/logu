@@ -44,7 +44,7 @@ model Schedule {
 }
 
 model UserWorkspace {
-  id          String   @id
+  id          String   @id @default(cuid())
   userId      String
   workspaceId String
   createdAt   DateTime @default(now()) @map("created_at")
@@ -54,11 +54,12 @@ model UserWorkspace {
   workspace Workspace               @relation(fields: [workspaceId], references: [id])
   schedules UserWorkspaceSchedule[]
 
+  @@unique([userId, workspaceId])
   @@map("users_workspaces")
 }
 
 model UserWorkspaceSchedule {
-  id              String   @id
+  id              String   @id @default(cuid())
   userWorkspaceId String
   scheduleId      String
   createdAt       DateTime @default(now())
@@ -67,6 +68,7 @@ model UserWorkspaceSchedule {
   userWorkspace UserWorkspace @relation(fields: [userWorkspaceId], references: [id])
   schedule      Schedule      @relation(fields: [scheduleId], references: [id])
 
+  @@unique([userWorkspaceId, scheduleId])
   @@map("users_workspaces_schedules")
 }
 
