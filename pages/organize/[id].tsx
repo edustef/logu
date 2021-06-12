@@ -11,7 +11,7 @@ import { WorkspaceWithUsers } from '../../schemas/userWorkspace.schema'
 import accountSetupRedirect from '../../utils/accountSetupRedirect'
 import authRedirect from '../../utils/authRedirect'
 import parseQueryOne from '../../utils/parseQueryOne'
-import { getWorkspace } from '../api/members/[id]'
+import { getWorkspace } from '../api/users-workspaces/[id]'
 
 const OrganizePage = ({ workspace }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { t } = useTranslation()

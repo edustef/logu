@@ -69,10 +69,10 @@ const Calendar: React.FC<Props> = ({ workspaceId, className }) => {
 				</div>
 			</div>
 			<div className='flex justify-center mt-4'>
-				<Button onClick={() => setIsDatePickerOpen(true)}>
+				<Button className="bg-gray-dark" onClick={() => setIsDatePickerOpen(true)}>
 					<span className='font-semibold text-lg'>{currentDate.format('MMMM YYYY')}</span>
 				</Button>
-				<DatePicker show={isDatePickerOpen} onClose={setIsDatePickerOpen} defaultDate={currentDate} onChange={handleDateChange} />
+				<DatePicker disableMonthView show={isDatePickerOpen} onClose={setIsDatePickerOpen} defaultDate={currentDate} onChange={handleDateChange} />
 			</div>
 			<div className={clsx('mt-4 grid auto-cols-max', isFullWeek ? 'grid-cols-7' : 'grid-cols-5')}>
 				{daysView.map((day) => (

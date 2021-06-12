@@ -7,19 +7,30 @@ import { getDays, getMonths, getWeekDays, getYears } from '../_utils/getDates'
 import { FULL_WEEK } from '../_utils/typeOfWeek'
 import clsx from 'clsx'
 import useTranslation from 'next-translate/useTranslation'
-import BackButton from '../../BackButton'
 
 interface Props {
 	defaultView?: 'month' | 'year' | 'years'
 	defaultDate?: Dayjs
 	show: boolean
+	disableMonthView?: boolean
+	disableYearView?: boolean
+	disableYearsView?: boolean
 	onChange: React.Dispatch<React.SetStateAction<Dayjs>>
 	onClose: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const DatePicker: React.FC<Props> = ({ defaultDate = dayjs(), show, onChange, onClose, defaultView = 'year' }) => {
+const DatePicker: React.FC<Props> = ({
+	defaultDate = dayjs(),
+	show,
+	onChange,
+	onClose,
+	defaultView = 'month',
+	disableMonthView = false,
+	disableYearView = false,
+	disableYearsView = false
+}) => {
 	const { t } = useTranslation()
-	const [view, setView] = useState<OpUnitType>(defaultView)
+	const [currentView, setCurrentView] = useState<OpUnitType>(defaultView)
 	const [currentDate, setCurrentDate] = useState(defaultDate)
 
 	const [weekDays, setWeekDays] = useState<string[]>(getWeekDays())
@@ -27,42 +38,70 @@ const DatePicker: React.FC<Props> = ({ defaultDate = dayjs(), show, onChange, on
 	const [datesByMonth, setMonths] = useState<Dayjs[]>(getMonths(currentDate))
 	const [datesByYear, setYears] = useState<Dayjs[]>(getYears(currentDate))
 
-	useEffect(() => {
-		setCurrentDate(defaultDate)
-	}, [defaultDate])
-
-	useEffect(() => {
-		switch (view) {
-			case 'month':
-				setWeekDays(getWeekDays(FULL_WEEK))
-				setDaysPerMonth(getDays(currentDate, FULL_WEEK))
-				break
-			case 'year':
-				setMonths(getMonths(currentDate))
-				break
-			case 'years':
-				setYears(getYears(currentDate))
-				break
-		}
-	}, [view, currentDate])
-
 	// console.log(dayjs().localeData().longDateFormat('L'))
 
+	useEffect(() => {
+		if (disableMonthView) {
+			defaultView = 'year'
+		}
+
+		if (disableYearView) {
+			defaultView = 'years'
+		}
+	})
+
+	useEffect(() => {
+		handleDateChange(defaultDate, defaultView)
+	}, [show])
+
 	const handleNavigation = (action: 'next' | 'previous') => {
-		const amount = view === 'years' ? datesByYear.length : 1
+		const amount = currentView === 'years' ? datesByYear.length : 1
 		switch (action) {
 			case 'next':
-				setCurrentDate((date) => date.add(amount, view))
+				handleDateChange(currentDate.add(amount, currentView), currentView)
 				break
 			case 'previous':
-				setCurrentDate((date) => date.subtract(amount, view))
+				handleDateChange(currentDate.subtract(amount, currentView), currentView)
+				break
+		}
+	}
+
+	const handleDateChange = (date: Dayjs, view: OpUnitType) => {
+		setCurrentDate(date)
+		switch (view) {
+			case 'month':
+				if (!disableMonthView) {
+					setWeekDays(getWeekDays(FULL_WEEK))
+					setDaysPerMonth(getDays(date, FULL_WEEK))
+					setCurrentView(view)
+				} else {
+					onChange(date)
+				}
+				break
+			case 'year':
+				console.log(disableYearView)
+
+				if (!disableYearView) {
+					setMonths(getMonths(date))
+					setCurrentView(view)
+				} else {
+					onChange(date)
+				}
+				break
+			case 'years':
+				if (!disableYearsView) {
+					setYears(getYears(date))
+					setCurrentView(view)
+				} else {
+					onChange(date)
+				}
 				break
 		}
 	}
 
 	return (
 		<>
-			<Transition appear show={show} as={Fragment}>
+			<Transition show={show} as={Fragment}>
 				<Dialog as='div' className='fixed inset-0 z-10 overflow-y-auto' onClose={onClose}>
 					<div className='text-white min-h-screen grid place-items-center px-3 text-center bg-black bg-opacity-50'>
 						<Transition.Child
@@ -85,28 +124,31 @@ const DatePicker: React.FC<Props> = ({ defaultDate = dayjs(), show, onChange, on
 							leaveFrom='opacity-100 scale-100'
 							leaveTo='opacity-0 scale-95'
 						>
-							<div className='flex flex-col h-80 w-full max-w-md p-3 my-8 overflow-hidden text-left align-middle transition-all transform bg-gray-dark shadow-xl rounded'>
-								{view !== 'month' && <Button className="self-start" onClick={() => setView('month')}><ArrowLeftIcon className="w-5 h-5" /></Button>}
+							<div className='flex flex-col h-80 min-h-[] w-full max-w-md p-3 my-8 overflow-hidden text-left align-middle transition-all transform bg-gray-dark shadow-xl rounded'>
 								<div className='flex justify-around items-center'>
 									<Button onClick={() => handleNavigation('previous')} className='px-1'>
 										<ChevronLeftIcon className='w-6 h-6' />
 									</Button>
-									{view === 'month' && (
-										<Button onClick={() => setView('year')} className='mx-3 bg-gray-darkless'>
+									{currentView === 'month' && (
+										<Button onClick={() => setCurrentView('year')} className='mx-3 bg-gray-darkless'>
+											{currentDate.format('MMMM YYYY')}
+										</Button>
+									)}
+									{currentView === 'year' && (
+										<Button onClick={() => setCurrentView('years')} className='mx-3 bg-gray-darkless'>
 											{currentDate.format('YYYY')}
 										</Button>
 									)}
-									{view === 'year' && (
-										<Button onClick={() => setView('years')} className='mx-3 bg-gray-darkless'>
-											{currentDate.format('YYYY')}
+									{currentView === 'years' && (
+										<Button className='mx-3 bg-gray-darkless'>
+											{datesByYear[0].format('YYYY')} - {datesByYear[datesByYear.length - 1].format('YYYY')}
 										</Button>
 									)}
-									{view === 'years' && <Button className='mx-3 bg-gray-darkless'>{currentDate.format('YYYY')}</Button>}
 									<Button onClick={() => handleNavigation('next')} className='px-1'>
 										<ChevronRightIcon className='w-6 h-6' />
 									</Button>
 								</div>
-								{view === 'month' && (
+								{currentView === 'month' && (
 									<div className='mt-2 grid auto-cols-max grid-cols-7'>
 										{weekDays.map((day) => (
 											<div className='text-center flex-grow border border-gray-dark' key={day}>
@@ -115,57 +157,60 @@ const DatePicker: React.FC<Props> = ({ defaultDate = dayjs(), show, onChange, on
 										))}
 									</div>
 								)}
-								{view === 'month' && (
+								{currentView === 'month' && (
 									<div className='mt-2 flex-grow grid auto-cols-max grid-cols-7'>
 										{datesByDay.map((date, index) => (
-											<Button
-												onClick={() => onChange(date)}
-												className={clsx(
-													'border border-gray-dark grid place-items-center p-1',
-													date.month() !== currentDate.month() && 'text-gray-600'
-												)}
-												key={index}
-											>
-												<div className={clsx(date.isSame(dayjs(), 'day') && 'bg-green-600', 'p-1 rounded-full')}>
+											<div className={clsx('grid place-items-center p-1')} key={index}>
+												<Button
+													className={clsx(
+														'p-1 rounded',
+														date.isSame(dayjs(), 'day') && 'bg-green-600',
+														!date.isSame(currentDate, 'month') && 'text-gray-400',
+														date.isSame(currentDate, 'day') && 'border border-gray-darkless'
+													)}
+													onClick={() => onChange(date)}
+												>
 													{date.format('D')}
-												</div>
-											</Button>
+												</Button>
+											</div>
 										))}
 									</div>
 								)}
-								{view === 'year' && (
+								{currentView === 'year' && (
 									<div className='mt-2 flex-grow grid auto-cols-max grid-cols-4 grid-rows-3'>
 										{datesByMonth.map((date, index) => (
-											<Button
-												onClick={() => setView('month')}
-												className={clsx('border border-gray-dark grid place-items-center p-1')}
-												key={index}
-											>
-												<div
-													className={clsx(date.isSame(dayjs(), 'month') && 'bg-green-600', 'p-1 rounded-full')}
+											<div className={clsx('grid place-items-center p-1')} key={index}>
+												<Button
+													onClick={() => handleDateChange(date, 'month')}
+													className={clsx(
+														'p-3 rounded',
+														date.isSame(dayjs(), 'month') && 'bg-green-600',
+														date.isSame(currentDate, 'month') && 'border border-gray-darkless'
+													)}
 													key={index}
 												>
 													{date.format('MMM')}
-												</div>
-											</Button>
+												</Button>
+											</div>
 										))}
 									</div>
 								)}
-								{view === 'years' && (
+								{currentView === 'years' && (
 									<div className='mt-2 flex-grow grid auto-cols-max grid-cols-4 grid-rows-2'>
 										{datesByYear.map((date, index) => (
-											<Button
-												onClick={() => setView('year')}
-												className={clsx('border border-gray-dark grid place-items-center p-1')}
-												key={index}
-											>
-												<div
-													className={clsx(date.isSame(dayjs(), 'month') && 'bg-green-600', 'p-1 rounded-full')}
+											<div className={clsx('grid place-items-center p-1')} key={index}>
+												<Button
+													onClick={() => handleDateChange(date, 'year')}
+													className={clsx(
+														'p-2 rounded',
+														date.isSame(dayjs(), 'year') && 'bg-green-600',
+														date.isSame(currentDate, 'year') && 'border border-gray-darkless'
+													)}
 													key={index}
 												>
 													{date.format('YYYY')}
-												</div>
-											</Button>
+												</Button>
+											</div>
 										))}
 									</div>
 								)}

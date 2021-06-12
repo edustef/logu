@@ -37,8 +37,9 @@ export const getMonths = (date: Dayjs) => {
 export const getYears = (date: Dayjs, range = 8) => {
 	const years: Dayjs[] = []
 
-	const middle = Math.ceil(range)
+	const middle = Math.ceil(range / 2)
 	for (let index = 1; index <= range; index++) {
+		
 		if (index < middle) {
 			years.push(date.subtract(middle - index, 'year'))
 		} else if (index > middle) {
@@ -47,6 +48,9 @@ export const getYears = (date: Dayjs, range = 8) => {
 			years.push(date)
 		}
 	}
+
+	console.log(years);
+	
 
 	return years
 }
