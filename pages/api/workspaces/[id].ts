@@ -57,7 +57,7 @@ export const getWorkspaceWithUsersSchedules = async (workspaceId: string) => {
 			users: {
 				include: {
 					user: true,
-					schedules: true
+					userWorkspaceSchedules: true
 				}
 			}
 		}
