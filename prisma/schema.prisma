@@ -15,61 +15,76 @@ model User {
   image         String?
   createdAt     DateTime        @default(now()) @map("created_at")
   updatedAt     DateTime        @updatedAt @map("updated_at")
-  workspaces    UserWorkspace[]
   isNewUser     Boolean         @default(true) @map("is_new_user")
+  workspaces    UserWorkspace[]
+  notifications Notification[]
 
   @@map("users")
 }
 
 model Workspace {
-  id          String          @id @default(cuid())
-  name        String
-  description String?
-  createdAt   DateTime        @default(now()) @map("created_at")
-  updatedAt   DateTime        @updatedAt @map("updated_at")
-  users       UserWorkspace[]
+  id           String          @id @default(cuid())
+  name         String
+  description  String?
+  isIndividual Boolean         @default(false) @map("is_individual")
+  createdAt    DateTime        @default(now()) @map("created_at")
+  updatedAt    DateTime        @updatedAt @map("updated_at")
+  users        UserWorkspace[]
 
   @@map("workspaces")
 }
 
 model Schedule {
-  id             String                  @id @default(cuid())
-  name           String
-  description    String?
-  start          DateTime
-  end            DateTime
-  userWorkspaces UserWorkspaceSchedule[]
+  id                     String                  @id @default(cuid())
+  name                   String
+  description            String?
+  start                  DateTime
+  end                    DateTime
+  userWorkspaceSchedules UserWorkspaceSchedule[]
 
   @@map("schedules")
 }
 
-model UserWorkspace {
-  id          String   @id @default(cuid())
-  userId      String
-  workspaceId String
-  createdAt   DateTime @default(now()) @map("created_at")
-  isAdmin     Boolean  @map("is_admin")
+model Notification {
+  id         String           @id @default(cuid())
+  type       NotificationType
+  resourceId String
+  userId     String           @map("user_id")
+  user       User             @relation(fields: [userId], references: [id])
+}
 
-  user      User                    @relation(fields: [userId], references: [id])
-  workspace Workspace               @relation(fields: [workspaceId], references: [id])
-  schedules UserWorkspaceSchedule[]
+model UserWorkspace {
+  id                     String                  @id @default(cuid())
+  userId                 String                  @map("user_id")
+  workspaceId            String                  @map("workspace_id")
+  createdAt              DateTime                @default(now()) @map("created_at")
+  isAdmin                Boolean                 @map("is_admin")
+  user                   User                    @relation(fields: [userId], references: [id])
+  workspace              Workspace               @relation(fields: [workspaceId], references: [id])
+  userWorkspaceSchedules UserWorkspaceSchedule[]
 
   @@unique([userId, workspaceId])
   @@map("users_workspaces")
 }
 
 model UserWorkspaceSchedule {
-  id              String   @id @default(cuid())
-  userWorkspaceId String
-  scheduleId      String
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt @map("updated_at")
-
-  userWorkspace UserWorkspace @relation(fields: [userWorkspaceId], references: [id])
-  schedule      Schedule      @relation(fields: [scheduleId], references: [id])
+  id              String        @id @default(cuid())
+  userWorkspaceId String        @map("user_workspace_id")
+  scheduleId      String        @map("schedule_id")
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+  userWorkspace   UserWorkspace @relation(fields: [userWorkspaceId], references: [id])
+  schedule        Schedule      @relation(fields: [scheduleId], references: [id])
 
   @@unique([userWorkspaceId, scheduleId])
   @@map("users_workspaces_schedules")
+}
+
+enum NotificationType {
+  INVITATION
+  USER_JOINED
+  SCHEDULE_CREATED
+  SCHEDULE_UPCOMING
 }
 
 // BELLOW MODELS USED FOR AUTHENTICATION WITH NEXT-AUTH
