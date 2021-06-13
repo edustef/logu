@@ -7,6 +7,7 @@ import useTranslation from 'next-translate/useTranslation'
 import Title from '../components/Atoms/Title'
 import authRedirect from '../utils/authRedirect'
 import accountSetupRedirect from '../utils/accountSetupRedirect'
+import Notifications from '../components/Molecules/Notifications'
 
 type Props = {
 	user: User
@@ -18,7 +19,10 @@ const DashboardPage: React.FC<Props> = () => {
 	return (
 		<Layout page={t('navigation:dashboard')}>
 			<div className='page'>
-				<Title>{t('navigation:dashboard')}</Title>
+				<div className="flex items-center">
+				<Title className="flex-grow">{t('navigation:dashboard')}</Title>
+				<Notifications />
+				</div>
 				<main></main>
 			</div>
 		</Layout>

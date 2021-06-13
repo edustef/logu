@@ -28,7 +28,7 @@ interface Props {
 const AccountPage: React.FC<Props> = ({ user }) => {
 	const { t } = useTranslation()
 	const workspaceTake = 5
-	const workspaces = useWorkspaces({ take: workspaceTake })
+	const workspaces = useWorkspaces({ take: workspaceTake.toString() })
 	const [isDeleteModalOpen, setIsDeletModalOpen] = useState(false)
 	const [confirmEmail, setConfirmEmail] = useState('')
 
@@ -78,36 +78,38 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 						<Link href='/workspaces'>
 							<h2 className='font-semibold'>{t('account:workspacesTitle')}</h2>
 						</Link>
-						<Link asBtn href='/workspaces/create' className='bg-gray-700 text-white'>
+						<Link asBtn href='/workspaces/create' className='bg-gray-darkless text-white'>
 							{t('account:newWorkspace')}
 						</Link>
 					</CardHeader>
 					{workspaces.isLoading && <Skeleton count={2} />}
 					{workspaces.isError && <div>{t('errors:failedLoad')}</div>}
-					{workspaces.isSuccess &&
-						workspaces.data.map((workspace, index) => (
-							<Link
-								className={clsx(
-									index === 0 && 'border-none pt-0',
-									'border-t flex items-center rounded-none py-2 border-gray-700'
-								)}
-								href={`/workspaces/${workspace.id}`}
-								key={workspace.id}
-							>
-								<span className='flex-grow'>{workspace.name}</span>
-								<span>
-									<ArrowRightIcon className='w-4 h-4' />
-								</span>
+					<div className="divide-y divide-gray-darkless divide-opacity-30">
+						{workspaces.isSuccess &&
+							workspaces.data.map((workspace, index) => (
+								<Link
+									className={clsx(
+										index === 0 && 'border-none pt-0',
+										'border-t rounded-t-none border-opacity-30 flex items-center py-2 border-gray-700'
+									)}
+									href={`/workspaces/${workspace.id}`}
+									key={workspace.id}
+								>
+									<span className='flex-grow'>{workspace.name}</span>
+									<span>
+										<ArrowRightIcon className='w-4 h-4' />
+									</span>
+								</Link>
+							))}
+						{workspaces.isSuccess && workspaces.data.length === 0 && (
+							<div className='italic text-gray-400'>{t('account:noWorkspaces')}</div>
+						)}
+						{workspaces.data?.length === workspaceTake && (
+							<Link className='flex items-center text-blue-300' href='/workspaces'>
+								{t('account:seeAllWorkspaces')} <ArrowRightIcon className='ml-2 w-4 h-4' />
 							</Link>
-						))}
-					{workspaces.isSuccess && workspaces.data.length === 0 && (
-						<div className='italic text-gray-400'>{t('account:noWorkspaces')}</div>
-					)}
-					{workspaces.data?.length === workspaceTake && (
-						<Link className='flex items-center text-blue-300' href='/teams'>
-							{t('account:seeAllWorkspaces')} <ArrowRightIcon className='ml-2 w-4 h-4' />
-						</Link>
-					)}
+						)}
+					</div>
 				</Card>
 				<Card>
 					<CardHeader>

@@ -130,17 +130,17 @@ const DatePicker: React.FC<Props> = ({
 										<ChevronLeftIcon className='w-6 h-6' />
 									</Button>
 									{currentView === 'month' && (
-										<Button onClick={() => setCurrentView('year')} className='mx-3 bg-gray-darkless'>
+										<Button onClick={() => setCurrentView('year')} className='mx-3 text-lg bg-gray-darkless'>
 											{currentDate.format('MMMM YYYY')}
 										</Button>
 									)}
 									{currentView === 'year' && (
-										<Button onClick={() => setCurrentView('years')} className='mx-3 bg-gray-darkless'>
+										<Button onClick={() => setCurrentView('years')} className='mx-3 text-lg bg-gray-darkless'>
 											{currentDate.format('YYYY')}
 										</Button>
 									)}
 									{currentView === 'years' && (
-										<Button className='mx-3 bg-gray-darkless'>
+										<Button className='mx-3 text-lg bg-gray-darkless'>
 											{datesByYear[0].format('YYYY')} - {datesByYear[datesByYear.length - 1].format('YYYY')}
 										</Button>
 									)}

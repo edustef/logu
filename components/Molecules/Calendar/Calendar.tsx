@@ -64,7 +64,7 @@ const Calendar: React.FC<Props> = ({ workspaceId, className }) => {
 					</Button>
 				</div>
 				<div className='flex items-center'>
-					<span className='mr-2 text-gray-500 text-sm'>{t('calendar:toggleFullWeek')}</span>
+					<span className='mr-2 text-sm'>{t('calendar:toggleFullWeek')}</span>
 					<Toggle checked={isFullWeek} onChange={setIsFullWeek} />
 				</div>
 			</div>
@@ -84,7 +84,7 @@ const Calendar: React.FC<Props> = ({ workspaceId, className }) => {
 			<div className={clsx('mt-4 flex-grow grid auto-cols-max', isFullWeek ? 'grid-cols-7' : 'grid-cols-5')}>
 				{daysPerWeek.map((day, index) => (
 					<Link
-						href={`/workspaces/${workspaceId}/${day.format('YYYY-MM-DD')}`}
+						href={`/organize/${workspaceId}/${day.format('YYYY-MM-DD')}`}
 						className={clsx(
 							'border border-gray-dark text-center p-1',
 							day.month() !== currentDate.month() && 'text-gray-600'

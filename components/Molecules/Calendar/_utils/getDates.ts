@@ -49,8 +49,5 @@ export const getYears = (date: Dayjs, range = 8) => {
 		}
 	}
 
-	console.log(years);
-	
-
 	return years
 }

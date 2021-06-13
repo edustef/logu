@@ -14,7 +14,7 @@ import * as Yup from 'yup'
 import axios from 'axios'
 import useTranslation from 'next-translate/useTranslation'
 import Title from '../../components/Atoms/Title'
-import { InputField } from '../../components/Atoms/Form'
+import { InputField } from '../../components/Atoms/Formik'
 import Card from '../../components/Molecules/Card'
 
 const SignIn: React.FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ providers, callbackUrl }) => {

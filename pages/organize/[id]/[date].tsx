@@ -10,8 +10,9 @@ import { getWorkspace } from '../../api/workspaces/[id]'
 import StatusCode from 'status-code-enum'
 import accountSetupRedirect from '../../../utils/accountSetupRedirect'
 import parseQueryOne from '../../../utils/parseQueryOne'
+import { WorkspaceWithUsers } from '../../../schemas/userWorkspace.schema'
 
-const WorkspacePage = ({ workspace, date }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const CreateSchedulePage = ({ workspace, date }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { t } = useTranslation()
 	console.log(date)
 
@@ -23,7 +24,7 @@ const WorkspacePage = ({ workspace, date }: InferGetServerSidePropsType<typeof g
 	)
 }
 
-export default WorkspacePage
+export default CreateSchedulePage
 
 export const getServerSideProps = async ({ req, params, res }: GetServerSidePropsContext) => {
 	const session = await getSession({ req })
@@ -51,7 +52,7 @@ export const getServerSideProps = async ({ req, params, res }: GetServerSideProp
 
 	return {
 		props: {
-			workspace: JSON.parse(JSON.stringify(workspace)),
+			workspace: JSON.parse(JSON.stringify(workspace)) as WorkspaceWithUsers,
 			date: date
 		}
 	}

@@ -4,18 +4,18 @@ import { getSession } from 'next-auth/client'
 import useTranslation from 'next-translate/useTranslation'
 import React, { useEffect, useState } from 'react'
 import StatusCode from 'status-code-enum'
-import Calendar from '../../components/Molecules/Calendar'
-import WorkspaceDropdown from '../../components/Molecules/WorkspaceDropdown'
-import Layout from '../../components/Templates/Layout'
-import { WorkspaceWithUsers } from '../../schemas/userWorkspace.schema'
-import accountSetupRedirect from '../../utils/accountSetupRedirect'
-import authRedirect from '../../utils/authRedirect'
-import parseQueryOne from '../../utils/parseQueryOne'
-import { getWorkspace } from '../api/users-workspaces/[id]'
+import Calendar from '../../../components/Molecules/Calendar'
+import WorkspaceDropdown from '../../../components/Molecules/WorkspaceDropdown'
+import Layout from '../../../components/Templates/Layout'
+import { WorkspaceWithUsers } from '../../../schemas/userWorkspace.schema'
+import accountSetupRedirect from '../../../utils/accountSetupRedirect'
+import authRedirect from '../../../utils/authRedirect'
+import parseQueryOne from '../../../utils/parseQueryOne'
+import { getWorkspace } from '../../api/workspaces/[id]'
 
 const OrganizePage = ({ workspace }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { t } = useTranslation()
-	
+
 	return (
 		<Layout>
 			<div className='flex flex-col h-full'>
@@ -46,7 +46,6 @@ export const getServerSideProps = async ({ req, params, res }: GetServerSideProp
 
 	if (!workspace) {
 		res.statusCode = StatusCode.ClientErrorNotFound
-		res.end()
 	}
 
 	return {

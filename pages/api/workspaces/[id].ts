@@ -48,7 +48,7 @@ export const getWorkspace = async (workspaceId: string) => {
 	return workspace
 }
 
-export const getWorkspaceWithUserSchedule = async (workspaceId: string) => {
+export const getWorkspaceWithUsersSchedules = async (workspaceId: string) => {
 	const workspace = await prisma.workspace.findUnique({
 		where: {
 			id: workspaceId

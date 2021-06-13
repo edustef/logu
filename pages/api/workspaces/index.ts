@@ -17,6 +17,8 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 			res.json(result)
 			break
 		case 'POST':
+			console.log(req.body)
+
 			const isValid = await YupWorkspaceObject.isValid(req.body)
 			if (isValid) {
 				const result = await createWorkspace(session.userDetails.id, req.body)

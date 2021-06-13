@@ -3,7 +3,7 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import Layout from '../../../components/Templates/Layout'
 import Title from '../../../components/Atoms/Title'
 import { getSession } from 'next-auth/client'
-import Card from '../../../components/Molecules/Card'
+import Card, { CardHeader } from '../../../components/Molecules/Card'
 import useTranslation from 'next-translate/useTranslation'
 import authRedirect from '../../../utils/authRedirect'
 import { getWorkspace } from '../../api/workspaces/[id]'
@@ -11,13 +11,32 @@ import StatusCode from 'status-code-enum'
 import accountSetupRedirect from '../../../utils/accountSetupRedirect'
 import parseQueryOne from '../../../utils/parseQueryOne'
 import { WorkspaceWithUsers } from '../../../schemas/userWorkspace.schema'
+import Link from '../../../components/Atoms/Link'
 
 const WorkspacePage = ({ workspace }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { t } = useTranslation()
 	return (
 		<Layout>
 			<Title hasBackBtn>{workspace.name}</Title>
-			<Card>{workspace.name}</Card>
+			<div className='space-y-3'>
+				<Card>{workspace.name}</Card>
+				{!workspace.isIndividual && (
+					<Card>
+						<CardHeader className='flex items-center justify-between'>
+							<h2 className='font-semibold'>{t('workspace:members')}</h2>
+							<Link asBtn href={`/workspaces/${workspace.id}/invite`} className='bg-gray-darkless'>
+								{t('workspace:addUsers')}
+							</Link>
+						</CardHeader>
+						{workspace.users.map((user) => (
+							<div key={user.userId}>
+								<span>{user.user.name}</span>
+								{user.isAdmin && <span> (Admin)</span>}
+							</div>
+						))}
+					</Card>
+				)}
+			</div>
 		</Layout>
 	)
 }
