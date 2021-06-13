@@ -34,11 +34,9 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-loading-skeleton": "^2.2.0",
-    "react-markdown": "5.0.3",
     "react-query": "^3.16.0",
     "react-toastify": "^7.0.4",
     "status-code-enum": "^1.0.0",
-    "swr": "^0.5.6",
     "yup": "^0.32.9"
   },
   "devDependencies": {

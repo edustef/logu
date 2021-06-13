@@ -13,12 +13,7 @@ interface Props {
 
 const Layout: React.FC<Props> = ({ children, className = '', page }) => {
 	const styles = {
-		root: clsx([
-			'flex flex-col min-h-screen',
-			'bg-gray-50 text-black',
-			'dark:bg-gray-darkest dark:text-white',
-			className
-		])
+		root: clsx(['flex flex-col min-h-screen', 'bg-gray-darkest text-white', className])
 	}
 	const { t } = useTranslation()
 
@@ -42,7 +37,9 @@ const Layout: React.FC<Props> = ({ children, className = '', page }) => {
 				<meta name='application-name' content='Logu' />
 				<meta name='msapplication-TileColor' content='#000' />
 			</Head>
-			<main className='p-3 flex-grow mb-[60px]'>{children}</main>
+			<main className='flex w-full h-full items-stretch p-3 flex-grow mb-[60px]'>
+				<div className='w-full'>{children}</div>
+			</main>
 			<BottomNavbar />
 		</div>
 	)

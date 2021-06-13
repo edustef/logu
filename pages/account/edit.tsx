@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, CollectionIcon, UserAddIcon } from '@heroicons/react/outline'
+import { ArrowLeftIcon, UserIcon } from '@heroicons/react/outline'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 import { object } from 'yup'
 import Avatar from '../../components/Atoms/Avatar'
 import Button from '../../components/Atoms/Button'
-import { InputField } from '../../components/Atoms/Form'
+import { InputField } from '../../components/Atoms/Formik'
 import Link from '../../components/Atoms/Link'
 import Title from '../../components/Atoms/Title'
 import Card from '../../components/Molecules/Card'
@@ -35,10 +35,9 @@ const EditAccountPage = ({ user }: InferGetServerSidePropsType<typeof getServerS
 
 	return (
 		<Layout>
-			<Button onClick={router.back} className='inline-flex items-center'>
-				<ArrowLeftIcon className='w-6 h-6' />
-			</Button>
-			<Title className='text-center'>{t('accountEdit:title')}</Title>
+			<Title hasBackBtn position='center'>
+				{t('accountEdit:title')}
+			</Title>
 			<Formik
 				enableReinitialize={true}
 				initialValues={{
@@ -55,17 +54,11 @@ const EditAccountPage = ({ user }: InferGetServerSidePropsType<typeof getServerS
 				{({ isSubmitting, values }) => (
 					<Form>
 						<>
-							<div className='grid place-items-center'>
-								{user.image && <Avatar className='mb-4' url={user.image} />}
-								{!user.image && values.name && (
-									<Avatar className='mb-4' name={values.name ?? t('accountEdit:name.placeholder')} />
-								)}
-							</div>
 							<Card className='mb-2 space-y-2'>
 								<InputField
 									className='w-full'
 									label={t('accountEdit:name.label')}
-									icon={<UserAddIcon className='w-full h-full text-current' />}
+									icon={<UserIcon className='w-full h-full text-current' />}
 									name='name'
 									type='text'
 									placeholder={t('accountEdit:name.placeholder')}

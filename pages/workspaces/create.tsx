@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import Button from '../../components/Atoms/Button'
 import Card from '../../components/Molecules/Card'
-import { InputField, TextAreaField } from '../../components/Atoms/Form'
+import { InputField, TextAreaField } from '../../components/Atoms/Formik'
 import Layout from '../../components/Templates/Layout'
 import Title from '../../components/Atoms/Title'
 import { workspaceDescription, workspaceName, YupWorkspaceData } from '../../schemas/workspace.schema'
@@ -16,6 +16,8 @@ import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/client'
 import authRedirect from '../../utils/authRedirect'
 import { UserWorkspace } from '../../schemas/userWorkspace.schema'
+import BackButton from '../../components/Molecules/BackButton'
+import accountSetupRedirect from '../../utils/accountSetupRedirect'
 
 const CreatePage: React.FC = () => {
 	const { t } = useTranslation()
@@ -25,12 +27,9 @@ const CreatePage: React.FC = () => {
 		setSubmitting(true)
 
 		try {
-			const { data } = await axios.post<UserWorkspace>(`/api/workspaces`, {
-				headers: { 'Content-Type': 'application/json' },
-				data: { ...values }
-			})
+			const { data } = await axios.post<UserWorkspace>(`/api/workspaces`, values)
 
-			toast(t('workspaceCreate:success', { name: data.workspace.name }))
+			toast.success(t('workspaceCreate:success', { name: data.workspace.name }))
 			router.push('/account')
 		} catch (error) {
 			console.log(error.response)
@@ -43,14 +42,12 @@ const CreatePage: React.FC = () => {
 
 	return (
 		<Layout>
-			<Button onClick={router.back}>
-				<ArrowLeftIcon className="w-6 h-6" />
-			</Button>
-			<Title className="text-center">{t('workspaceCreate:title')}</Title>
+			<Title hasBackBtn>{t('workspaceCreate:title')}</Title>
 			<Formik
 				initialValues={{
 					name: '',
-					description: ''
+					description: '',
+					isIndividual: false
 				}}
 				validationSchema={Yup.object({
 					name: workspaceName.label(t('workspaceCreate:name.label')),
@@ -99,7 +96,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const session = await getSession({ req })
 
 	if (!session) {
-		return authRedirect(req.url)
+		return authRedirect('/dashboard')
+	}
+
+	if (session.userDetails.isNewUser) {
+		return accountSetupRedirect()
 	}
 
 	return {

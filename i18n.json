@@ -1,14 +1,16 @@
 {
-  "locales": ["en", "es"],
-  "defaultLocale": "en",
-  "pages": {
-    "*": ["common", "metadata", "navigation", "errors", "validation"],
-    "/": ["home"],
-    "/account": ["account"],
-    "/account/edit": ["accountEdit"],
-    "/account-setup": ["accountSetup"],
-    "/auth/signin": ["signin"],
-    "/workspaces": ["workspaces"],
-    "/workspaces/create": ["workspaceCreate"]
-  }
+	"locales": ["en", "es"],
+	"defaultLocale": "en",
+	"pages": {
+		"*": ["common", "metadata", "navigation", "errors", "validation"],
+		"/": ["home"],
+		"/account": ["account"],
+		"/account/edit": ["accountEdit"],
+		"/account-setup": ["accountSetup"],
+		"/auth/signin": ["signin"],
+		"/workspaces": ["workspaces"],
+		"rgx:^/workspace": ["workspace"],
+		"/workspaces/create": ["workspaceCreate"],
+		"rgx:^/organize": ["calendar"]
+	}
 }

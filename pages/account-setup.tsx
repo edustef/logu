@@ -11,13 +11,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import { boolean, object, string, StringSchema } from 'yup'
 import Avatar from '../components/Atoms/Avatar'
 import Button from '../components/Atoms/Button'
-import { InputField, TextAreaField } from '../components/Atoms/Form'
+import { InputField, TextAreaField } from '../components/Atoms/Formik'
 import Title from '../components/Atoms/Title'
 import Card from '../components/Molecules/Card'
 import LayoutGuest from '../components/Templates/LayoutGuest'
 import { userImage, userName } from '../schemas/user.schema'
 import { workspaceDescription, workspaceName } from '../schemas/workspace.schema'
 import authRedirect from '../utils/authRedirect'
+import getAvatarName from '../utils/getAvatarName'
 import homeRedirect from '../utils/homeRedirect'
 
 interface Values {
@@ -56,12 +57,17 @@ const AccountSetupPage = ({ user }: InferGetServerSidePropsType<typeof getServer
 
 	const submit = async (values: Values) => {
 		try {
-			await axios.put(`/api/users/${user.id}`, { name: values.name, isNewUser: false })
+			await axios.put(`/api/users/${user.id}`, {
+				name: values.name,
+				isNewUser: false,
+				image: values.image ? values.image : getAvatarName({ name: values.name })
+			})
 
 			if (isIndividual()) {
 				await axios.post(`/api/workspaces`, {
 					name: t('accountSetup:individualWorkspace.name.defaultValue'),
-					description: t('accountSetup:individualWorkspace.defaultDescriptionValue')
+					description: t('accountSetup:individualWorkspace.defaultDescriptionValue'),
+					isIndividual: true
 				})
 			} else {
 				await axios.post(`/api/workspaces`, {
@@ -79,7 +85,9 @@ const AccountSetupPage = ({ user }: InferGetServerSidePropsType<typeof getServer
 	return (
 		<LayoutGuest>
 			<div className='max-w-lg mx-auto'>
-				<Title className='text-center'>{t('accountSetup:title')}</Title>
+				<Title position='center' className='text-center'>
+					{t('accountSetup:title')}
+				</Title>
 				<Formik
 					enableReinitialize={true}
 					initialValues={{

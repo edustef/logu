@@ -1,20 +1,19 @@
-import type { NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../utils/prisma'
-import nc from 'next-connect'
-import auth, { NextApiRequestWithUser } from '../../../middlewares/auth'
-import { Workspace } from '.prisma/client'
-import { YupWorkspaceData, YupWorkspaceObject } from '../../../schemas/workspace.schema'
+import { WorkspaceParams, YupWorkspaceData, YupWorkspaceObject } from '../../../schemas/workspace.schema'
 import StatusCode from 'status-code-enum'
 import { getSession } from 'next-auth/client'
 
-export default async function handle(req: NextApiRequestWithUser, res: NextApiResponse) {
+export default async function handle(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
-	const { skip, take, filter } = req.query
-	// console.log(take, filter)
+
+	if (!session) {
+		res.status(StatusCode.ClientErrorForbidden).end()
+	}
 
 	switch (req.method) {
 		case 'GET':
-			const result = await getWorkspaces(session.userDetails.id)
+			const result = await getWorkspaces(session.userDetails.id, req.query)
 			res.json(result)
 			break
 		case 'POST':
@@ -35,25 +34,24 @@ export default async function handle(req: NextApiRequestWithUser, res: NextApiRe
 	res.status(StatusCode.ClientErrorMethodNotAllowed).end()
 }
 
-export const getWorkspaces = async (id: string) => {
-	const data = await prisma.user.findUnique({
+export const getWorkspaces = async (userId: string, params?: WorkspaceParams) => {
+	const data = await prisma.workspace.findMany({
 		where: {
-			id
-		},
-		select: {
-			workspaces: {
-				take: 3,
-				orderBy: [
-					{
-						createdAt: 'desc'
+			AND: {
+				name: { contains: params?.name, mode: 'insensitive' },
+				users: {
+					some: {
+						userId
 					}
-				],
-				include: { workspace: true }
+				}
 			}
+		},
+		include: {
+			users: { include: { user: true } }
 		}
 	})
 
-	return data.workspaces.map(({ workspace }: { workspace: Workspace }) => workspace)
+	return data
 }
 
 export const createWorkspace = async (id: string, data: YupWorkspaceData) => {

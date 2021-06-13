@@ -8,11 +8,11 @@ export const userImage = string().url().notRequired()
 export const userEmail = string().email()
 export const userIsAdmin = boolean()
 
-export const UserWorkspaceObject = object({
+export const YupUserWorkspaceObject = object({
 	name: userName,
 	image: userImage,
 	workspaceName: workspaceName,
 	isAdmin: userIsAdmin
 })
 
-export interface UserWorkspaceData extends Asserts<typeof UserWorkspaceObject> {}
+export interface YupUserWorkspaceData extends Asserts<typeof YupUserWorkspaceObject> {}

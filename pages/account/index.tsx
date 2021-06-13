@@ -18,6 +18,8 @@ import Avatar from '../../components/Atoms/Avatar'
 import { Dialog, Transition } from '@headlessui/react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import accountSetupRedirect from '../../utils/accountSetupRedirect'
+import Preferences from '../../components/Molecules/Preferences'
 
 interface Props {
 	user: User
@@ -26,7 +28,7 @@ interface Props {
 const AccountPage: React.FC<Props> = ({ user }) => {
 	const { t } = useTranslation()
 	const workspaceTake = 5
-	const workspaces = useWorkspaces({ take: workspaceTake, filter: { qwe: 'asd' } })
+	const workspaces = useWorkspaces({ take: workspaceTake.toString() })
 	const [isDeleteModalOpen, setIsDeletModalOpen] = useState(false)
 	const [confirmEmail, setConfirmEmail] = useState('')
 
@@ -59,7 +61,7 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 						<Avatar url={user.image} width={50} height={50} className='rounded-full object-cover' />
 						<div className='ml-3 flex flex-col'>
 							<h2 className='font-semibold'>{user.name ?? t('account:noName')}</h2>
-							<small className='text-sm dark:text-gray-400'>{user.email}</small>
+							<small className='text-sm text-gray-400'>{user.email}</small>
 						</div>
 					</CardHeader>
 					<div className='flex justify-between'>
@@ -73,45 +75,52 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 				</Card>
 				<Card>
 					<CardHeader className='flex justify-between items-center'>
-						<h2 className='font-semibold'>{t('account:workspacesTitle')}</h2>
-						<Link href='/workspaces/create' className='bg-gray-700 text-white'>
+						<Link href='/workspaces'>
+							<h2 className='font-semibold'>{t('account:workspacesTitle')}</h2>
+						</Link>
+						<Link asBtn href='/workspaces/create' className='bg-gray-darkless text-white'>
 							{t('account:newWorkspace')}
 						</Link>
 					</CardHeader>
 					{workspaces.isLoading && <Skeleton count={2} />}
 					{workspaces.isError && <div>{t('errors:failedLoad')}</div>}
-					{workspaces.isSuccess &&
-						workspaces.data.map((workspace, index) => (
-							<Link
-								className={clsx(
-									index === 0 && 'border-none pt-0',
-									'border-t flex items-center rounded-none py-2 border-gray-700'
-								)}
-								href={`/workspaces/${workspace.id}`}
-								key={workspace.id}
-							>
-								<span className='flex-grow'>{workspace.name}</span>
-								<span>
-									<ArrowRightIcon className='w-4 h-4' />
-								</span>
+					<div className="divide-y divide-gray-darkless divide-opacity-30">
+						{workspaces.isSuccess &&
+							workspaces.data.map((workspace, index) => (
+								<Link
+									className={clsx(
+										index === 0 && 'border-none pt-0',
+										'border-t rounded-t-none border-opacity-30 flex items-center py-2 border-gray-700'
+									)}
+									href={`/workspaces/${workspace.id}`}
+									key={workspace.id}
+								>
+									<span className='flex-grow'>{workspace.name}</span>
+									<span>
+										<ArrowRightIcon className='w-4 h-4' />
+									</span>
+								</Link>
+							))}
+						{workspaces.isSuccess && workspaces.data.length === 0 && (
+							<div className='italic text-gray-400'>{t('account:noWorkspaces')}</div>
+						)}
+						{workspaces.data?.length === workspaceTake && (
+							<Link className='flex items-center text-blue-300' href='/workspaces'>
+								{t('account:seeAllWorkspaces')} <ArrowRightIcon className='ml-2 w-4 h-4' />
 							</Link>
-						))}
-					{workspaces.isSuccess && workspaces.data.length === 0 && (
-						<div className='italic text-gray-400'>{t('account:noWorkspaces')}</div>
-					)}
-					{workspaces.data?.length === workspaceTake && (
-						<Link className='flex items-center text-blue-300' href='/teams'>
-							{t('account:seeAllWorkspaces')} <ArrowRightIcon className='ml-2 w-4 h-4' />
-						</Link>
-					)}
+						)}
+					</div>
+				</Card>
+				<Card>
+					<CardHeader>
+						<h2 className='font-semibold'>{t('account:preferences.title')}</h2>
+					</CardHeader>
+					<Preferences />
 				</Card>
 				<Card>
 					<CardHeader>
 						<h2 className='font-semibold'>{t('account:manage.title')}</h2>
 					</CardHeader>
-					<div className='mb-2 text-gray-300 text-sm italic'>
-						If you no longer want to use this application you can chose to delete your account.
-					</div>
 					<Button onClick={() => setIsDeletModalOpen(true)} className='bg-red-500'>
 						{t('account:manage.delete')}
 					</Button>
@@ -191,12 +200,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 
 	if (session.isNewUser) {
-		return {
-			redirect: {
-				permanent: false,
-				destination: '/account-setup'
-			}
-		}
+		accountSetupRedirect()
 	}
 
 	return {

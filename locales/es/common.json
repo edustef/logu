@@ -1,10 +1,10 @@
 {
-  "title": "WorkLogger",
-  "powered": "Powered by",
-  "alt": "Vercel logo",
-  "english": "Ingles",
-  "spanish": "Español",
-  "signIn": "Iniciar Sesión",
-  "signOut": "Sign Out",
-  "today": "Hoy"
+	"title": "WorkLogger",
+	"powered": "Powered by",
+	"alt": "Vercel logo",
+	"english": "Ingles",
+	"spanish": "Español",
+	"signIn": "Iniciar Sesión",
+	"signOut": "Sign Out",
+	"today": "Hoy"
 }

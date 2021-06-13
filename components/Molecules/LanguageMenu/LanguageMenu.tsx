@@ -3,8 +3,6 @@ import { useRouter } from 'next/router'
 import clsx from 'clsx'
 import { CheckIcon, GlobeAltIcon } from '@heroicons/react/outline'
 import { Listbox, Transition } from '@headlessui/react'
-import 'dayjs/locale/es'
-import 'dayjs/locale/en'
 import { useLanguage} from '../../../hooks/useLanguage'
 import Link from '../../Atoms/Link'
 import languages from '../../../constants/languages'
@@ -19,10 +17,9 @@ const LanguageMenu: React.FC<Props> = ({ className, popupRight = false }) => {
 		options: clsx(
 			'absolute border border-gray-600 w-32 rounded-md shadow-md ml-4 py-2 z-10',
 			popupRight ? 'right-0' : '',
-			'bg-white text-black',
-			'dark:bg-gray-darkless dark:text-white shadow-md'
+			'bg-gray-darkless text-white shadow-md'
 		),
-		listItem: (active) => clsx(active && 'bg-green-300 dark:bg-green-600', 'p-1')
+		listItem: (active) => clsx(active && 'bg-green-600', 'p-1')
 	}
 
 	const router = useRouter()

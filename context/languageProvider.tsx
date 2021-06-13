@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import languages, { Language } from '../constants/languages'
 
 interface Props {
@@ -11,12 +11,13 @@ export const LanguageContext = React.createContext<[Language, React.Dispatch<Lan
 
 const LanguageProvider: React.FC<Props> = ({ children }) => {
 	const router = useRouter()
+
 	const [currentLanguage, setCurrentLanguage] = useState(
 		languages.find((language) => language.locale === router.locale)
 	)
 
 	useEffect(() => {
-		dayjs.locale(currentLanguage.locale)
+		dayjs.locale(currentLanguage.locale === 'en' ? 'en-gb' : 'es')
 	}, [currentLanguage])
 
 	return <LanguageContext.Provider value={[currentLanguage, setCurrentLanguage]}>{children}</LanguageContext.Provider>

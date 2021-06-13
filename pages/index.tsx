@@ -22,7 +22,7 @@ const HomePage: React.FC<Props> = () => {
 				<LoguSvg className='w-24 h-24' />
 			</div>
 			<div className='flex justify-center'>
-				<Link href='/account' className='bg-white text-black uppercase mr-3'>
+				<Link asBtn href='/account' className='bg-white text-black uppercase mr-3'>
 					Get started
 				</Link>
 				<Button className='border border-white uppercase'>Discover</Button>
@@ -35,6 +35,7 @@ export default HomePage
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const session = await getSession({ req })
+	
 	if (session) {
 		return {
 			redirect: {

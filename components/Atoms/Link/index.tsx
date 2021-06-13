@@ -5,12 +5,13 @@ import React from 'react'
 
 interface Props extends LinkProps {
 	className?: string
+	asBtn?: boolean
 }
 
-const Link: React.FC<Props> = ({ className, children, ...props }) => {
+const Link: React.FC<Props> = ({ className, asBtn = false, children, ...props }) => {
 	return (
 		<NextLink {...props}>
-			<a className={clsx('px-2 py-1 rounded font-semibold', className)}>{children}</a>
+			<a className={clsx('py-1 rounded font-semibold', asBtn && 'px-2', className)}>{children}</a>
 		</NextLink>
 	)
 }

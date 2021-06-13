@@ -27,8 +27,8 @@ const LayoutGuest: React.FC<Props> = ({ children, className }) => {
 				<meta name='application-name' content='Logu' />
 				<meta name='msapplication-TileColor' content='#000' />
 			</Head>
-			<main className='flex flex-col items-stretch min-h-screen w-full px-3 dark:text-white dark:bg-gray-darkest'>
-				<div className={clsx(className, 'pt-6 h-0 flex-grow')}>{children}</div>
+			<main className='flex flex-col items-stretch min-h-screen w-full px-3 text-white bg-gray-darkest'>
+				<div className={clsx(className, 'pt-6 flex-grow mb-6')}>{children}</div>
 			</main>
 		</>
 	)
