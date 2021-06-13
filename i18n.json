@@ -9,6 +9,7 @@
 		"/account-setup": ["accountSetup"],
 		"/auth/signin": ["signin"],
 		"/workspaces": ["workspaces"],
+		"rgx:^/workspace": ["workspace"],
 		"/workspaces/create": ["workspaceCreate"],
 		"rgx:^/organize": ["calendar"]
 	}

@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../utils/prisma'
-import { YupWorkspaceData, YupWorkspaceObject } from '../../../schemas/workspace.schema'
+import { WorkspaceParams, YupWorkspaceData, YupWorkspaceObject } from '../../../schemas/workspace.schema'
 import StatusCode from 'status-code-enum'
 import { getSession } from 'next-auth/client'
-import { WorkspaceParams } from '../../../models/WorkspaceParams'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
@@ -18,6 +17,8 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 			res.json(result)
 			break
 		case 'POST':
+			console.log(req.body)
+
 			const isValid = await YupWorkspaceObject.isValid(req.body)
 			if (isValid) {
 				const result = await createWorkspace(session.userDetails.id, req.body)

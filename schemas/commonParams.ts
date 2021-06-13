@@ -1,5 +1,5 @@
 export interface CommonParams {
-	skip?: number
-	take?: number
+	skip?: string
+	take?: string
 	sort?: ['ASC' | 'DESC', string]
 }

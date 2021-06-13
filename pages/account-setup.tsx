@@ -11,7 +11,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { boolean, object, string, StringSchema } from 'yup'
 import Avatar from '../components/Atoms/Avatar'
 import Button from '../components/Atoms/Button'
-import { InputField, TextAreaField } from '../components/Atoms/Form'
+import { InputField, TextAreaField } from '../components/Atoms/Formik'
 import Title from '../components/Atoms/Title'
 import Card from '../components/Molecules/Card'
 import LayoutGuest from '../components/Templates/LayoutGuest'
@@ -60,13 +60,14 @@ const AccountSetupPage = ({ user }: InferGetServerSidePropsType<typeof getServer
 			await axios.put(`/api/users/${user.id}`, {
 				name: values.name,
 				isNewUser: false,
-				image: !values.image ? getAvatarName({ name: values.name }) : ''
+				image: values.image ? values.image : getAvatarName({ name: values.name })
 			})
 
 			if (isIndividual()) {
 				await axios.post(`/api/workspaces`, {
 					name: t('accountSetup:individualWorkspace.name.defaultValue'),
-					description: t('accountSetup:individualWorkspace.defaultDescriptionValue')
+					description: t('accountSetup:individualWorkspace.defaultDescriptionValue'),
+					isIndividual: true
 				})
 			} else {
 				await axios.post(`/api/workspaces`, {

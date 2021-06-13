@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { Workspace } from '.prisma/client'
-import { WorkspaceParams } from '../models/WorkspaceParams'
 import { WorkspaceWithUsers } from '../schemas/userWorkspace.schema'
+import { WorkspaceParams } from '../schemas/workspace.schema'
 
 export default function useWorkspaces(props: WorkspaceParams = {}) {
 	return useQuery(['workspaces', props], async () => {

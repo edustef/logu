@@ -56,18 +56,6 @@ export const updateUser = async (id: string, data: YupUserData) => {
 }
 
 export const deleteUser = async (id: string) => {
-	const workspacesWhereUserIsAdmin = await prisma.workspace.findMany({
-		where: {
-			users: {
-				some: {
-					AND: [{ userId: id }, { isAdmin: true }]
-				}
-			}
-		},
-		select: { id: true }
-	})
-	console.log(workspacesWhereUserIsAdmin)
-
 	const sessionDelete = prisma.session.deleteMany({
 		where: {
 			userId: id
@@ -81,7 +69,9 @@ export const deleteUser = async (id: string) => {
 
 	const userWorkspaceScheduleDelete = prisma.userWorkspaceSchedule.deleteMany({
 		where: {
-			userId: id
+			userWorkspace: {
+				userId: id
+			}
 		}
 	})
 
@@ -97,12 +87,14 @@ export const deleteUser = async (id: string) => {
 		}
 	})
 
-	const deleteWorkspacesTransaction = workspacesWhereUserIsAdmin.map(({ id }) => {
-		return prisma.workspace.delete({
-			where: {
-				id
+	const deleteWorkspacesTransaction = prisma.workspace.deleteMany({
+		where: {
+			users: {
+				some: {
+					AND: { userId: id, isAdmin: true }
+				}
 			}
-		})
+		}
 	})
 
 	return await prisma.$transaction([
@@ -110,7 +102,7 @@ export const deleteUser = async (id: string) => {
 		accountDelete,
 		userWorkspaceScheduleDelete,
 		userWorkspaceDelete,
-		...deleteWorkspacesTransaction,
+		deleteWorkspacesTransaction,
 		userDelete
 	])
 }
