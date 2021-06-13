@@ -46,7 +46,8 @@ const CreatePage: React.FC = () => {
 			<Formik
 				initialValues={{
 					name: '',
-					description: ''
+					description: '',
+					isIndividual: false
 				}}
 				validationSchema={Yup.object({
 					name: workspaceName.label(t('workspaceCreate:name.label')),
