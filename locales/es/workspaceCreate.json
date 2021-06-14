@@ -1,0 +1,14 @@
+{
+  "title": "Crear espacio de trabajo",
+  "createWorkspace": "Crear espacio de trabajo",
+  "success": "Espacio de trabajo, {{name}}, se ha creado con éxito.",
+  "error": "Hubo un problema al crear el espacio de trabajo.",
+  "name": {
+    "label": "Nombre",
+    "placeholder": "Mi maravilloso espacio de trabajo"
+  },
+  "description": {
+    "label": "Descripción",
+    "placeholder": "Breve descripción del espacio de trabajo."
+  }
+}

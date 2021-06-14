@@ -1,11 +1,5 @@
 {
   "continue": "Continue with",
-  "form": {
-    "email": {
-      "label": "Email",
-      "placeholder": "joe@example.com"
-    }
-  },
   "signWithEmail": "Sign in with magic link",
   "signWithGoogle": "Google",
   "goToHome": "Go to landing page"

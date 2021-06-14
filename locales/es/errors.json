@@ -1,3 +1,13 @@
 {
-  "failedLoad": "Algo salió mal al cargar..."
+	"failedLoad": "Algo salió mal al cargar...",
+	"page": {
+		"notFound": "No se ha encontrado"
+	},
+	"failedPost": "Algo salió mal.",
+	"auth": {
+		"Configuration": "Hay un problema con la configuración del servidor",
+		"Verification": "Error de verificación. El token ha caducado o ya ha sido utilizado.",
+		"AccessDenied": "Acceso restringido.",
+		"Default": "Se ha producido un error inesperado. Por favor, inténtelo de nuevo o póngase en contacto con nosotros."
+	}
 }

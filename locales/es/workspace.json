@@ -1,0 +1,13 @@
+{
+	"members": "Miembros",
+	"addUsers": "Invitar a los usuarios",
+	"organizeBtn": "Organizar",
+	"invite": {
+		"title": "Invitar a los usuarios",
+		"addUserBtn": "Añadir usuario",
+		"listTitle": "Lista de usuarios a invitar",
+		"emptyList": "La lista está vacía. Intenta añadir algunos usuarios.",
+		"noteAboutInvitation": "Nota. Los usuarios deben estar registrados para recibir la invitación.",
+		"success": "Invitaciones enviadas con éxito."
+	}
+}

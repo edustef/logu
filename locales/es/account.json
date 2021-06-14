@@ -1,9 +1,22 @@
 {
-  "workspacesTitle": "Manage workspaces",
-  "developersTitle": "For developers",
-  "generateAPI": "Generate API Key",
-  "editProfile": "Edit Profile",
-  "newWorkspace": "New workspace",
-  "addWorkspace": "Add workspace",
-  "noWorkspaces": "You have no workspace."
+	"noName": "Sin nombre",
+	"workspacesTitle": "Espacios de trabajo",
+	"editProfile": "Editar perfil",
+	"newWorkspace": "Nuevo espacio",
+	"addWorkspace": "Añadir espacio",
+	"noWorkspaces": "No tienes espacio de trabajo.",
+	"seeAllWorkspaces": "Ver todo",
+	"preferences": {
+		"title": "Preferencias"
+	},
+	"manage": {
+		"title": "Gestionar la cuenta",
+		"delete": "Eliminar la cuenta",
+		"deleteModalTitle": "¿Estás seguro de que quieres eliminar esta cuenta?",
+		"confirmButton": "Confirmar el borrado",
+		"emailLabel": "Introduzca su correo electrónico para confirmar",
+		"emailPlaceholder": "Su correo electrónico",
+		"deleteSuccess": "Cuenta eliminada con éxito.",
+		"deleteError": "Algo salió mal al borrar la cuenta."
+	}
 }

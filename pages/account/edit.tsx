@@ -61,7 +61,7 @@ const EditAccountPage = ({ user }: InferGetServerSidePropsType<typeof getServerS
 									icon={<UserIcon className='w-full h-full text-current' />}
 									name='name'
 									type='text'
-									placeholder={t('accountEdit:name.placeholder')}
+									placeholder={t('common:namePlaceholder')}
 								/>
 							</Card>
 							<Button

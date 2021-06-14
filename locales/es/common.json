@@ -1,10 +1,12 @@
 {
 	"title": "WorkLogger",
-	"powered": "Powered by",
-	"alt": "Vercel logo",
-	"english": "Ingles",
-	"spanish": "Español",
-	"signIn": "Iniciar Sesión",
-	"signOut": "Sign Out",
-	"today": "Hoy"
+	"signIn": "Registrarse",
+	"signOut": "Cerrar la sesión",
+	"today": "Hoy",
+	"avatarAlt": "Foto de perfil",
+	"namePlaceholder": "Antonio Fernández",
+	"email": {
+		"label": "Correo electrónico",
+		"placeholder": "antoniofernandez@example.com"
+	}
 }

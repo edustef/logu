@@ -3,7 +3,7 @@ import useTranslation from 'next-translate/useTranslation'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
-import BottomNavbar from '../Molecules/BottomNavbar'
+import BottomNavbar, { DesktopMenu } from '../Molecules/Navigation'
 
 interface Props {
 	className?: string
@@ -37,10 +37,11 @@ const Layout: React.FC<Props> = ({ children, className = '', page }) => {
 				<meta name='application-name' content='Logu' />
 				<meta name='msapplication-TileColor' content='#000' />
 			</Head>
-			<main className='flex w-full h-full items-stretch p-3 flex-grow mb-[60px]'>
+			<DesktopMenu className='hidden md:block' />
+			<main className='flex w-full h-full items-stretch p-3 md:p-8 flex-grow mb-[60px] md:mb-0'>
 				<div className='w-full'>{children}</div>
 			</main>
-			<BottomNavbar />
+			<BottomNavbar className='md:hidden' />
 		</div>
 	)
 }

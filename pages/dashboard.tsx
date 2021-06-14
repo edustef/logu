@@ -7,31 +7,19 @@ import Title from '../components/Atoms/Title'
 import authRedirect from '../utils/authRedirect'
 import accountSetupRedirect from '../utils/accountSetupRedirect'
 import Notifications from '../components/Molecules/Notifications'
-import { Notification, User } from '@prisma/client'
-import { useQuery } from 'react-query'
-import axios from 'axios'
+import { User } from '@prisma/client'
 
 const DashboardPage = ({ user }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { t } = useTranslation()
 	const session = useSession()[0]
 	const userId = session?.userDetails?.id
 
-	const notifications = useQuery(
-		['notifications', userId],
-		async () => {
-			const { data } = await axios.get<Notification[]>(`/api/notifications?userId=${session.userDetails.id}`)
-
-			return data
-		},
-		{ enabled: !!userId }
-	)
-
 	return (
 		<Layout page={t('navigation:dashboard')}>
 			<div className='page'>
 				<div className='flex items-center'>
 					<Title className='flex-grow'>{t('navigation:dashboard')}</Title>
-					<Notifications notifications={notifications} />
+					<Notifications className="md:hidden" />
 				</div>
 				<main></main>
 			</div>

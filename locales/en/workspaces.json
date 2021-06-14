@@ -1,6 +1,6 @@
 {
-  "search": {
-    "placeholder": "Search workspace"
-  },
-  "noData": "No workspaces found."
+	"search": {
+		"placeholder": "Buscar espacio de trabajo"
+	},
+	"noData": "No se han encontrado espacios de trabajo."
 }

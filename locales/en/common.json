@@ -1,13 +1,12 @@
 {
-	"title": "WorkLogger",
-	"powered": "Powered by",
-	"alt": "Vercel logo",
+	"title": "Logu",
 	"english": "English",
 	"spanish": "Spanish",
 	"signIn": "Sign In",
 	"signOut": "Sign Out",
 	"today": "Today",
 	"avatarAlt": "Profile picture",
+	"namePlaceholder": "John Smith",
 	"email": {
 		"label": "Email",
 		"placeholder": "joe@example.com"

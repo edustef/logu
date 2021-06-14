@@ -1,0 +1,12 @@
+{
+  "title": "Editar perfil",
+  "name": {
+    "label": "Nombre"
+  },
+  "image": {
+    "label": "Pegue la url de su imagen aquí"
+  },
+  "submit": "Actualizar el perfil",
+  "success": "Perfil actualizado con éxito.",
+  "error": "Algo ha ido mal. Por favor, inténtelo de nuevo."
+}

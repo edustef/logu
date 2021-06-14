@@ -61,12 +61,12 @@ const SignIn: React.FC<InferGetServerSidePropsType<typeof getServerSideProps>> =
 						<Form>
 							<>
 								<InputField
-									label={t('signin:form.email.label')}
+									label={t('common:email.label')}
 									className='w-full'
 									icon={<MailIcon className='w-full h-full text-current' />}
 									name='email'
 									type='email'
-									placeholder={t('signin:form.email.placeholder')}
+									placeholder={t('common:email.placeholder')}
 								/>
 								<Button
 									disabled={isSubmitting}

@@ -3,8 +3,7 @@ import { useRouter } from 'next/router'
 import clsx from 'clsx'
 import { CheckIcon, GlobeAltIcon } from '@heroicons/react/outline'
 import { Listbox, Transition } from '@headlessui/react'
-import { useLanguage} from '../../../hooks/useLanguage'
-import Link from '../../Atoms/Link'
+import { useLanguage } from '../../../hooks/useLanguage'
 import languages from '../../../constants/languages'
 
 interface Props {
@@ -22,7 +21,6 @@ const LanguageMenu: React.FC<Props> = ({ className, popupRight = false }) => {
 		listItem: (active) => clsx(active && 'bg-green-600', 'p-1')
 	}
 
-	const router = useRouter()
 	const [currentLanguage, setCurrentLanguage] = useLanguage()
 
 	return (
@@ -45,10 +43,10 @@ const LanguageMenu: React.FC<Props> = ({ className, popupRight = false }) => {
 							<Listbox.Option key={language.locale} value={language} as={Fragment}>
 								{({ active, selected }) => (
 									<li className={styles.listItem(active)}>
-										<Link className='flex' href={router.pathname} locale={language.locale}>
+										<div className='flex'>
 											{selected && <CheckIcon className='w-6 h-6' />}
 											{language.name}
-										</Link>
+										</div>
 									</li>
 								)}
 							</Listbox.Option>

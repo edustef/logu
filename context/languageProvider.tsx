@@ -18,6 +18,9 @@ const LanguageProvider: React.FC<Props> = ({ children }) => {
 
 	useEffect(() => {
 		dayjs.locale(currentLanguage.locale === 'en' ? 'en-gb' : 'es')
+		router.replace(router.pathname, router.asPath, {
+			locale: currentLanguage.locale
+		})
 	}, [currentLanguage])
 
 	return <LanguageContext.Provider value={[currentLanguage, setCurrentLanguage]}>{children}</LanguageContext.Provider>

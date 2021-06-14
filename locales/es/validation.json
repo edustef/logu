@@ -1,1 +1,9 @@
-{}
+{
+  "invalidField": "{{label}} no es válido.",
+  "notNumberFirst": "{{label}} no puede empezar con los números.",
+  "onlyWords": "{{label}} no puede contener números.",
+  "required": "{{label}} es necesario.",
+  "min": "Debe ser como mínimo {{min}} letras",
+  "max": "Debe ser como máximo {{max}} caracteres o menos.",
+  "email": "El correo electrónico no es válido."
+}

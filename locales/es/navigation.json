@@ -1,7 +1,7 @@
 {
-  "home": "Inicio",
+  "welcome": "Bienvenido",
+  "dashboard": "Dashboard",
   "organize": "Organizar",
-  "organize-desc": "Registra tu pasado, planifica tu futuro.",
-  "report": "Informe",
+  "reports": "Informes",
   "account": "Cuenta"
 }

@@ -1,21 +1,21 @@
 import { Popover } from '@headlessui/react'
 import { BellIcon } from '@heroicons/react/outline'
-import { Notification } from '@prisma/client'
 import React from 'react'
 import Button from '../../Atoms/Button'
 import Invitation from './NotificationTypes'
 import Skeleton from 'react-loading-skeleton'
 import axios from 'axios'
-import { UseQueryResult } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
+import { useNotifications } from '../../../hooks/useNotifications'
+import clsx from 'clsx'
 
 interface Props {
 	className?: string
-	notifications: UseQueryResult<Notification[], unknown>
 }
 
-const Notifications: React.FC<Props> = ({ className, notifications }) => {
+const Notifications: React.FC<Props> = ({ className }) => {
 	const { t } = useTranslation()
+	const notifications = useNotifications()
 
 	const handleClearAll = async () => {
 		try {
@@ -30,7 +30,7 @@ const Notifications: React.FC<Props> = ({ className, notifications }) => {
 	}
 
 	return (
-		<Popover className='relative'>
+		<Popover className={clsx('relative', className)}>
 			<Popover.Button>
 				{notifications.isSuccess && notifications.data.length !== 0 && (
 					<div className='absolute top-0 right-0 w-3 h-3 rounded-full bg-green-500'></div>

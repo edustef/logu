@@ -5,18 +5,19 @@ import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { NavLink, NavigationRouter } from '.'
 
-export default function BottomNavbar() {
+interface Props {
+	className?: string
+}
+
+const BottomNavbar: React.FC<Props> = ({ className }) => {
 	const styles = {
-		root: clsx([
-			'block fixed shadow border-t-2 inset-x-0 bottom-0 z-10',
-			'border-gray-dark bg-gray-darkest'
-		])
+		root: clsx(['block fixed shadow border-t-2 inset-x-0 bottom-0 z-10', 'border-gray-dark bg-gray-darkest'])
 	}
 	const router = useRouter()
 	const { t } = useTranslation()
 
 	return (
-		<section id='bottom-navigation' className={styles.root}>
+		<nav id='bottom-navigation' className={clsx(className, styles.root)}>
 			<div id='tabs' className='flex justify-between'>
 				<NavigationRouter currentPath={router.pathname}>
 					<NavLink path='/dashboard' name={t('navigation:dashboard')}>
@@ -33,6 +34,8 @@ export default function BottomNavbar() {
 					</NavLink>
 				</NavigationRouter>
 			</div>
-		</section>
+		</nav>
 	)
 }
+
+export default BottomNavbar

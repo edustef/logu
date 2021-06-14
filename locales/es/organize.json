@@ -1,4 +1,25 @@
 {
-	"createSchedule": "Planning",
-	"log": "Log the activity"
+	"title": "Organizar",
+	"addSchedule": "Añadir horario",
+	"form": {
+		"start": {
+			"label": "Fecha de inicio"
+		},
+		"end": {
+			"label": "Fecha de finalización"
+		},
+		"name": {
+			"label": "Nombre del horario",
+			"placeholder": "Nombre"
+		},
+		"description": {
+			"label": "Descripción del horario",
+			"placeholder": "Breve descripción..."
+		},
+		"success": "Programa creado con éxito.",
+		"submit": "Enviar"
+	},
+	"schedule": {
+		"title": "Horarios"
+	}
 }

@@ -13,6 +13,7 @@ import XButton from '../components/Atoms/XButton'
 import clsx from 'clsx'
 import { dayjsConfig } from '../config/dayjs.config'
 import yupConfig from '../config/yup.config'
+import NotificationsProvider from '../context/notificationsProvider'
 
 const queryClient = new QueryClient()
 
@@ -47,22 +48,24 @@ const App = ({ Component, pageProps }: AppProps) => {
 				>
 					<GoogleOneTapProvider>
 						<LanguageProvider>
-							<SkeletonTheme color='#374151' highlightColor='#4b5563'>
-								<ToastContainer
-									toastClassName={({ type }) =>
-										clsx(
-											contextClass[type || 'default'],
-											'relative text-white flex p-1 min-h-10 shadow-md justify-between overflow-hidden cursor-pointer'
-										)
-									}
-									bodyClassName={() => 'text-sm font-white font-med block p-3'}
-									position='top-right'
-									autoClose={6000}
-									draggable={false}
-									closeButton={XButton}
-								/>
-								<Component {...pageProps} />
-							</SkeletonTheme>
+							<NotificationsProvider>
+								<SkeletonTheme color='#374151' highlightColor='#4b5563'>
+									<ToastContainer
+										toastClassName={({ type }) =>
+											clsx(
+												contextClass[type || 'default'],
+												'relative text-white flex p-1 min-h-10 shadow-md justify-between overflow-hidden cursor-pointer'
+											)
+										}
+										bodyClassName={() => 'text-sm font-white font-med block p-3'}
+										position='top-right'
+										autoClose={6000}
+										draggable={false}
+										closeButton={XButton}
+									/>
+									<Component {...pageProps} />
+								</SkeletonTheme>
+							</NotificationsProvider>
 						</LanguageProvider>
 					</GoogleOneTapProvider>
 				</Provider>
