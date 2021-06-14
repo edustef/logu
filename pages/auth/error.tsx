@@ -13,7 +13,7 @@ const AuthErrorPage = () => {
 	return (
 		<LayoutGuest>
 			<div className='h-full flex flex-col items-center justify-center'>
-				<Title className='text-center'>Something went wrong :(</Title>
+				<Title className='text-center'>{t('errors:failedPost')}</Title>
 				{error && <div className='text-center'>{t(`errors:auth.${error}`)}</div>}
 			</div>
 		</LayoutGuest>

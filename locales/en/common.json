@@ -10,5 +10,7 @@
 	"email": {
 		"label": "Email",
 		"placeholder": "joe@example.com"
-	}
+	},
+	"emptyNotifications": "You don't have any notifications.",
+	"verifyRequest": "Verification sent succesfully. Check your email to continue the sign in."
 }

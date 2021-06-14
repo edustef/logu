@@ -80,13 +80,13 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 							<h2 className='font-semibold'>{t('account:workspacesTitle')}</h2>
 						</Link>
 						<Link asBtn href='/workspaces/create' className='bg-gray-darkless text-white'>
-							<PlusIcon className="w-6 h-6 mr-1" />
+							<PlusIcon className='w-6 h-6 mr-1' />
 							{t('account:newWorkspace')}
 						</Link>
 					</CardHeader>
 					{workspaces.isLoading && <Skeleton count={2} />}
 					{workspaces.isError && <div>{t('errors:failedLoad')}</div>}
-					<div className="divide-y divide-gray-darkless divide-opacity-30">
+					<div className='divide-y divide-gray-darkless divide-opacity-30'>
 						{workspaces.isSuccess &&
 							workspaces.data.map((workspace, index) => (
 								<Link

@@ -20,7 +20,7 @@ const OrganizePage = ({ workspace, user }: InferGetServerSidePropsType<typeof ge
 	const { t } = useTranslation()
 
 	return (
-		<Layout>
+		<Layout fullWidth>
 			<div className='flex flex-col h-full'>
 				<WorkspaceDropdown current={workspace} className='mt-2 text-2xl font-semibold' />
 				<div className='mt-6 flex-grow'>

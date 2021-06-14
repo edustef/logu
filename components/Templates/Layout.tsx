@@ -9,9 +9,10 @@ interface Props {
 	className?: string
 	children: React.ReactNode
 	page?: string
+	fullWidth?: boolean
 }
 
-const Layout: React.FC<Props> = ({ children, className = '', page }) => {
+const Layout: React.FC<Props> = ({ children, className = '', page, fullWidth = false }) => {
 	const styles = {
 		root: clsx(['flex flex-col min-h-screen', 'bg-gray-darkest text-white', className])
 	}
@@ -38,7 +39,12 @@ const Layout: React.FC<Props> = ({ children, className = '', page }) => {
 				<meta name='msapplication-TileColor' content='#000' />
 			</Head>
 			<DesktopMenu className='hidden md:block' />
-			<main className='flex w-full h-full items-stretch p-3 md:p-8 flex-grow mb-[60px] md:mb-0'>
+			<main
+				className={clsx(
+					!fullWidth && 'max-w-3xl mx-auto',
+					'flex w-full h-full items-stretch p-3 md:p-8 flex-grow mb-[60px] md:mb-0'
+				)}
+			>
 				<div className='w-full'>{children}</div>
 			</main>
 			<BottomNavbar className='md:hidden' />

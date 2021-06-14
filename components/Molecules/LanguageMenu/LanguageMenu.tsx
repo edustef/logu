@@ -43,7 +43,7 @@ const LanguageMenu: React.FC<Props> = ({ className, popupRight = false }) => {
 							<Listbox.Option key={language.locale} value={language} as={Fragment}>
 								{({ active, selected }) => (
 									<li className={styles.listItem(active)}>
-										<div className='flex'>
+										<div className='flex cursor-pointer'>
 											{selected && <CheckIcon className='w-6 h-6' />}
 											{language.name}
 										</div>

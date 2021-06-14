@@ -43,7 +43,7 @@ const Notifications: React.FC<Props> = ({ className }) => {
 					<div className='divide-y divide-gray-darkless'>
 						{notifications.isLoading && <Skeleton count={4} height={50} />}
 						{notifications.isSuccess && notifications.data.length < 1 && (
-							<div className='italic text-gray-400'>{t('dashboard:emptyNotifications')}</div>
+							<div className='italic text-gray-400'>{t('common:emptyNotifications')}</div>
 						)}
 						{notifications.isSuccess &&
 							notifications.data.map((notification) => {

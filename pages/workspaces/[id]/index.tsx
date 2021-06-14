@@ -29,10 +29,12 @@ const WorkspacePage = ({ workspace, user }: InferGetServerSidePropsType<typeof g
 	return (
 		<Layout>
 			<Title hasBackBtn>{workspace.name}</Title>
-			<Link asBtn className='bg-gray-darkless mt-2' href={`/organize/${workspace.id}`}>
-				<ViewGridAddIcon className='w-6 h-6 mr-1' />
-				{t('workspace:organizeBtn')}
-			</Link>
+			{isAdmin() && (
+				<Link asBtn className='bg-gray-darkless mt-2' href={`/organize/${workspace.id}`}>
+					<ViewGridAddIcon className='w-6 h-6 mr-1' />
+					{t('workspace:organizeBtn')}
+				</Link>
+			)}
 			<div className='space-y-3 mt-3'>
 				{!workspace.isIndividual && (
 					<Card>
@@ -40,7 +42,7 @@ const WorkspacePage = ({ workspace, user }: InferGetServerSidePropsType<typeof g
 							<h2 className='font-semibold'>{t('workspace:members')}</h2>
 							{isAdmin() && (
 								<Link asBtn href={`/workspaces/${workspace.id}/invite`} className='bg-gray-darkless'>
-									<MailOpenIcon className="w-6 h-6 mr-1" />
+									<MailOpenIcon className='w-6 h-6 mr-1' />
 									{t('workspace:addUsers')}
 								</Link>
 							)}

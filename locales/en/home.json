@@ -1,3 +1,17 @@
 {
-
+	"getStarted": "Get started",
+	"subtitle1": "Log your past.",
+	"subtitle2": "Plan your future.",
+	"feature1": {
+		"title": "Manage your tasks",
+		"description": "You can plan future tasks or simply record the ones you have done."
+	},
+	"feature2": {
+		"title": "Is a website but feels like an app",
+		"description": "Built with technologies that uses the full power of the web."
+	},
+	"feature3": {
+		"title": "Work as a team.",
+		"description": "Create workspaces and add your team. You can create, share and collaborate your plans."
+	}
 }

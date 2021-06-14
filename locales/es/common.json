@@ -8,5 +8,7 @@
 	"email": {
 		"label": "Correo electrónico",
 		"placeholder": "antoniofernandez@example.com"
-	}
+	},
+	"emptyNotifications": "You don't have any notifications.",
+	"verifyRequest": "Verificación enviada con éxito. Compruebe su correo electrónico para continuar con el inicio de sesión."
 }

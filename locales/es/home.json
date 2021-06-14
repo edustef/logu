@@ -1,3 +1,17 @@
 {
-
+	"getStarted": "Empezar",
+	"subtitle1": "Registra tu pasado.",
+	"subtitle2": "Planifica tu futuro.",
+	"feature1": {
+		"title": "Gestione sus tareas",
+		"description": "Puede planificar las tareas futuras o simplemente registrar las que ha realizado."
+	},
+	"feature2": {
+		"title": "Es un sitio web pero se siente como una aplicación",
+		"description": "Desarrollado con tecnologías que utilizan toda la potencia de la web."
+	},
+	"feature3": {
+		"title": "Trabajar en equipo",
+		"description": "Crea espacios de trabajo y añade a tu equipo. Puedes crear, compartir y colaborar tus planes."
+	}
 }

@@ -12,7 +12,7 @@ const OrganizePage: React.FC = () => {
 	const { t } = useTranslation()
 
 	return (
-		<Layout>
+		<Layout fullWidth>
 			<div></div>
 		</Layout>
 	)

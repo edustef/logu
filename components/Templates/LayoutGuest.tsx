@@ -7,9 +7,10 @@ import clsx from 'clsx'
 interface Props {
 	className?: string
 	children: React.ReactNode
+	fullWidth?: boolean
 }
 
-const LayoutGuest: React.FC<Props> = ({ children, className }) => {
+const LayoutGuest: React.FC<Props> = ({ children, className, fullWidth = false }) => {
 	const { t } = useTranslation()
 
 	return (
@@ -27,7 +28,12 @@ const LayoutGuest: React.FC<Props> = ({ children, className }) => {
 				<meta name='application-name' content='Logu' />
 				<meta name='msapplication-TileColor' content='#000' />
 			</Head>
-			<main className='flex flex-col items-stretch min-h-screen w-full px-3 text-white bg-gray-darkest'>
+			<main
+				className={clsx(
+					!fullWidth && 'mx-auto max-w-3xl',
+					'flex flex-col items-stretch min-h-screen w-full px-3 text-white bg-gray-darkest'
+				)}
+			>
 				<div className={clsx(className, 'pt-6 flex-grow mb-6')}>{children}</div>
 			</main>
 		</>

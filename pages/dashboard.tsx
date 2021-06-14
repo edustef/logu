@@ -15,13 +15,15 @@ const DashboardPage = ({ user }: InferGetServerSidePropsType<typeof getServerSid
 	const userId = session?.userDetails?.id
 
 	return (
-		<Layout page={t('navigation:dashboard')}>
+		<Layout fullWidth page={t('navigation:dashboard')}>
 			<div className='page'>
 				<div className='flex items-center'>
 					<Title className='flex-grow'>{t('navigation:dashboard')}</Title>
 					<Notifications className="md:hidden" />
 				</div>
-				<main></main>
+				<main>
+					
+				</main>
 			</div>
 		</Layout>
 	)
