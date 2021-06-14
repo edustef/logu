@@ -1,0 +1,40 @@
+{
+	"title": "Configuración de la cuenta",
+	"name": {
+		"label": "Nombre",
+		"placeholder": "Antonio Fernández"
+	},
+	"image": {
+		"label": "Pegue la url de su imagen aquí"
+	},
+	"individualWorkspace": {
+		"name": {
+			"label": "Su primer espacio de trabajo",
+			"placeholder": "Mi primer espacio de trabajo",
+			"defaultValue": "Espacio de trabajo personal"
+		},
+		"defaultDescriptionValue": "Espacio de trabajo creado por defecto en la configuración de la cuenta."
+	},
+	"teamWorkspace": {
+		"name": {
+			"label": "El nombre del espacio de trabajo de su equipo",
+			"placeholder": "Mi primer espacio de trabajo",
+			"defaultValue": "Mi espacio de trabajo en equipo"
+		},
+		"description": {
+			"label": "Descripción del espacio de trabajo",
+			"placeholder": "Describe the workspace here..."
+		}
+	},
+	"confirmSetup": "Configuración de acabado",
+	"options": {
+		"individual": {
+			"name": "Para mí",
+			"description": "Empieza con un espacio de trabajo personal. No te preocupes, siempre puedes crear espacios de trabajo con otras personas más adelante."
+		},
+		"withTeam": {
+			"name": "Para mi equipo",
+			"description": "Empieza como un equipo. Una vez creado el espacio de trabajo, no dudes en añadir a los demás miembros."
+		}
+	}
+}

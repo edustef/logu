@@ -1,1 +1,7 @@
-{}
+{
+  "workspacesTitle": "Workspaces",
+	"newWorkspace": "New workspace",
+	"addWorkspace": "Add workspace",
+	"noWorkspaces": "You have no workspace.",
+	"seeAllWorkspaces": "See all"
+}

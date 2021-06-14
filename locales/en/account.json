@@ -1,11 +1,11 @@
 {
 	"noName": "No name",
 	"workspacesTitle": "Workspaces",
-	"editProfile": "Edit Profile",
 	"newWorkspace": "New workspace",
 	"addWorkspace": "Add workspace",
 	"noWorkspaces": "You have no workspace.",
 	"seeAllWorkspaces": "See all",
+	"editProfile": "Edit Profile",
 	"preferences": {
 		"title": "Preferences"
 	},
