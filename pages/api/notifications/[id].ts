@@ -2,6 +2,7 @@ import { NotificationType } from '.prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/client'
 import StatusCode from 'status-code-enum'
+import parseQueryOne from '../../../utils/parseQueryOne'
 import prisma from '../../../utils/prisma'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
@@ -14,11 +15,9 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 	let result
 	switch (req.method.toUpperCase()) {
 		case 'GET':
-			result = await getNotifications(req.body.userId)
-			res.json(result)
 			break
-		case 'POST':
-			result = await createNotification(req.body.email, req.body.type, req.body.resourceId)
+		case 'DELETE':
+			result = await deleteNotification(parseQueryOne(req.query.id))
 			res.status(StatusCode.SuccessCreated).json(result)
 			break
 	}
@@ -36,25 +35,8 @@ export const getNotifications = async (userId: string) => {
 	})
 }
 
-export const createNotification = async (email: string, type: string, resourceId: string) => {
-	const foundUser = await prisma.user.findUnique({
-		where: { email }
-	})
-
-	if (!foundUser) {
-		return null
-	}
-
-	const enumType: NotificationType = NotificationType[type]
-	return await prisma.notification.create({
-		data: {
-			type: enumType,
-			resourceId,
-			user: {
-				connect: {
-					id: foundUser.id
-				}
-			}
-		}
+export const deleteNotification = async (id: string) => {
+	return await prisma.notification.delete({
+		where: { id }
 	})
 }

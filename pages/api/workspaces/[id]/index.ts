@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/client'
 import StatusCode from 'status-code-enum'
-import { YupWorkspaceData } from '../../../schemas/workspace.schema'
-import prisma from '../../../utils/prisma'
+import { YupWorkspaceData } from '../../../../schemas/workspace.schema'
+import prisma from '../../../../utils/prisma'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
@@ -19,9 +19,6 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
 				if (!workspace) {
 					res.status(StatusCode.ClientErrorNotFound).end()
-				}
-				if (workspace.users.find(({ user }) => user.id === session.userDetails.id)) {
-					res.status(StatusCode.ClientErrorForbidden).end()
 				}
 
 				res.json(workspace)

@@ -12,28 +12,48 @@ import accountSetupRedirect from '../../../utils/accountSetupRedirect'
 import parseQueryOne from '../../../utils/parseQueryOne'
 import { WorkspaceWithUsers } from '../../../schemas/userWorkspace.schema'
 import Link from '../../../components/Atoms/Link'
+import { User } from '@prisma/client'
+import Avatar from '../../../components/Atoms/Avatar'
+import Button from '../../../components/Atoms/Button'
+import { ViewGridAddIcon } from '@heroicons/react/solid'
+import { MailOpenIcon } from '@heroicons/react/outline'
 
-const WorkspacePage = ({ workspace }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const WorkspacePage = ({ workspace, user }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { t } = useTranslation()
+
+	console.log(user, workspace.users)
+	const isAdmin = () => {
+		return workspace.users.find((usr) => user.id === usr.user.id && usr.isAdmin)
+	}
+
 	return (
 		<Layout>
 			<Title hasBackBtn>{workspace.name}</Title>
-			<div className='space-y-3'>
-				<Card>{workspace.name}</Card>
+			<Link asBtn className='bg-gray-darkless mt-2' href={`/organize/${workspace.id}`}>
+				<ViewGridAddIcon className='w-6 h-6 mr-1' />
+				{t('workspace:organizeBtn')}
+			</Link>
+			<div className='space-y-3 mt-3'>
 				{!workspace.isIndividual && (
 					<Card>
 						<CardHeader className='flex items-center justify-between'>
 							<h2 className='font-semibold'>{t('workspace:members')}</h2>
-							<Link asBtn href={`/workspaces/${workspace.id}/invite`} className='bg-gray-darkless'>
-								{t('workspace:addUsers')}
-							</Link>
+							{isAdmin() && (
+								<Link asBtn href={`/workspaces/${workspace.id}/invite`} className='bg-gray-darkless'>
+									<MailOpenIcon className="w-6 h-6 mr-1" />
+									{t('workspace:addUsers')}
+								</Link>
+							)}
 						</CardHeader>
-						{workspace.users.map((user) => (
-							<div key={user.userId}>
-								<span>{user.user.name}</span>
-								{user.isAdmin && <span> (Admin)</span>}
-							</div>
-						))}
+						<div className='space-y-3'>
+							{workspace.users.map((user) => (
+								<div className='flex items-center' key={user.userId}>
+									<Avatar className='mr-3' width={40} height={40} url={user.user.image} />
+									<span>{user.user.name}</span>
+									{user.isAdmin && <span> (Admin)</span>}
+								</div>
+							))}
+						</div>
 					</Card>
 				)}
 			</div>
@@ -69,7 +89,8 @@ export const getServerSideProps = async ({ req, params, res }: GetServerSideProp
 
 	return {
 		props: {
-			workspace: JSON.parse(JSON.stringify(workspace)) as WorkspaceWithUsers
+			workspace: JSON.parse(JSON.stringify(workspace)) as WorkspaceWithUsers,
+			user: JSON.parse(JSON.stringify(session.userDetails)) as User
 		}
 	}
 }

@@ -12,13 +12,18 @@ import accountSetupRedirect from '../../../utils/accountSetupRedirect'
 import parseQueryOne from '../../../utils/parseQueryOne'
 import { WorkspaceWithUsers } from '../../../schemas/userWorkspace.schema'
 import Button from '../../../components/Atoms/Button'
-import Input from '../../../components/Atoms/Form/Input'
+import {Input} from '../../../components/Atoms/Form'
 import { UserAddIcon, XIcon } from '@heroicons/react/outline'
 import axios from 'axios'
-import { Prisma, PrismaClient, Notification, NotificationType } from '@prisma/client'
+import { Notification } from '@prisma/client'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
+import clsx from 'clsx'
 
 const InviteUserPage = ({ workspace }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { t } = useTranslation()
+	const router = useRouter()
+	const [isSubmiting, setIsSubmiting] = useState(false)
 	const [userList, setUserList] = useState<string[]>([])
 	const [emailInput, setEmailInput] = useState<string>('')
 	const handleAddUser = () => {
@@ -31,6 +36,7 @@ const InviteUserPage = ({ workspace }: InferGetServerSidePropsType<typeof getSer
 	}
 
 	const handleInvite = async () => {
+		setIsSubmiting(true)
 		const invitations = userList.map((user) =>
 			axios.post<Notification>(`/api/notifications`, {
 				email: user,
@@ -40,8 +46,9 @@ const InviteUserPage = ({ workspace }: InferGetServerSidePropsType<typeof getSer
 		)
 
 		const results = await axios.all(invitations)
-
-		results.forEach((res) => console.log(res))
+		setIsSubmiting(false)
+		toast.success(t('workspace:invite.success'))
+		router.push(`/workspaces/${workspace.id}`)
 	}
 
 	return (
@@ -60,7 +67,7 @@ const InviteUserPage = ({ workspace }: InferGetServerSidePropsType<typeof getSer
 					}}
 					name='search'
 					className='flex-grow'
-					button={<UserAddIcon className='w-6 h-6' />}
+					icon={<UserAddIcon className='w-6 h-6' />}
 				/>
 				<Button onClick={handleAddUser} className='ml-2 bg-gray-darkless'>
 					{t('workspace:invite.addUserBtn')}
@@ -85,7 +92,11 @@ const InviteUserPage = ({ workspace }: InferGetServerSidePropsType<typeof getSer
 					</div>
 				</Card>
 			</div>
-			<Button onClick={handleInvite} className='w-full bg-green-600 mt-3'>
+			<Button
+				disabled={isSubmiting}
+				onClick={handleInvite}
+				className={clsx(isSubmiting && 'animate-pulse disabled:cursor-not-allowed', 'w-full bg-green-600 mt-3')}
+			>
 				{t('workspace:addUsers')}
 			</Button>
 			<div className='text-gray-400 italic mt-6 text-center'>{t('workspace:invite.noteAboutInvitation')}</div>

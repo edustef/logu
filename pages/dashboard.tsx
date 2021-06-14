@@ -1,27 +1,37 @@
 import React from 'react'
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import Layout from '../components/Templates/Layout'
-import { getSession } from 'next-auth/client'
-import { User } from 'next-auth'
+import { getSession, useSession } from 'next-auth/client'
 import useTranslation from 'next-translate/useTranslation'
 import Title from '../components/Atoms/Title'
 import authRedirect from '../utils/authRedirect'
 import accountSetupRedirect from '../utils/accountSetupRedirect'
 import Notifications from '../components/Molecules/Notifications'
+import { Notification, User } from '@prisma/client'
+import { useQuery } from 'react-query'
+import axios from 'axios'
 
-type Props = {
-	user: User
-}
-
-const DashboardPage: React.FC<Props> = () => {
+const DashboardPage = ({ user }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { t } = useTranslation()
+	const session = useSession()[0]
+	const userId = session?.userDetails?.id
+
+	const notifications = useQuery(
+		['notifications', userId],
+		async () => {
+			const { data } = await axios.get<Notification[]>(`/api/notifications?userId=${session.userDetails.id}`)
+
+			return data
+		},
+		{ enabled: !!userId }
+	)
 
 	return (
 		<Layout page={t('navigation:dashboard')}>
 			<div className='page'>
-				<div className="flex items-center">
-				<Title className="flex-grow">{t('navigation:dashboard')}</Title>
-				<Notifications />
+				<div className='flex items-center'>
+					<Title className='flex-grow'>{t('navigation:dashboard')}</Title>
+					<Notifications notifications={notifications} />
 				</div>
 				<main></main>
 			</div>
@@ -31,7 +41,7 @@ const DashboardPage: React.FC<Props> = () => {
 
 export default DashboardPage
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+export const getServerSideProps = async ({ req }: GetServerSidePropsContext) => {
 	const session = await getSession({ req })
 	if (!session) {
 		return authRedirect('/dashboard')
@@ -42,6 +52,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 
 	return {
-		props: {}
+		props: {
+			user: JSON.parse(JSON.stringify(session.userDetails)) as User
+		}
 	}
 }

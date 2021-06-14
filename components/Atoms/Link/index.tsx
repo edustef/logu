@@ -11,7 +11,7 @@ interface Props extends LinkProps {
 const Link: React.FC<Props> = ({ className, asBtn = false, children, ...props }) => {
 	return (
 		<NextLink {...props}>
-			<a className={clsx('py-1 rounded font-semibold', asBtn && 'px-2', className)}>{children}</a>
+			<a className={clsx('py-1 rounded font-semibold inline-flex items-center', asBtn && 'px-2', className)}>{children}</a>
 		</NextLink>
 	)
 }

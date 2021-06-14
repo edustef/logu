@@ -5,12 +5,13 @@
 		"*": ["common", "metadata", "navigation", "errors", "validation"],
 		"/": ["home"],
 		"/account": ["account"],
+		"/dashboard": ["dashboard"],
 		"/account/edit": ["accountEdit"],
 		"/account-setup": ["accountSetup"],
 		"/auth/signin": ["signin"],
 		"/workspaces": ["workspaces"],
 		"rgx:^/workspace": ["workspace"],
 		"/workspaces/create": ["workspaceCreate"],
-		"rgx:^/organize": ["calendar"]
+		"rgx:^/organize": ["calendar", "organize"]
 	}
 }

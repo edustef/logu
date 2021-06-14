@@ -20,6 +20,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import accountSetupRedirect from '../../utils/accountSetupRedirect'
 import Preferences from '../../components/Molecules/Preferences'
+import { PlusIcon } from '@heroicons/react/outline'
 
 interface Props {
 	user: User
@@ -79,6 +80,7 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 							<h2 className='font-semibold'>{t('account:workspacesTitle')}</h2>
 						</Link>
 						<Link asBtn href='/workspaces/create' className='bg-gray-darkless text-white'>
+							<PlusIcon className="w-6 h-6 mr-1" />
 							{t('account:newWorkspace')}
 						</Link>
 					</CardHeader>
@@ -90,7 +92,7 @@ const AccountPage: React.FC<Props> = ({ user }) => {
 								<Link
 									className={clsx(
 										index === 0 && 'border-none pt-0',
-										'border-t rounded-t-none border-opacity-30 flex items-center py-2 border-gray-700'
+										'border-t rounded-t-none border-opacity-30 w-full items-center py-2 border-gray-700'
 									)}
 									href={`/workspaces/${workspace.id}`}
 									key={workspace.id}

@@ -1,1 +1,25 @@
-{}
+{
+	"title": "Organize",
+	"addSchedule": "Add schedule",
+	"form": {
+		"start": {
+			"label": "Start date"
+		},
+		"end": {
+			"label": "End date"
+		},
+		"name": {
+			"label": "Schedule Name",
+			"placeholder": "Name"
+		},
+		"description": {
+			"label": "Schedule description",
+			"placeholder": "Brief description..."
+		},
+		"success": "Schedule created succesfully.",
+		"submit": "Submit"
+	},
+	"schedule": {
+		"title": "Schedules"
+	}
+}

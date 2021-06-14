@@ -16,4 +16,5 @@ export interface YupWorkspaceData extends Asserts<typeof YupWorkspaceObject> {}
 
 export interface WorkspaceParams extends CommonParams {
 	name?: string
+	isAdmin?: string
 }

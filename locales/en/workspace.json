@@ -1,11 +1,13 @@
 {
 	"members": "Members",
 	"addUsers": "Invite users",
+	"organizeBtn": "Organize",
 	"invite": {
 		"title": "Invite users",
 		"addUserBtn": "Add user",
 		"listTitle": "Users list to invite",
 		"emptyList": "List is empty. Try adding some users.",
-		"noteAboutInvitation": "Note! Users need to be registered in order to recieve the invitation."
+		"noteAboutInvitation": "Note! Users need to be registered in order to recieve the invitation.",
+		"success": "Invitations sent succesfully."
 	}
 }

@@ -33,7 +33,7 @@ const WorkspacePage: React.FC = () => {
 					onChange={(e) => setSearch(e.target.value)}
 					name='search'
 					placeholder={t('workspaces:search.placeholder')}
-					button={<SearchIcon className='w-6 h-6' />}
+					icon={<SearchIcon className='w-6 h-6' />}
 				/>
 				<div className='space-y-3 flex-grow'>
 					{workspaces.isLoading && <Skeleton count={2} />}

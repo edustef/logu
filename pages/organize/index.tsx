@@ -1,11 +1,8 @@
-import { Workspace } from '.prisma/client'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/client'
 import useTranslation from 'next-translate/useTranslation'
 import React, { useEffect, useState } from 'react'
 import StatusCode from 'status-code-enum'
-import Calendar from '../../components/Molecules/Calendar'
-import WorkspaceDropdown from '../../components/Molecules/WorkspaceDropdown'
 import Layout from '../../components/Templates/Layout'
 import accountSetupRedirect from '../../utils/accountSetupRedirect'
 import authRedirect from '../../utils/authRedirect'
@@ -34,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params, res 
 		return accountSetupRedirect()
 	}
 
-	const workspaces = await getWorkspaces(session.userDetails.id)
+	const workspaces = await getWorkspaces(session.userDetails.id, { isAdmin: '1' })
 
 	if (!workspaces) {
 		res.statusCode = StatusCode.ClientErrorNotFound

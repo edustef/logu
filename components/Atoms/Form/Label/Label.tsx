@@ -4,15 +4,10 @@ import React, { InputHTMLAttributes } from 'react'
 
 interface Props extends React.LabelHTMLAttributes<HTMLLabelElement> {
 	className?: string
-	button: React.ReactChild
 }
 
-const Label: React.FC<Props> = ({ className, button, children, ...props }) => {
-	return (
-		<label className='' {...props}>
-			{children}
-		</label>
-	)
+const Label: React.FC<Props> = ({ className, children, ...props }) => {
+	return <label className='block mb-1 uppercase text-sm text-gray-400 font-semibold'>{children}</label>
 }
 
 export default Label

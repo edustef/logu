@@ -1,12 +1,13 @@
 {
-  "failedLoad": "Something went wrong while loading...",
-  "page": {
-    "notFound": "Not found"
-  },
-  "auth": {
-    "Configuration": "There is a problem with the server configuration",
-    "Verification": "Verification error. The token has expired or has already been used.",
-    "AccessDenied": "Access restricted.",
-    "Default": "There was an unexpected error. Please try again or contact us."
-  }
+	"failedLoad": "Something went wrong while loading...",
+	"page": {
+		"notFound": "Not found"
+	},
+	"failedPost": "Something went wrong.",
+	"auth": {
+		"Configuration": "There is a problem with the server configuration",
+		"Verification": "Verification error. The token has expired or has already been used.",
+		"AccessDenied": "Access restricted.",
+		"Default": "There was an unexpected error. Please try again or contact us."
+	}
 }

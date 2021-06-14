@@ -7,9 +7,6 @@ import React, { Fragment, useEffect, useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import useWorkspaces from '../../../hooks/useWorkspaces'
 import { WorkspaceWithUsers } from '../../../schemas/userWorkspace.schema'
-import Button from '../../Atoms/Button'
-import Link from '../../Atoms/Link'
-
 interface Props {
 	className?: string
 	current: WorkspaceWithUsers
@@ -25,7 +22,7 @@ const WorkspaceDropdown: React.FC<Props> = ({ className, current }) => {
 	}
 	const router = useRouter()
 
-	const workspaces = useWorkspaces()
+	const workspaces = useWorkspaces({ isAdmin: '1' })
 	const [workspaceSelected, setWorkspaceSelected] = useState<WorkspaceWithUsers>(current)
 
 	useEffect(() => {

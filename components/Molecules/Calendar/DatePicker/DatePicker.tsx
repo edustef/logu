@@ -125,28 +125,33 @@ const DatePicker: React.FC<Props> = ({
 							leaveTo='opacity-0 scale-95'
 						>
 							<div className='flex flex-col h-80 min-h-[] w-full max-w-md p-3 my-8 overflow-hidden text-left align-middle transition-all transform bg-gray-dark shadow-xl rounded'>
-								<div className='flex justify-around items-center'>
-									<Button onClick={() => handleNavigation('previous')} className='px-1'>
-										<ChevronLeftIcon className='w-6 h-6' />
+								<div className="flex items-center justify-between">
+									<Button onClick={() => onChange(dayjs())} className='mx-3 border border-gray-darkless'>
+										{t('common:today')}
 									</Button>
-									{currentView === 'month' && (
-										<Button onClick={() => setCurrentView('year')} className='mx-3 text-lg bg-gray-darkless'>
-											{currentDate.format('MMMM YYYY')}
+									<div className='flex flex-grow justify-around items-center'>
+										<Button onClick={() => handleNavigation('previous')} className='px-1'>
+											<ChevronLeftIcon className='w-6 h-6' />
 										</Button>
-									)}
-									{currentView === 'year' && (
-										<Button onClick={() => setCurrentView('years')} className='mx-3 text-lg bg-gray-darkless'>
-											{currentDate.format('YYYY')}
+										{currentView === 'month' && (
+											<Button onClick={() => setCurrentView('year')} className='mx-3 text-lg bg-gray-darkless'>
+												{currentDate.format('MMMM YYYY')}
+											</Button>
+										)}
+										{currentView === 'year' && (
+											<Button onClick={() => setCurrentView('years')} className='mx-3 text-lg bg-gray-darkless'>
+												{currentDate.format('YYYY')}
+											</Button>
+										)}
+										{currentView === 'years' && (
+											<Button className='mx-3 text-lg bg-gray-darkless'>
+												{datesByYear[0].format('YYYY')} - {datesByYear[datesByYear.length - 1].format('YYYY')}
+											</Button>
+										)}
+										<Button onClick={() => handleNavigation('next')} className='px-1'>
+											<ChevronRightIcon className='w-6 h-6' />
 										</Button>
-									)}
-									{currentView === 'years' && (
-										<Button className='mx-3 text-lg bg-gray-darkless'>
-											{datesByYear[0].format('YYYY')} - {datesByYear[datesByYear.length - 1].format('YYYY')}
-										</Button>
-									)}
-									<Button onClick={() => handleNavigation('next')} className='px-1'>
-										<ChevronRightIcon className='w-6 h-6' />
-									</Button>
+									</div>
 								</div>
 								{currentView === 'month' && (
 									<div className='mt-2 grid auto-cols-max grid-cols-7'>
